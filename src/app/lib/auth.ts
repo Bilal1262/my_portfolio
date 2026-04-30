@@ -2,10 +2,8 @@ import { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { compare } from 'bcryptjs'
 
-// Admin credentials
-const ADMIN_EMAIL = 'bk632723@gmail.com'
-const ADMIN_PASSWORD = 'Bilal1262'
-
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
