@@ -16,7 +16,7 @@ export type Project = {
 }
 
 export const profile = {
-  name: 'Bilal Ahmed Qaimkhani',
+  name: 'Bilal Ahmed',
   email: 'bk632723@gmail.com',
   location: 'Girona, Spain',
   github: 'https://github.com/Bilal1262',
