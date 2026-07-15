@@ -143,7 +143,8 @@ export const projects: Project[] = [
     results: ['ROS 2 odometry, IMU, slip, sinkage and environment topics', 'Terrain, rocks, dust, wind and lighting controls', 'Extensible per-wheel terramechanics architecture'],
     technologies: ['ROS 2', 'Panda3D', 'Terramechanics', 'Sensors'],
     cover: '/projects_picture/marsim_cover.png',
-    gallery: ['/projects_picture/marsim_environment.png', '/projects_picture/marsim_rover.png', '/projects_picture/marsim_architecture.png']
+    gallery: ['/projects_picture/marsim_environment.png', '/projects_picture/marsim_rover.png', '/projects_picture/marsim_architecture.png'],
+    links: [{ label: 'Video demonstration', href: 'https://youtu.be/t26hZjJ5NcQ?si=xdQssn14VgJZq20d' }]
   },
   {
     id: 'humanoid',
