@@ -300,11 +300,7 @@ function ProjectModal({
                 </a>
               ))}
             </div>
-          ) : (
-            <p className="project-private-note">
-              Public source or report link will be added when available.
-            </p>
-          )}
+          ) : null}
         </div>
       </motion.article>
     </motion.div>
@@ -779,43 +775,47 @@ export default function Portfolio() {
         </section>
 
 
-        <section className="recognition-block">
-  <div className="recognition-heading">
-    <p className="section-eyebrow">Selected recognition</p>
-    <h3>Awards tied to research and robot performance.</h3>
-    <p>
-      External recognition for technical research, integrated robotic systems,
-      and applied AI engineering.
-    </p>
-  </div>
+        <section className="section recognition-block">
+          <div className="shell">
+            <div className="recognition-heading">
+              <p className="section-eyebrow">Selected recognition</p>
+              <h3>Awards tied to research and robot performance.</h3>
+              <p>
+                External recognition for technical research, integrated
+                robotic systems, and applied AI engineering.
+              </p>
+            </div>
 
-  <div className="awards-grid">
-    {awards.map((award, index) => (
-      <Reveal
-        className="award-card"
-        delay={index * 0.05}
-        key={`${award.achievement}-${award.year}`}
-      >
-        <div className="award-number">
-          {String(index + 1).padStart(2, '0')}
-        </div>
+            <div className="awards-grid">
+              {awards.map((award, index) => (
+                <Reveal
+                  className="award-card"
+                  delay={index * 0.05}
+                  key={`${award.achievement}-${award.year}`}
+                >
+                  <div className="award-number">
+                    {String(index + 1).padStart(2, '0')}
+                  </div>
 
-        <div className="award-card-content">
-          <div className="award-heading">
-            <p className="award-kicker">{award.organisation}</p>
+                  <div className="award-card-content">
+                    <div className="award-heading">
+                      <p className="award-kicker">{award.organisation}</p>
 
-            <span className="award-meta">
-              {award.year} · {award.location}
-            </span>
+                      <span className="award-meta">
+                        {award.year} · {award.location}
+                      </span>
+                    </div>
+
+                    <h3>{award.achievement}</h3>
+                    <p className="award-description">
+                      {award.description}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
           </div>
-
-          <h3>{award.achievement}</h3>
-          <p className="award-description">{award.description}</p>
-        </div>
-      </Reveal>
-    ))}
-  </div>
-</section>
+        </section>
 
         <section className="section skills-section" id="skills">
           <div className="shell">
@@ -839,6 +839,7 @@ export default function Portfolio() {
                       <p key={item}>{item}</p>
                     ))}
                   </div>
+                  <p className="skill-proof">{skill.proof}</p>
                 </Reveal>
               ))}
             </div>

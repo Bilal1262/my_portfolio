@@ -239,9 +239,12 @@ export const projects: Project[] = [
     technologies: ['ROS 2', 'LLM Agents', 'RAG', 'FAISS', 'StoneFish'],
     cover: '/projects_picture/maestro_cover.png',
     gallery: [
-      '/projects_picture/maestro_architecture.png',
-      '/projects_picture/maestro_results.png',
-      '/projects_picture/maestro_recovery.png'
+      '/projects_picture/maestro_1.png',
+      '/projects_picture/maestro_2.png',
+      '/projects_picture/maestro_3.png',
+      '/projects_picture/maestro_4.png',
+      '/projects_picture/maestro_5.png',
+      '/projects_picture/maestro_6.png'
     ]
   },
   {
@@ -331,9 +334,10 @@ export const projects: Project[] = [
     technologies: ['ROS 2', 'Panda3D', 'Python', 'Sensors', 'Terramechanics'],
     cover: '/projects_picture/marsim_cover.png',
     gallery: [
-      '/projects_picture/marsim_environment.png',
-      '/projects_picture/marsim_rover.png',
-      '/projects_picture/marsim_architecture.png'
+      '/projects_picture/marsim_1.png',
+      '/projects_picture/marsim_2.png',
+      '/projects_picture/marsim_3.png',
+      '/projects_picture/marsim_4.png'
     ],
     links: [
       {
@@ -420,12 +424,8 @@ export const projects: Project[] = [
     limitations:
       'Evaluation used a small fixed set of simulation episodes and has not yet transferred to hardware.',
     technologies: ['PPO', 'MuJoCo', 'Stable-Baselines3', 'Curriculum Learning'],
-    cover: '/projects_picture/humanoid_ppo_cover.png',
-    gallery: [
-      '/projects_picture/humanoid_walk.png',
-      '/projects_picture/humanoid_goal.png',
-      '/projects_picture/humanoid_obstacle.png'
-    ],
+    cover: '/projects_picture/ppo_cover.png',
+    gallery: [],
     links: [
       {
         label: 'GitHub repository',
@@ -468,8 +468,12 @@ export const projects: Project[] = [
     limitations:
       'The benchmark contains 50 curated tasks and does not yet cover every ROS 2 package or hardware interface.',
     technologies: ['ROS 2', 'LLM', 'RAG', 'FAISS', 'Validation'],
-    cover: '/projects_picture/maestro_architecture.png',
-    gallery: []
+    cover: '/projects_picture/code_cover.png',
+    gallery: [
+      '/projects_picture/code_1.png',
+      '/projects_picture/code_2.png',
+      '/projects_picture/code_3.png'
+    ]
   },
   {
     id: 'active-navigation',
@@ -503,42 +507,7 @@ export const projects: Project[] = [
     limitations:
       'Current evaluation is simulation-only and depends on the fidelity of the MarSim sensor models.',
     technologies: ['ROS 2', 'Active Perception', 'LiDAR', 'Depth', 'Planning'],
-    cover: '/projects_picture/marsim_rover.png',
-    gallery: []
-  },
-  {
-    id: 'memory-navigation',
-    title: 'Memory-Augmented Human-Aware Navigation',
-    subtitle: 'Adaptive Planning around Occluded Human Crossings',
-    period: '2026',
-    area: 'Adaptive Autonomy',
-    category: 'SLAM, Localization & Navigation',
-    status: 'Completed',
-    summary:
-      'A partially observable benchmark combining reactive avoidance with persistent memory of human emergence patterns.',
-    challenge:
-      'Reactive navigation cannot anticipate people repeatedly emerging from occluded crossing zones.',
-    architecture: [
-      'Reactive collision avoidance',
-      'Persistent interaction memory',
-      'Temporal pattern estimation',
-      'Adaptive path selection'
-    ],
-    contribution:
-      'Designed the benchmark, memory model, adaptation logic and comparative evaluation.',
-    role: 'Independent developer',
-    team: 'Solo project',
-    evaluation:
-      'Compared against a reactive baseline before and after human dwell behavior changed.',
-    results: [
-      'Reduced emergency interventions by 92%',
-      'Eliminated occluded surprises in the evaluated scenario',
-      'Increased completion time by only 2.2% under changed behavior'
-    ],
-    limitations:
-      'Results come from a controlled 2D benchmark and require validation in richer 3D environments.',
-    technologies: ['Python', 'Adaptive Planning', 'Intent Prediction', 'Memory'],
-    cover: '/projects_picture/path_planning_cover.png',
+    cover: '/projects_picture/uncertainity.png',
     gallery: []
   },
   {
@@ -574,7 +543,7 @@ export const projects: Project[] = [
     limitations:
       'Performance depends on stereo calibration, visibility and object texture.',
     technologies: ['YOLOE', 'Stereo', 'PCL', 'PCA', 'Clustering'],
-    cover: '/projects_picture/key_feature1.png',
+    cover: '/projects_picture/feature_cover.png',
     gallery: [
       '/projects_picture/key_feature1.png',
       '/projects_picture/key_feature2.png'
@@ -785,44 +754,10 @@ export const projects: Project[] = [
     limitations:
       'The current system is simulation-only and has not been transferred to a physical manipulator.',
     technologies: ['OpenVLA', 'PyBullet', 'KUKA', 'Inverse Kinematics'],
-    cover: '/projects_picture/hri_cover.png',
+    cover: '/projects_picture/vla_cover.png',
     gallery: []
   },
-  {
-    id: 'unitree-go2',
-    title: 'Unitree Go2 Navigation',
-    subtitle: 'LiDAR SLAM and Learning-Based Obstacle Avoidance',
-    period: '2026–Present',
-    area: 'Legged Robotics · Navigation',
-    category: 'Robot Learning & Manipulation',
-    status: 'Ongoing',
-    summary:
-      'A legged-robot autonomy project combining LiDAR mapping, localization and exploration of learning-based navigation.',
-    challenge:
-      'Legged navigation must combine a stable locomotion platform with mapping, planning and obstacle-aware motion.',
-    architecture: [
-      'LiDAR sensing',
-      'SLAM and localization',
-      'Indoor navigation interface',
-      'Learning-based obstacle avoidance experiments'
-    ],
-    contribution:
-      'Implemented the mapping and navigation workflow and prepared reinforcement-learning experiments.',
-    role: 'Independent developer',
-    team: 'Solo project',
-    evaluation:
-      'Tested mapping and navigation components in controlled indoor environments.',
-    results: [
-      'Produced LiDAR maps for indoor navigation',
-      'Integrated localization and navigation interfaces',
-      'Prepared an RL workflow for obstacle avoidance'
-    ],
-    limitations:
-      'The learning-based navigation component remains under development.',
-    technologies: ['Unitree Go2', 'LiDAR', 'ROS 2', 'SLAM', 'RL'],
-    cover: '/projects_picture/turtlebot_localization.png',
-    gallery: []
-  },
+
   {
     id: 'tiago-assistant',
     title: 'TiAGo LLM–VLM Smart-Home Assistant',
@@ -925,148 +860,7 @@ export const projects: Project[] = [
     limitations:
       'The study requires broader quantitative evaluation against downstream detection and depth metrics.',
     technologies: ['OpenCV', 'HSV', 'RGB', 'YCbCr'],
-    cover: '/projects_picture/color_enhancement_cover.png',
-    gallery: []
-  },
-  {
-    id: 'integrated-3d-scanner-printer',
-    title: 'Integrated 3D Scanner and Printer',
-    subtitle: 'Object Replication without an Existing CAD Model',
-    period: '2021–2022',
-    area: 'Final-Year Mechatronics Project',
-    category: 'Earlier Engineering Projects',
-    status: 'Completed',
-    summary:
-      'A single-platform system for scanning an object and reproducing it through additive manufacturing.',
-    challenge:
-      'Connect sensing, geometry generation, motion control and printing into a complete object-replication workflow.',
-    architecture: [
-      '3D scanning mechanism',
-      'Geometry reconstruction',
-      'CNC-style motion system',
-      'Additive manufacturing workflow'
-    ],
-    contribution:
-      'Led the four-person team and contributed to mechanical design, integration and evaluation.',
-    role: 'Team lead and mechatronics developer',
-    team: 'Four-person final-year project',
-    evaluation:
-      'Compared reproduced objects with source geometry.',
-    results: [
-      'Built an integrated scanning and printing platform',
-      'Achieved approximately 70% geometric accuracy',
-      'Led system integration across hardware and software'
-    ],
-    limitations:
-      'Accuracy was constrained by low-cost sensing and mechanical tolerances.',
-    technologies: ['LiDAR', 'CNC', 'CAD', '3D Printing'],
-    cover: '/projects_picture/path_planning_cover.png',
-    gallery: []
-  },
-  {
-    id: 'hexapod-mine-inspection',
-    title: 'Hexapod Robot for Mine Inspection',
-    subtitle: 'Remote Environmental Sensing and Surveillance',
-    period: '2022',
-    area: 'Embedded Robotics',
-    category: 'Earlier Engineering Projects',
-    status: 'Completed',
-    summary:
-      'A six-legged inspection robot with environmental sensing, remote control and live video.',
-    challenge:
-      'Provide remote situational awareness in environments that may be unsafe for people.',
-    architecture: [
-      'Hexapod locomotion',
-      'Gas and temperature sensing',
-      'Ultrasonic obstacle sensing',
-      'Wi-Fi and RC control',
-      'Live camera stream'
-    ],
-    contribution:
-      'Built and integrated the locomotion, sensing and remote-control components.',
-    role: 'Mechatronics developer',
-    team: 'Student engineering project',
-    evaluation:
-      'Demonstrated remote movement, sensing and video transmission.',
-    results: [
-      'Integrated multiple environmental sensors',
-      'Enabled Wi-Fi and RC operation',
-      'Demonstrated live surveillance'
-    ],
-    limitations:
-      'The prototype was not certified for deployment in hazardous industrial mines.',
-    technologies: ['Raspberry Pi', 'Servos', 'OpenCV', 'Sensors'],
-    cover: '/projects_picture/swarm_control.png',
-    gallery: []
-  },
-  {
-    id: 'cartesian-manipulator',
-    title: 'Cartesian Manipulator with GUI and G-Code Control',
-    subtitle: 'Three-Axis Stepper-Motor Motion Platform',
-    period: '2021',
-    area: 'Mechatronics · Motion Control',
-    category: 'Earlier Engineering Projects',
-    status: 'Completed',
-    summary:
-      'A three-axis Cartesian manipulator controlled through a Python interface and G-code commands.',
-    challenge:
-      'Coordinate repeatable multi-axis motion through a simple operator interface.',
-    architecture: [
-      'Three prismatic axes',
-      'Stepper-motor control',
-      'Python GUI',
-      'G-code parsing and execution'
-    ],
-    contribution:
-      'Built the mechanical platform and implemented the control interface.',
-    role: 'Independent developer',
-    team: 'Student project',
-    evaluation:
-      'Demonstrated commanded multi-axis motion and sequence execution.',
-    results: [
-      'Built a functional three-axis manipulator',
-      'Implemented Python GUI control',
-      'Executed G-code motion commands'
-    ],
-    limitations:
-      'The platform used open-loop stepper control without industrial feedback hardware.',
-    technologies: ['Python', 'G-Code', 'Stepper Motors', 'CNC'],
-    cover: '/projects_picture/path_planning_cover.png',
-    gallery: []
-  },
-  {
-    id: 'potato-disease',
-    title: 'Potato Leaf Disease Classification',
-    subtitle: 'CNN Classification with Data Augmentation',
-    period: '2023',
-    area: 'Applied Computer Vision',
-    category: 'Earlier Engineering Projects',
-    status: 'Completed',
-    summary:
-      'A convolutional neural network for classifying three potato-leaf health and disease classes.',
-    challenge:
-      'Build a reliable image classifier from a limited agricultural dataset.',
-    architecture: [
-      'Image preprocessing',
-      'Data augmentation',
-      'CNN classifier',
-      'Validation and accuracy reporting'
-    ],
-    contribution:
-      'Implemented the training, augmentation and evaluation pipeline.',
-    role: 'Independent developer',
-    team: 'Solo project',
-    evaluation:
-      'Measured classification accuracy on a held-out validation set.',
-    results: [
-      'Achieved 90% classification accuracy',
-      'Implemented reproducible augmentation and training'
-    ],
-    limitations:
-      'The model was evaluated on a limited dataset and not deployed in field conditions.',
-    technologies: ['TensorFlow', 'CNN', 'Data Augmentation'],
-    cover: '/projects_picture/color_enhancement_cover.png',
-    gallery: []
+    cover: '/projects_picture/enhancement.png',
+    gallery: ['/projects_picture/enhancement_1.png']
   }
-
 ]
