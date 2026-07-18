@@ -3,6 +3,11 @@ export type ProjectLink = {
   href: string
 }
 
+export type ContextLogo = {
+  name: string
+  src: string
+}
+
 export type Project = {
   id: string
   title: string
@@ -24,6 +29,7 @@ export type Project = {
   cover: string
   gallery: string[]
   links?: ProjectLink[]
+  logos?: ContextLogo[]
   featured?: boolean
 }
 
@@ -35,7 +41,7 @@ export const profile = {
   github: 'https://github.com/Bilal1262',
   linkedin: 'https://www.linkedin.com/in/bilal131/',
   resume: '/resume/Bilal_Ahmed_Qaimkhani_CV.pdf',
-  heroImage: '/projects_picture/minigirona_2.png',
+  heroImage: '/projects_picture/minigirona_1.png',
   availability:
     'Open to robotics software, autonomy and research-engineering roles across Europe.'
 }
@@ -52,6 +58,7 @@ export const experience = [
     period: '2026–Present',
     organisation: 'Ocean Systems Lab, Heriot-Watt University',
     role: 'Visiting Scholar — Agentic Recovery for Marine Robotics',
+    logo: '/companies_logo/herriot_watt.png',
     description:
       'Developing MAESTRO, a multi-agent ROS 2 framework for anomaly diagnosis, mission-impact reasoning and operator-approved recovery synthesis for autonomous underwater vehicles.'
   },
@@ -59,6 +66,7 @@ export const experience = [
     period: '2025',
     organisation: 'COE MARBLE Lab, University of Zagreb',
     role: 'Research Intern — Multimodal Underwater 3D Reconstruction',
+    logo: '/companies_logo/coe_marble.png',
     description:
       'Developed stereo, sonar and vehicle-pose fusion methods for offshore-structure reconstruction and probabilistic reduction of sonar vertical ambiguity.'
   },
@@ -66,6 +74,7 @@ export const experience = [
     period: '2024–2025',
     organisation: 'CIRS Lab, University of Girona',
     role: 'Volunteer Researcher — MiniGirona AUV',
+    logo: '/companies_logo/cirs_girona.png',
     description:
       'Contributed to sonar-based initialization, DVL/INS localization, mission planning, stereo perception and task-priority manipulation on a real autonomous underwater vehicle.'
   }
@@ -95,12 +104,14 @@ export const research = [
     title:
       'Advancing Accessible Underwater Robotics: The Mini-Girona I-AUV at RAMI 2025',
     venue: 'ROBOT 2025 · Porto, Portugal',
+    logo: '/companies_logo/rami_competition.png',
     links: [] as ProjectLink[]
   },
   {
     type: 'Research Presentation',
     title: 'Multimodal 3D Reconstruction of Offshore Structures',
     venue: 'Breaking the Surface 2025 · Cyprus',
+    logo: '/companies_logo/breaking_the_surface.png',
     links: [] as ProjectLink[]
   },
   {
@@ -108,6 +119,7 @@ export const research = [
     title:
       'MAESTRO: Agentic Fault Diagnosis and Recovery for Autonomous Underwater Robots',
     venue: 'Heriot-Watt University · 2026',
+    logo: '/companies_logo/herriot_watt.png',
     links: [] as ProjectLink[]
   }
 ]
@@ -115,19 +127,21 @@ export const research = [
 export const awards = [
   {
     achievement: 'First Place — Research Poster Competition',
-    organisation: 'Research and Applications in Marine Robotics (RAMI)',
+    organisation: 'RAMI Marine Robots Competition',
+    logo: '/companies_logo/rami_competition.png',
     description:
       'Recognised for research on multimodal underwater 3D reconstruction and offshore inspection.',
-    year: '2025',
-    location: 'Cyprus'
+    year: 'June 2025',
+    location: 'La Spezia, Italy'
   },
   {
     achievement: 'Second Place — Underwater Inspection & Maintenance Challenge',
-    organisation: 'Research and Applications in Marine Robotics (RAMI)',
+    organisation: 'RAMI Marine Robots Competition',
+    logo: '/companies_logo/rami_competition.png',
     description:
       'Contributed to the MiniGirona AUV autonomy stack used for navigation, inspection and intervention tasks.',
-    year: '2025',
-    location: 'Cyprus'
+    year: 'June 2025',
+    location: 'La Spezia, Italy'
   },
   {
     achievement: 'Second Prize — AI Agent Olympics',
@@ -212,6 +226,12 @@ export const projects: Project[] = [
     category: 'LLM/VLM & Agentic Robotics',
     status: 'Ongoing',
     featured: true,
+    logos: [
+      {
+        name: 'Heriot-Watt University',
+        src: '/companies_logo/herriot_watt.png'
+      }
+    ],
     summary:
       'An operator-supervised autonomy framework connecting anomaly evidence, multi-agent LLM reasoning, mission-impact analysis and validated ROS 2 recovery synthesis.',
     challenge:
@@ -256,6 +276,16 @@ export const projects: Project[] = [
     category: 'Underwater & Marine Robotics',
     status: 'Completed',
     featured: true,
+    logos: [
+      {
+        name: 'CIRS, University of Girona',
+        src: '/companies_logo/cirs_girona.png'
+      },
+      {
+        name: 'RAMI Marine Robots Competition',
+        src: '/companies_logo/rami_competition.png'
+      }
+    ],
     summary:
       'An integrated autonomy stack combining sonar-based initialization, DVL/INS localization, behavior-tree missions, stereo perception and Alpha 5 arm manipulation.',
     challenge:
@@ -271,9 +301,9 @@ export const projects: Project[] = [
     role: 'Autonomy and localization contributor',
     team: 'CIRS Lab MiniGirona research team',
     evaluation:
-      'Validated in simulation and real-robot experiments and integrated into RAMI 2025 competition missions.',
+      'Validated in simulation and real-robot experiments and integrated into RAMI 2025 competition missions in La Spezia, Italy.',
     results: [
-      '2nd place at RAMI 2025',
+      '2nd place at RAMI 2025 in La Spezia, Italy',
       'Validated sonar-based initialization on MiniGirona',
       'Integrated navigation and manipulation into mission execution',
       'Research contribution published at ROBOT 2025'
@@ -355,6 +385,16 @@ export const projects: Project[] = [
     category: 'Underwater & Marine Robotics',
     status: 'Research Prototype',
     featured: true,
+    logos: [
+      {
+        name: 'COE MARBLE',
+        src: '/companies_logo/coe_marble.png'
+      },
+      {
+        name: 'Breaking the Surface',
+        src: '/companies_logo/breaking_the_surface.png'
+      }
+    ],
     summary:
       'A multimodal reconstruction pipeline combining stereo depth, forward-looking sonar and AUV pose estimates to reconstruct offshore structures.',
     challenge:
@@ -518,6 +558,12 @@ export const projects: Project[] = [
     area: 'Perception · Manipulation',
     category: 'Computer Vision',
     status: 'Research Prototype',
+    logos: [
+      {
+        name: 'CIRS, University of Girona',
+        src: '/companies_logo/cirs_girona.png'
+      }
+    ],
     summary:
       'An end-to-end perception pipeline for underwater enhancement, zero-shot detection, stereo depth and 3D keypoint extraction.',
     challenge:

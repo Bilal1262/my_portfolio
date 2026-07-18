@@ -124,6 +124,27 @@ function SectionTitle({
   )
 }
 
+function ContextLogos({
+  logos,
+  className = ''
+}: {
+  logos?: Project['logos']
+  className?: string
+}) {
+  if (!logos?.length) return null
+
+  return (
+    <div className={`context-logos ${className}`}>
+      {logos.map((logo) => (
+        <span className="context-logo" key={logo.name}>
+          <img src={assetPath(logo.src)} alt={`${logo.name} logo`} />
+          <span>{logo.name}</span>
+        </span>
+      ))}
+    </div>
+  )
+}
+
 function ProjectModal({
   project,
   onClose
@@ -223,6 +244,11 @@ function ProjectModal({
             <span>{project.period}</span>
             <span>{project.status}</span>
           </div>
+
+          <ContextLogos
+            logos={project.logos}
+            className="modal-context-logos"
+          />
 
           <h2 id={`project-title-${project.id}`}>{project.title}</h2>
           <h3>{project.subtitle}</h3>
@@ -511,50 +537,18 @@ export default function Portfolio() {
             </motion.div>
 
             <motion.div
-              className="hero-visual"
+              className="hero-visual hero-portrait"
               initial={reduce ? false : { opacity: 0, x: 35 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
             >
-              <div className="orbit orbit-one" />
-              <div className="orbit orbit-two" />
-
               <figure>
                 <ProjectImage
                   src={profile.heroImage}
-                  alt="MiniGirona autonomous underwater robot"
+                  alt={`${profile.name} with the MiniGirona autonomous underwater robot`}
                   eager
                 />
-                <figcaption>
-                  <span>Featured platform</span>
-                  <strong>MiniGirona AUV</strong>
-                  <small>Localization · navigation · intervention</small>
-                </figcaption>
               </figure>
-
-              <motion.div
-                className="floating-note note-one"
-                animate={reduce ? undefined : { y: [0, -8, 0] }}
-                transition={{ duration: 5, repeat: Infinity }}
-              >
-                <i />
-                <div>
-                  <strong>Current focus</strong>
-                  <span>Fault-tolerant autonomy</span>
-                </div>
-              </motion.div>
-
-              <motion.div
-                className="floating-note note-two"
-                animate={reduce ? undefined : { y: [0, 7, 0] }}
-                transition={{ duration: 5.8, repeat: Infinity }}
-              >
-                <b />
-                <div>
-                  <strong>Engineering approach</strong>
-                  <span>Build → test → measure</span>
-                </div>
-              </motion.div>
             </motion.div>
           </div>
         </section>
@@ -623,6 +617,10 @@ export default function Portfolio() {
                     transition={{ duration: 0.4 }}
                   >
                     <p className="project-area">{active.area}</p>
+                    <ContextLogos
+                      logos={active.logos}
+                      className="project-context-logos"
+                    />
                     <h3>{active.title}</h3>
                     <h4>{active.subtitle}</h4>
                     <p>{active.summary}</p>
@@ -720,6 +718,12 @@ export default function Portfolio() {
                   key={item.role}
                 >
                   <span>{String(index + 1).padStart(2, '0')}</span>
+                  <div className="row-logo-tile">
+                    <img
+                      src={assetPath(item.logo)}
+                      alt={`${item.organisation} logo`}
+                    />
+                  </div>
                   <div>
                     <small>{item.organisation}</small>
                     <h3>{item.role}</h3>
@@ -749,6 +753,12 @@ export default function Portfolio() {
                   key={item.title}
                 >
                   <span>{String(index + 1).padStart(2, '0')}</span>
+                  <div className="row-logo-tile">
+                    <img
+                      src={assetPath(item.logo)}
+                      alt={`${item.venue} logo`}
+                    />
+                  </div>
                   <small>{item.type}</small>
                   <div>
                     <h3>{item.title}</h3>
@@ -798,6 +808,15 @@ export default function Portfolio() {
                   </div>
 
                   <div className="award-card-content">
+                    {'logo' in award && award.logo ? (
+                      <div className="award-logo-tile">
+                        <img
+                          src={assetPath(award.logo)}
+                          alt={`${award.organisation} logo`}
+                        />
+                      </div>
+                    ) : null}
+
                     <div className="award-heading">
                       <p className="award-kicker">{award.organisation}</p>
 
@@ -963,6 +982,11 @@ export default function Portfolio() {
                         <small>{project.category}</small>
                         <time>{project.period}</time>
                       </div>
+
+                      <ContextLogos
+                        logos={project.logos}
+                        className="archive-context-logos"
+                      />
 
                       <h3>{project.title}</h3>
                       <h4>{project.subtitle}</h4>
