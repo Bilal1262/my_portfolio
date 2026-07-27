@@ -236,6 +236,27 @@ function ProjectModal({
               ))}
             </div>
           ) : null}
+
+          {project.video ? (
+            <div className="modal-video">
+              <div>
+                <span>Result video</span>
+                <small>{project.video.caption}</small>
+              </div>
+              <video
+                controls
+                playsInline
+                preload="metadata"
+                poster={assetPath(project.video.poster)}
+              >
+                <source
+                  src={assetPath(project.video.src)}
+                  type="video/mp4"
+                />
+                Your browser does not support embedded video.
+              </video>
+            </div>
+          ) : null}
         </div>
 
         <div className="modal-copy">
@@ -316,7 +337,7 @@ function ProjectModal({
             <div className="modal-links">
               {project.links.map((link) => (
                 <a
-                  href={link.href}
+                  href={assetPath(link.href)}
                   target="_blank"
                   rel="noreferrer"
                   key={link.href}

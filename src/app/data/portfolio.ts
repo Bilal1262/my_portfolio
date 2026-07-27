@@ -28,6 +28,11 @@ export type Project = {
   technologies: string[]
   cover: string
   gallery: string[]
+  video?: {
+    src: string
+    poster: string
+    caption: string
+  }
   links?: ProjectLink[]
   logos?: ContextLogo[]
   featured?: boolean
@@ -217,6 +222,60 @@ export const skills = [
 ]
 
 export const projects: Project[] = [
+  {
+    id: 'aquaadapt',
+    title: 'AquaAdapt',
+    subtitle: 'Robust Underwater Place Recognition with DINOv2',
+    period: '2026',
+    area: 'Computer Vision · Self-Supervised Learning',
+    category: 'Underwater & Marine Robotics',
+    status: 'Research Prototype',
+    featured: true,
+    summary:
+      'A self-supervised adaptation pipeline that preserves clean DINOv2 retrieval while improving place recognition under low light, haze, colour attenuation, blur and marine snow.',
+    challenge:
+      'Foundation visual descriptors are strong on clean imagery but underwater lighting loss, backscatter, colour attenuation and suspended particles can change retrieval rankings precisely when reliable loop closures are needed.',
+    architecture: [
+      'ROS1 image extraction at 5 Hz with TUM timestamp–pose association',
+      'Frozen DINOv2 ViT-S/14 with a zero-initialized 384→512→384 residual adapter',
+      'Multi-positive InfoNCE, DINO geometry preservation and clean/corrupt consistency',
+      'Exact cosine retrieval with temporal exclusion and pose-based Recall@K evaluation'
+    ],
+    contribution:
+      'Designed and implemented the complete research pipeline: bag ingestion, leakage-resistant manifests, controlled underwater augmentation, residual-adapter training, descriptor retrieval, robustness evaluation and qualitative reporting.',
+    role: 'Independent researcher and developer',
+    team: 'Solo research project',
+    evaluation:
+      'Trained on balanced MCLab1, MCLab2 and Fjord1 trajectories, then froze the checkpoint and evaluated on untouched Fjord2. Of 1,095 candidate queries, 665 had a valid geometric revisit after temporal exclusion.',
+    results: [
+      'Improved clean Recall@5 from 49.32% to 51.13% on held-out Fjord2',
+      'Improved macro Recall@1 by +1.77, +3.34 and +5.41 percentage points at corruption severities 1–3',
+      'Outperformed raw DINOv2 in all 15 corruption/severity comparisons',
+      'Reached gains of +9.32 pp in severe low light and +8.57 pp under severe haze'
+    ],
+    limitations:
+      'Fjord2 is an unseen trajectory rather than a completely unseen environment because Fjord1 is present during training. Clean Recall@1 improves by only 0.30 pp, and evaluation coverage is 60.73%; the strongest evidence is degradation robustness.',
+    technologies: [
+      'PyTorch',
+      'DINOv2',
+      'Self-Supervised Learning',
+      'ROS1 Bags',
+      'FAISS',
+      'OpenCV'
+    ],
+    cover: '/projects_picture/aquaadapt_robustness.png',
+    gallery: [
+      '/projects_picture/aquaadapt_architecture.png',
+      '/projects_picture/aquaadapt_retrieval.png',
+      '/projects_picture/aquaadapt_training.png'
+    ],
+    video: {
+      src: '/projects_picture/aquaadapt_retrieval_highlights.mp4',
+      poster: '/projects_picture/aquaadapt_retrieval.png',
+      caption:
+        'Held-out Fjord2 retrievals under haze, low light, colour attenuation and marine snow'
+    }
+  },
   {
     id: 'maestro',
     title: 'MAESTRO',
