@@ -223,6 +223,55 @@ export const skills = [
 
 export const projects: Project[] = [
   {
+    id: 'bathygraph',
+    title: 'BathyGraph-Lite',
+    subtitle:
+      'DR-Initialized Bathymetric Submap Registration and Pose-Graph Optimization',
+    period: '2026',
+    area: 'Underwater Mapping · Pose-Graph Optimization',
+    category: 'SLAM, Localization & Navigation',
+    status: 'Research Prototype',
+    featured: true,
+    summary:
+      'A research prototype that decodes real AUV dead-reckoning and multibeam records, associates measured bathymetric submaps with navigation states, registers revisits and optimizes a robust planar pose graph.',
+    challenge:
+      'Underwater vehicles accumulate dead-reckoning drift without GNSS, while sparse or repetitive seabed geometry makes reliable submap association and registration difficult.',
+    architecture: [
+      'Streaming index for 34,048,732 XYZ measurements and an exact-layout decoder for 97,318 AUVLib Cereal pings',
+      'Quality-checked monotonic association of 296 measured submaps with representative DR states',
+      'DR-proximity candidate generation followed by generalized ICP and explicit geometric quality gates',
+      'Huber-robust GTSAM Pose2 optimization with trajectory, map-consistency and candidate-audit outputs'
+    ],
+    contribution:
+      'Designed and implemented the complete pipeline: large-file ingestion, Cereal decoding, submap-to-ping association, point-cloud preprocessing, GICP registration, robust graph optimization, sensitivity analysis and reproducible reporting.',
+    role: 'Independent researcher and developer',
+    team: 'Solo research project using the published KTH Antarctica 2019 dataset',
+    evaluation:
+      'Ran all 296 embedded submaps and manually audited all seven proposed candidates independently of the algorithm decision. Repeated the experiment after excluding associations above 30 m and 20 m to test sensitivity to the inferred mapping.',
+    results: [
+      'Decoded 97,318 DR states and 36,087,441 multibeam points from the AUVLib Cereal archive',
+      'Improved accepted-edge bathymetric overlap consistency by 6.3% while reducing the robust graph objective',
+      'Reduced accepted-pair vertical RMS consistency from 2.219 m to 1.466 m after graph optimization',
+      'Recorded TP=2, FP=0, FN=3 and TN=2 in the seven-candidate manual audit; results were unchanged by association-residual filtering'
+    ],
+    limitations:
+      'No verified external trajectory ground truth is available. The ping association is quality-checked but inferred, the XYZ groups are already globally expressed, and only seven candidates with two accepted loops were observed. The exploratory terrain-observability gate showed no independent benefit.',
+    technologies: [
+      'Python',
+      'AUVLib Cereal',
+      'Open3D',
+      'Generalized ICP',
+      'GTSAM',
+      'Pose Graphs',
+      'Bathymetric Mapping'
+    ],
+    cover: '/projects_picture/bathygraph_map.png',
+    gallery: [
+      '/projects_picture/bathygraph_trajectory.png',
+      '/projects_picture/bathygraph_navigation.png'
+    ]
+  },
+  {
     id: 'aquaadapt',
     title: 'AquaAdapt',
     subtitle: 'Robust Underwater Place Recognition with DINOv2',
