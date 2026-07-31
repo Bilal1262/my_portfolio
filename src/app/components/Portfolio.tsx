@@ -162,6 +162,7 @@ function ProjectModal({
       ),
     [project]
   )
+  const projectVideos = project.videos ?? (project.video ? [project.video] : [])
 
   useEffect(() => {
     setActiveImage(project.cover)
@@ -237,26 +238,28 @@ function ProjectModal({
             </div>
           ) : null}
 
-          {project.video ? (
-            <div className="modal-video">
+          {projectVideos.map((video, index) => (
+            <div className="modal-video" key={video.src}>
               <div>
-                <span>Result video</span>
-                <small>{project.video.caption}</small>
+                <span>
+                  {projectVideos.length > 1
+                    ? `Result video ${index + 1}`
+                    : 'Result video'}
+                </span>
+                <small>{video.caption}</small>
               </div>
               <video
+                className={video.layout === 'wide' ? 'wide' : undefined}
                 controls
                 playsInline
                 preload="metadata"
-                poster={assetPath(project.video.poster)}
+                poster={assetPath(video.poster)}
               >
-                <source
-                  src={assetPath(project.video.src)}
-                  type="video/mp4"
-                />
+                <source src={assetPath(video.src)} type="video/mp4" />
                 Your browser does not support embedded video.
               </video>
             </div>
-          ) : null}
+          ))}
         </div>
 
         <div className="modal-copy">

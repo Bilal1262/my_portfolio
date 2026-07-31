@@ -8,6 +8,13 @@ export type ContextLogo = {
   src: string
 }
 
+export type ProjectVideo = {
+  src: string
+  poster: string
+  caption: string
+  layout?: 'wide' | 'ultrawide'
+}
+
 export type Project = {
   id: string
   title: string
@@ -28,11 +35,8 @@ export type Project = {
   technologies: string[]
   cover: string
   gallery: string[]
-  video?: {
-    src: string
-    poster: string
-    caption: string
-  }
+  video?: ProjectVideo
+  videos?: ProjectVideo[]
   links?: ProjectLink[]
   logos?: ContextLogo[]
   featured?: boolean
@@ -222,6 +226,77 @@ export const skills = [
 ]
 
 export const projects: Project[] = [
+  {
+    id: 'failure-aware-manipulation',
+    title: 'Failure-Aware Multimodal Manipulation',
+    subtitle:
+      'Behavior Cloning, Contact-Aware Failure Detection and Autonomous Recovery',
+    period: '2026',
+    area: 'Robot Learning · Contact-Rich Manipulation',
+    category: 'Robot Learning & Manipulation',
+    status: 'Research Prototype',
+    featured: true,
+    summary:
+      'An end-to-end MuJoCo research stack for square-peg insertion that connects multimodal demonstrations, behavior cloning, online failure detection and retry-limited autonomous recovery on a collision-enabled Franka Panda.',
+    challenge:
+      'Contact-rich insertion compounds perception, alignment and force-control errors. A policy can achieve low held-out action error yet drift outside the demonstration distribution in closed loop, while recovery must respond without exceeding robot safety limits.',
+    architecture: [
+      'MuJoCo/Gymnasium square-peg environment with a collision-enabled Franka Menagerie presentation model and a checkpoint-compatible training proxy',
+      'HDF5 pipeline for 200 demonstrations containing front and wrist RGB, joint state, gripper width, force/torque, actions, task phase and failure labels',
+      'PyTorch state-only and multimodal vision/state/force behavior-cloning policies with deterministic training histories and checkpointed validation loss',
+      'Windowed rule-based failure detector feeding a retry-limited recovery manager with regrasp, spiral search, withdraw/retry and safe-abort skills',
+      'Seeded evaluation, controlled disturbance injection, structured metrics and truthful 16:9 rollout visualization'
+    ],
+    contribution:
+      'Designed and implemented the complete project: simulator and Cartesian control, scripted demonstration policy, dataset schema, state and multimodal BC models, temporal failure rules, recovery skills, evaluation reports, tests and portfolio-ready visual diagnostics.',
+    role: 'Independent robotics research engineer and developer',
+    team: 'Solo research project',
+    evaluation:
+      'Collected 200 successful randomized demonstrations, compared state and multimodal BC on held-out transitions, executed both checkpoints in closed loop, and ran a controlled object-slip test on the collision-enabled Franka with measured detection, recovery, force and task outcome.',
+    results: [
+      'Completed the nominal collision-enabled Franka insertion in 110 control steps with 9.7 N peak measured force',
+      'Detected a controlled OBJECT_SLIP, selected REGRASP once and resumed the task to successful insertion at step 175',
+      'Kept the recovery rollout below the configured 60 N robot limit, with a measured peak of 38.0 N',
+      'Reached best validation MSE of 0.002239 for State BC and 0.002102 for Multimodal BC; closed-loop rollouts exposed transfer-to-alignment covariate shift',
+      'Validated the implementation with Ruff, mypy and 16 automated tests'
+    ],
+    limitations:
+      'The learned checkpoints were trained on the lightweight proxy and did not complete end-to-end insertion within 500 steps. The selected object-slip recovery succeeded, but broader detector precision and recovery robustness still require evaluation across more seeds and contact disturbances before making general success-rate claims.',
+    technologies: [
+      'Python',
+      'PyTorch',
+      'MuJoCo',
+      'Gymnasium',
+      'Behavior Cloning',
+      'Multimodal Learning',
+      'Force/Torque Sensing',
+      'Failure Recovery',
+      'HDF5',
+      'OpenCV'
+    ],
+    cover: '/projects_picture/failure_aware_manipulation_cover.png',
+    gallery: [
+      '/projects_picture/failure_aware_manipulation_live.png',
+      '/projects_picture/failure_aware_manipulation_recovery.png',
+      '/projects_picture/failure_aware_manipulation_training.png'
+    ],
+    videos: [
+      {
+        src: '/projects_picture/failure_aware_manipulation_success.mp4',
+        poster: '/projects_picture/failure_aware_manipulation_cover.png',
+        caption:
+          'Collision-enabled Franka reference rollout: pick, transfer, align and insert with measured telemetry.',
+        layout: 'wide'
+      },
+      {
+        src: '/projects_picture/failure_aware_manipulation_recovery.mp4',
+        poster: '/projects_picture/failure_aware_manipulation_recovery.png',
+        caption:
+          'Controlled object slip, online detection, autonomous regrasp and successful task resumption.',
+        layout: 'wide'
+      }
+    ]
+  },
   {
     id: 'bathygraph',
     title: 'BathyGraph-Lite',

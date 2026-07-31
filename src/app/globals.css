@@ -40,7 +40,7 @@
 @media(max-width:560px){.context-logo{font-size:.62rem;min-height:42px}.context-logo img{height:24px;max-width:86px}.award-logo-tile img{height:46px;max-width:180px}}
 
 /* Project evidence video */
-.modal-video{margin:0 12px 16px;border:1px solid var(--line2);background:#101820}.modal-video>div{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:13px 15px;background:#fff}.modal-video span{color:var(--blue);font-size:.66rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase}.modal-video small{max-width:360px;color:var(--muted);font-size:.66rem;line-height:1.45;text-align:right}.modal-video video{display:block;width:100%;height:auto;aspect-ratio:3/1;background:#0a1014;object-fit:contain}
+.modal-video{margin:0 12px 16px;border:1px solid var(--line2);background:#101820}.modal-video>div{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:13px 15px;background:#fff}.modal-video span{color:var(--blue);font-size:.66rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase}.modal-video small{max-width:360px;color:var(--muted);font-size:.66rem;line-height:1.45;text-align:right}.modal-video video{display:block;width:100%;height:auto;aspect-ratio:3/1;background:#0a1014;object-fit:contain}.modal-video video.wide{aspect-ratio:16/9}
 @media(max-width:560px){.modal-video>div{display:grid;gap:5px}.modal-video small{text-align:left}.modal-video video{aspect-ratio:16/7}}
 .recognition-block {
   background: #fff;
