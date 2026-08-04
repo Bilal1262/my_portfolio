@@ -779,6 +779,64 @@ export const projects: Project[] = [
     ]
   },
   {
+    id: 'frontier_exploration',
+    title: 'Frontier-Based Autonomous Exploration for a Unitree Go1',
+    subtitle: 'Autonomous SLAM, Navigation and Obstacle Avoidance',
+    period: '2026',
+    area: 'Robotics · Autonomous Navigation',
+    category: 'Mobile Robotics',
+    status: 'Completed',
+
+    summary:
+      'A ROS1-based autonomous exploration system enabling a Unitree Go1 quadruped to map and navigate unknown cluttered environments using 2D LiDAR, odometry and frontier-based planning.',
+
+    challenge:
+      'The robot must build a consistent occupancy map, identify unexplored regions, generate collision-free paths and avoid becoming trapped near obstacles.',
+
+    architecture: [
+      'GMapping occupancy-grid SLAM',
+      'Frontier detection with explore_lite',
+      'Navfn global path planning',
+      'DWA local obstacle avoidance',
+      'Go1-specific velocity safety controller'
+    ],
+
+    contribution:
+      'Integrated the complete exploration stack and developed a velocity safety layer for smooth Go1 motion, obstacle recovery and safe cmd_vel execution.',
+
+    role: 'Independent developer',
+    team: 'Independent robotics project',
+
+    evaluation:
+      'Evaluated in custom cluttered Gazebo environments using live SLAM maps, frontier goals, global paths, local trajectories and obstacle-avoidance behaviour.',
+
+    results: [
+      'Generated occupancy maps of previously unknown environments',
+      'Enabled autonomous frontier selection and path replanning',
+      'Integrated collision-aware global and local navigation',
+      'Visualized SLAM, costmaps, paths and frontiers in RViz'
+    ],
+
+    limitations:
+      'Navigation performance depends on accurate LiDAR-to-base transforms, odometry quality and environment-specific costmap tuning.',
+
+    technologies: [
+      'ROS1',
+      'Python',
+      'Gazebo',
+      'RViz',
+      'GMapping',
+      'move_base',
+      'Navfn',
+      'DWA',
+      'explore_lite',
+      '2D LiDAR'
+    ],
+
+    cover: '/projects_picture/unitree.png',
+    gallery: []
+  },
+  {
     id: 'mobile-autonomy',
     title: 'ROS 2 Mobile Robot Autonomy',
     subtitle: 'SLAM, Localization, Planning and Behavior Trees',
@@ -1092,4 +1150,5 @@ export const projects: Project[] = [
     cover: '/projects_picture/enhancement.png',
     gallery: ['/projects_picture/enhancement_1.png']
   }
+  
 ]
