@@ -18,12 +18,36 @@ import {
   profile,
   projects,
   research,
-  roles,
   skills,
-  type Project
+  type Project,
+  type RobotSystem
 } from '../data/portfolio'
 import { assetPath } from '../lib/paths'
 import ProjectImage from './ProjectImage'
+
+const robotSystems: Array<{
+  id: RobotSystem
+  label: string
+}> = [
+  { id: 'marine', label: 'Marine Robotics' },
+  { id: 'mobile', label: 'Mobile Robotics' },
+  { id: 'legged', label: 'Legged Robotics' },
+  { id: 'aerial', label: 'Aerial Robotics' },
+  { id: 'manipulation', label: 'Manipulation & Embodied AI' }
+]
+
+const robotSystemLabels = Object.fromEntries(
+  robotSystems.map((system) => [system.id, system.label])
+) as Record<RobotSystem, string>
+
+const featuredProjectIds = [
+  'maestro',
+  'tiago-navigation-integration',
+  'frontier_exploration',
+  'multi-robot',
+  'failure-aware-manipulation',
+  'marsim'
+]
 
 function Reveal({
   children,
@@ -50,54 +74,6 @@ function Reveal({
     >
       {children}
     </motion.div>
-  )
-}
-
-function Typewriter() {
-  const [wordIndex, setWordIndex] = useState(0)
-  const [text, setText] = useState('')
-  const [deleting, setDeleting] = useState(false)
-
-  useEffect(() => {
-    const word = roles[wordIndex]
-    const complete = text === word
-    const empty = text.length === 0
-    const delay =
-      complete && !deleting
-        ? 1400
-        : empty && deleting
-          ? 240
-          : deleting
-            ? 30
-            : 58
-
-    const timer = window.setTimeout(() => {
-      if (complete && !deleting) {
-        setDeleting(true)
-        return
-      }
-
-      if (empty && deleting) {
-        setDeleting(false)
-        setWordIndex((index) => (index + 1) % roles.length)
-        return
-      }
-
-      setText(
-        deleting
-          ? word.slice(0, Math.max(0, text.length - 1))
-          : word.slice(0, text.length + 1)
-      )
-    }, delay)
-
-    return () => window.clearTimeout(timer)
-  }, [deleting, text, wordIndex])
-
-  return (
-    <span className="typed-role">
-      {text}
-      <i aria-hidden="true" />
-    </span>
   )
 }
 
@@ -264,7 +240,9 @@ function ProjectModal({
 
         <div className="modal-copy">
           <div className="modal-meta">
-            <span>{project.area}</span>
+            <span>
+              {robotSystemLabels[project.system]} · {project.area}
+            </span>
             <span>{project.period}</span>
             <span>{project.status}</span>
           </div>
@@ -363,34 +341,39 @@ export default function Portfolio() {
   const [slide, setSlide] = useState(0)
   const [paused, setPaused] = useState(false)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-  const [archiveCategory, setArchiveCategory] = useState('All')
+  const [archiveCategory, setArchiveCategory] =
+    useState<'All' | RobotSystem>('All')
   const [archiveSearch, setArchiveSearch] = useState('')
   const [visibleProjects, setVisibleProjects] = useState(6)
   const reduce = useReducedMotion()
 
   const showcase = useMemo(
-    () => projects.filter((project) => project.featured).slice(0, 6),
+    () =>
+      featuredProjectIds
+        .map((id) => projects.find((project) => project.id === id))
+        .filter((project): project is Project => Boolean(project)),
     []
   )
   const active = showcase[slide]
 
-  const archiveCategories = useMemo(
-    () => ['All', ...Array.from(new Set(projects.map((p) => p.category)))],
-    []
-  )
+  const archiveCategories: Array<{
+    id: 'All' | RobotSystem
+    label: string
+  }> = [{ id: 'All', label: 'All' }, ...robotSystems]
 
   const filteredProjects = useMemo(() => {
     const query = archiveSearch.trim().toLowerCase()
 
     return projects.filter((project) => {
       const matchesCategory =
-        archiveCategory === 'All' || project.category === archiveCategory
+        archiveCategory === 'All' || project.system === archiveCategory
       const searchable = [
         project.title,
         project.subtitle,
         project.summary,
         project.area,
         project.category,
+        robotSystemLabels[project.system],
         project.role,
         project.team,
         project.evaluation,
@@ -431,8 +414,17 @@ export default function Portfolio() {
       (index) => (index + direction + showcase.length) % showcase.length
     )
 
+  const exploreSystem = (system: RobotSystem) => {
+    setArchiveCategory(system)
+    window.requestAnimationFrame(() => {
+      document.getElementById('archive')?.scrollIntoView({
+        behavior: reduce ? 'auto' : 'smooth'
+      })
+    })
+  }
+
   const nav = [
-    ['Work', '#work'],
+    ['Robot Systems', '#systems'],
     ['Experience', '#experience'],
     ['Research', '#research'],
     ['Capabilities', '#skills'],
@@ -515,15 +507,13 @@ export default function Portfolio() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.72 }}
             >
-              <p className="hero-kicker">Hi, I am {profile.name}</p>
-              <h1>
-                I build <Typewriter />
-              </h1>
+              <p className="hero-kicker">{profile.name}</p>
+              <h1>{profile.headline}</h1>
 
               <p className="hero-description">
-                Robotics software and research engineer building autonomous
-                systems for challenging environments—across underwater
-                robotics, perception, localization, simulation and embodied AI.
+                Building autonomous marine, mobile, legged, aerial and
+                manipulation systems across perception, localization, planning,
+                learning and control.
               </p>
 
               <p className="hero-availability">{profile.availability}</p>
@@ -546,11 +536,11 @@ export default function Portfolio() {
 
               <div className="hero-stats">
                 <div>
-                  <strong>Real AUV</strong>
-                  <span>Field-tested autonomy</span>
+                  <strong>5 systems</strong>
+                  <span>Sea, land and air</span>
                 </div>
                 <div>
-                  <strong>ROS 2</strong>
+                  <strong>ROS / ROS 2</strong>
                   <span>Integrated robot systems</span>
                 </div>
                 <div>
@@ -582,21 +572,17 @@ export default function Portfolio() {
             <Reveal>
               <p className="section-eyebrow light">About</p>
               <h2>
-                I turn difficult autonomy problems into evaluated robot systems.
+                Autonomous systems across different robotic platforms.
               </h2>
             </Reveal>
 
             <Reveal className="about-text" delay={0.08}>
               <p>
-                My work usually begins with an autonomy failure—uncertain
-                localization, degraded perception, incomplete mission logic or
-                unsafe planning—and ends with an integrated ROS 2 system,
-                evaluation workflow and documented limitations.
-              </p>
-              <p>
-                I am most interested in robotics software and research-engineering
-                roles involving autonomous systems, perception, simulation and
-                embodied AI.
+                I build autonomous systems across marine, mobile, legged, aerial
+                and manipulation platforms, with experience in robot perception,
+                localization and SLAM, navigation and planning, simulation,
+                robot learning and embodied AI. My work spans research prototypes,
+                integrated ROS and ROS 2 systems, and real-robot deployment.
               </p>
               <div>
                 <a href={`mailto:${profile.email}`}>{profile.email}</a>
@@ -611,10 +597,37 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section className="section showcase-section" id="work">
+        <section className="section systems-section" id="systems">
           <div className="shell">
             <SectionTitle
               number="01"
+              eyebrow="Robot systems"
+              title="Explore projects by robotic platform."
+              description="Work across marine, mobile, legged, aerial and manipulation systems, with technical capabilities retained on every project."
+            />
+
+            <div
+              className="archive-filters system-tabs"
+              aria-label="Explore projects by robot system"
+            >
+              {robotSystems.map((system) => (
+                <button
+                  className={archiveCategory === system.id ? 'active' : ''}
+                  onClick={() => exploreSystem(system.id)}
+                  key={system.id}
+                >
+                  {system.label} ·{' '}
+                  {projects.filter((project) => project.system === system.id).length}
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="section showcase-section" id="work">
+          <div className="shell">
+            <SectionTitle
+              number="02"
               eyebrow="Selected work"
               title="Complete robotic systems with measurable outcomes."
               description="Six projects that best represent my systems engineering, research and implementation work."
@@ -640,7 +653,9 @@ export default function Portfolio() {
                     exit={reduce ? undefined : { opacity: 0, y: -12 }}
                     transition={{ duration: 0.4 }}
                   >
-                    <p className="project-area">{active.area}</p>
+                    <p className="project-area">
+                      {robotSystemLabels[active.system]} · {active.area}
+                    </p>
                     <ContextLogos
                       logos={active.logos}
                       className="project-context-logos"
@@ -728,10 +743,10 @@ export default function Portfolio() {
         >
           <div className="shell">
             <SectionTitle
-              number="02"
+              number="03"
               eyebrow="Experience"
               title="Research and engineering across the autonomy stack."
-              description="Work spanning mission reasoning, underwater perception, localization, simulation and real-robot integration."
+              description="Work spanning mission reasoning, multimodal perception, localization and real-robot integration."
             />
 
             <div className="experience-list">
@@ -763,10 +778,10 @@ export default function Portfolio() {
         <section className="section research-section" id="research">
           <div className="shell">
             <SectionTitle
-              number="03"
+              number="04"
               eyebrow="Research & communication"
-              title="Work communicated beyond the codebase."
-              description="Peer-reviewed research, technical presentations and thesis work."
+              title="Research in autonomy, perception and resilient robot systems."
+              description="Peer-reviewed work, technical presentations and thesis research across the autonomy stack."
             />
 
             <div className="research-list">
@@ -863,7 +878,7 @@ export default function Portfolio() {
         <section className="section skills-section" id="skills">
           <div className="shell">
             <SectionTitle
-              number="04"
+              number="05"
               eyebrow="Capabilities"
               title="Tools organised around engineering problems."
             />
@@ -892,7 +907,7 @@ export default function Portfolio() {
         <section className="section education-section" id="education">
           <div className="shell">
             <SectionTitle
-              number="05"
+              number="06"
               eyebrow="Education"
               title="International training in intelligent field robotics."
               description="A multidisciplinary path combining robotics, perception, control, autonomous systems and field deployment."
@@ -922,10 +937,10 @@ export default function Portfolio() {
         <section className="section projects-section" id="archive">
           <div className="shell">
             <SectionTitle
-              number="06"
+              number="07"
               eyebrow="Project archive"
-              title="A curated catalogue of robotics and AI work."
-              description="Browse substantial case studies by engineering area, technology or problem."
+              title="Robotics projects organised by system."
+              description="Filter by robotic platform, then search by capability, technology or problem."
             />
 
             <div className="archive-toolbar">
@@ -942,17 +957,17 @@ export default function Portfolio() {
 
               <div
                 className="archive-filters"
-                aria-label="Filter projects by category"
+                aria-label="Filter projects by robot system"
               >
                 {archiveCategories.map((category) => (
                   <button
                     className={
-                      archiveCategory === category ? 'active' : ''
+                      archiveCategory === category.id ? 'active' : ''
                     }
-                    onClick={() => setArchiveCategory(category)}
-                    key={category}
+                    onClick={() => setArchiveCategory(category.id)}
+                    key={category.id}
                   >
-                    {category}
+                    {category.label}
                   </button>
                 ))}
               </div>
@@ -1003,7 +1018,7 @@ export default function Portfolio() {
 
                     <div className="archive-card-copy">
                       <div className="archive-card-meta">
-                        <small>{project.category}</small>
+                        <small>{robotSystemLabels[project.system]}</small>
                         <time>{project.period}</time>
                       </div>
 

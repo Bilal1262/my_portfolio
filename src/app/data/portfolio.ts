@@ -15,6 +15,13 @@ export type ProjectVideo = {
   layout?: 'wide' | 'ultrawide'
 }
 
+export type RobotSystem =
+  | 'marine'
+  | 'mobile'
+  | 'legged'
+  | 'aerial'
+  | 'manipulation'
+
 export type Project = {
   id: string
   title: string
@@ -22,6 +29,8 @@ export type Project = {
   period: string
   area: string
   category: string
+  system: RobotSystem
+  capabilities?: string[]
   status: 'Completed' | 'Ongoing' | 'Research Prototype'
   summary: string
   challenge: string
@@ -52,14 +61,15 @@ export const profile = {
   resume: '/resume/Bilal_Ahmed_Qaimkhani_CV.pdf',
   heroImage: '/projects_picture/minigirona_1.png',
   availability:
-    'Open to robotics software, autonomy and research-engineering roles across Europe.'
+    'Open to robotics software, autonomy and research engineering roles across Europe.'
 }
 
 export const roles = [
-  'autonomous robot systems',
-  'perception and localization',
-  'fault-tolerant ROS 2 autonomy',
-  'simulation and robot learning'
+  'marine robot autonomy',
+  'mobile robot navigation',
+  'legged robot learning',
+  'aerial robot coordination',
+  'robot manipulation'
 ]
 
 export const experience = [
@@ -96,7 +106,7 @@ export const education = [
     institution: 'University of Zagreb · University of Girona',
     result: 'GPA: 9.40/10.0',
     focus:
-      'Autonomous systems · underwater robotics · perception · localization · robot learning'
+      'Autonomous systems · perception · localization · planning · robot learning'
   },
   {
     period: '2018–2022',
@@ -163,65 +173,80 @@ export const awards = [
 ]
 
 export const projectCategories = [
-  'All Projects',
-  'Underwater & Marine Robotics',
-  'Robot Simulation',
-  'LLM/VLM & Agentic Robotics',
-  'Robot Learning & Manipulation',
-  'SLAM, Localization & Navigation',
-  'Multi-Agent & Aerial Robotics',
-  'Computer Vision',
-  'Earlier Engineering Projects'
+  'All',
+  'Marine',
+  'Mobile',
+  'Legged',
+  'Aerial',
+  'Manipulation'
 ]
 
 export const skills = [
   {
-    group: 'Autonomy & Robot Software',
-    headline: 'I build complete ROS 2 systems, not isolated nodes.',
+    group: 'Robot Software',
+    headline: 'Integrated software for autonomous robot systems.',
     items: [
-      'ROS 2 integration',
+      'ROS and ROS 2',
+      'Python and C++',
       'Behavior Trees',
-      'Mission planning',
-      'Fault recovery',
       'Testing and debugging'
     ],
-    proof: 'Applied in MAESTRO, MiniGirona, MarsSim and mobile-robot autonomy projects.'
+    proof: 'Applied in MAESTRO, MiniGirona, TIAGo, MarsSim and mobile-robot autonomy projects.'
   },
   {
-    group: 'Perception, Localization & Mapping',
-    headline: 'I turn uncertain sensor data into reliable robot state and geometry.',
+    group: 'Perception',
+    headline: 'Perception across optical and range sensors.',
     items: [
-      'Sonar and LiDAR',
+      'Computer vision',
+      'LiDAR and sonar',
       'Stereo vision',
-      'EKF and particle filtering',
-      'Visual odometry and SLAM',
       'Point-cloud reconstruction'
     ],
-    proof: 'Used across AUV localization, underwater 3D reconstruction and stereo SLAM.'
+    proof: 'Used in underwater reconstruction, manipulation perception, rover sensing and stereo SLAM.'
+  },
+  {
+    group: 'Localization & Mapping',
+    headline: 'State estimation and mapping under uncertain sensing.',
+    items: [
+      'SLAM and visual odometry',
+      'EKF and particle filters',
+      'Pose graphs',
+      'Bathymetric mapping'
+    ],
+    proof: 'Implemented for AUVs, mobile robots, stereo datasets and bathymetric mapping.'
+  },
+  {
+    group: 'Navigation & Planning',
+    headline: 'Navigation from mission goals to safe robot motion.',
+    items: [
+      'Nav2',
+      'Path planning',
+      'Behavior Trees',
+      'Exploration'
+    ],
+    proof: 'Used in TIAGo commissioning, Unitree exploration, rover navigation and AUV missions.'
   },
   {
     group: 'Robot Learning & Embodied AI',
-    headline: 'I connect learned policies and foundation models to robot actions.',
+    headline: 'Learned policies and foundation models connected to robot actions.',
     items: [
       'PyTorch',
-      'PPO and curriculum learning',
-      'LLM/VLM agents',
-      'RAG and validation',
-      'OpenVLA'
+      'Reinforcement learning',
+      'Behavior cloning',
+      'VLA, VLM and LLM systems'
     ],
-    proof: 'Demonstrated in humanoid locomotion, ROS 2 code generation and VLA manipulation.'
+    proof: 'Demonstrated in locomotion, manipulation, recovery and robot-software generation.'
   },
   {
-    group: 'Simulation & Engineering Practice',
-    headline: 'I create reproducible environments and engineering workflows for robotics research.',
+    group: 'Simulation',
+    headline: 'Reproducible environments for robotics development and evaluation.',
     items: [
       'MuJoCo and Panda3D',
       'Gazebo and StoneFish',
-      'Docker and Linux',
-      'Unit and integration testing',
-      'Benchmarking and documentation'
+      'Sensor simulation',
+      'Benchmarking and evaluation'
     ],
-    proof: 'Used to build MarsSim and evaluate autonomy, learning and recovery systems.'
+    proof: 'Used to build MarsSim and evaluate navigation, learning and recovery systems.'
   }
 ]
 
@@ -234,10 +259,11 @@ export const projects: Project[] = [
     period: '2026',
     area: 'ROS 2 Navigation · Systems Integration',
     category: 'SLAM, Localization & Navigation',
+    system: 'mobile',
     status: 'Research Prototype',
     featured: true,
     summary:
-      'A production-style integration layer that turns the TIAGo Nav2 stack into a testable and observable navigation service. It accepts missions through ROS 2, REST and MQTT, manages the mission lifecycle, monitors navigation health and produces repeatable commissioning evidence.',
+      'Integrated TIAGo navigation with ROS 2, Nav2, REST and MQTT interfaces, health monitoring and repeatable commissioning tests.',
     challenge:
       'A working Nav2 demo is not yet an integration-ready robot. External systems need stable command interfaces, readiness checks, clear mission states, pause/resume/cancel control, fault evidence and measurable acceptance results without coupling directly to Nav2 internals.',
     architecture: [
@@ -285,10 +311,11 @@ export const projects: Project[] = [
     period: '2026',
     area: 'Robot Learning · Contact-Rich Manipulation',
     category: 'Robot Learning & Manipulation',
+    system: 'manipulation',
     status: 'Research Prototype',
     featured: true,
     summary:
-      'An end-to-end MuJoCo research stack for square-peg insertion that connects multimodal demonstrations, behavior cloning, online failure detection and retry-limited autonomous recovery on a collision-enabled Franka Panda.',
+      'Built contact-aware failure detection and autonomous recovery for behavior-cloned Franka peg insertion in MuJoCo.',
     challenge:
       'Contact-rich insertion compounds perception, alignment and force-control errors. A policy can achieve low held-out action error yet drift outside the demonstration distribution in closed loop, while recovery must respond without exceeding robot safety limits.',
     architecture: [
@@ -356,10 +383,11 @@ export const projects: Project[] = [
     period: '2026',
     area: 'Underwater Mapping · Pose-Graph Optimization',
     category: 'SLAM, Localization & Navigation',
+    system: 'marine',
     status: 'Research Prototype',
     featured: true,
     summary:
-      'A research prototype that decodes real AUV dead-reckoning and multibeam records, associates measured bathymetric submaps with navigation states, registers revisits and optimizes a robust planar pose graph.',
+      'Built bathymetric pose-graph SLAM from real AUV dead-reckoning and multibeam records for GPS-denied navigation.',
     challenge:
       'Underwater vehicles accumulate dead-reckoning drift without GNSS, while sparse or repetitive seabed geometry makes reliable submap association and registration difficult.',
     architecture: [
@@ -404,10 +432,11 @@ export const projects: Project[] = [
     period: '2026',
     area: 'Computer Vision · Self-Supervised Learning',
     category: 'Underwater & Marine Robotics',
+    system: 'marine',
     status: 'Research Prototype',
     featured: true,
     summary:
-      'A self-supervised adaptation pipeline that preserves clean DINOv2 retrieval while improving place recognition under low light, haze, colour attenuation, blur and marine snow.',
+      'Adapted DINOv2 for underwater place recognition under low light, haze, colour attenuation, blur and marine snow.',
     challenge:
       'Foundation visual descriptors are strong on clean imagery but underwater lighting loss, backscatter, colour attenuation and suspended particles can change retrieval rankings precisely when reliable loop closures are needed.',
     architecture: [
@@ -458,6 +487,7 @@ export const projects: Project[] = [
     period: '2026–Present',
     area: 'Master Thesis · Agentic Robotics',
     category: 'LLM/VLM & Agentic Robotics',
+    system: 'marine',
     status: 'Ongoing',
     featured: true,
     logos: [
@@ -467,7 +497,7 @@ export const projects: Project[] = [
       }
     ],
     summary:
-      'An operator-supervised autonomy framework connecting anomaly evidence, multi-agent LLM reasoning, mission-impact analysis and validated ROS 2 recovery synthesis.',
+      'Developed multi-agent fault diagnosis, mission-impact reasoning and operator-approved ROS 2 recovery for autonomous underwater missions.',
     challenge:
       'Long-duration AUV missions must diagnose and recover from sensor, localization and thruster faults despite incomplete pre-programmed recovery logic and limited communication.',
     architecture: [
@@ -508,6 +538,7 @@ export const projects: Project[] = [
     period: '2024–2025',
     area: 'CIRS Lab · Real-Robot Deployment',
     category: 'Underwater & Marine Robotics',
+    system: 'marine',
     status: 'Completed',
     featured: true,
     logos: [
@@ -521,7 +552,7 @@ export const projects: Project[] = [
       }
     ],
     summary:
-      'An integrated autonomy stack combining sonar-based initialization, DVL/INS localization, behavior-tree missions, stereo perception and Alpha 5 arm manipulation.',
+      'Integrated sonar initialization, DVL/INS localization, behavior-tree missions, stereo perception and manipulation on the MiniGirona AUV.',
     challenge:
       'Underwater autonomy requires multiple perception, localization, planning and intervention modules to cooperate under poor visibility and uncertain sensing.',
     architecture: [
@@ -569,10 +600,11 @@ export const projects: Project[] = [
     period: '2025–Present',
     area: 'Simulation · Planetary Robotics',
     category: 'Robot Simulation',
+    system: 'mobile',
     status: 'Ongoing',
     featured: true,
     summary:
-      'A modular planetary robotics simulator with custom terrain, rover motion, environmental effects, virtual sensors and ROS 2 integration.',
+      'Built a ROS 2 planetary rover simulator with terrain-aware motion, environmental effects and configurable sensors.',
     challenge:
       'Planetary autonomy needs repeatable testing across terrain, wheel slip, sinkage, rocks, dust and degraded sensing.',
     architecture: [
@@ -617,6 +649,7 @@ export const projects: Project[] = [
     period: '2025',
     area: 'COE MARBLE · Research Internship',
     category: 'Underwater & Marine Robotics',
+    system: 'marine',
     status: 'Research Prototype',
     featured: true,
     logos: [
@@ -630,7 +663,7 @@ export const projects: Project[] = [
       }
     ],
     summary:
-      'A multimodal reconstruction pipeline combining stereo depth, forward-looking sonar and AUV pose estimates to reconstruct offshore structures.',
+      'Fused stereo depth, forward-looking sonar and AUV poses to reconstruct offshore structures underwater.',
     challenge:
       'Forward-looking sonar has weak vertical observability, making direct 3D reconstruction geometrically ambiguous.',
     architecture: [
@@ -670,10 +703,11 @@ export const projects: Project[] = [
     period: '2026',
     area: 'Robot Learning · MuJoCo',
     category: 'Robot Learning & Manipulation',
+    system: 'legged',
     status: 'Completed',
     featured: true,
     summary:
-      'A staged PPO training system progressing from stable walking to goal reaching and collision-free obstacle navigation.',
+      'Trained a curriculum-based PPO policy for humanoid walking, goal reaching and obstacle navigation in MuJoCo.',
     challenge:
       'Training balance, locomotion and navigation simultaneously produced unstable policies and frequent falls.',
     architecture: [
@@ -714,10 +748,11 @@ export const projects: Project[] = [
     period: '2026',
     area: 'LLM Systems · Robotics Software',
     category: 'LLM/VLM & Agentic Robotics',
+    system: 'manipulation',
     status: 'Completed',
     featured: true,
     summary:
-      'A self-improving coding pipeline that converts brief robot requirements into detailed ROS 2 node specifications, code and validation results.',
+      'Built an LLM pipeline that generates, validates and iteratively repairs ROS 2 robot software.',
     challenge:
       'General coding agents often generate plausible ROS 2 code that fails because of missing interfaces, package assumptions or runtime integration errors.',
     architecture: [
@@ -756,9 +791,10 @@ export const projects: Project[] = [
     period: '2026',
     area: 'MarSim · Active Perception',
     category: 'SLAM, Localization & Navigation',
+    system: 'mobile',
     status: 'Research Prototype',
     summary:
-      'A ROS 2 navigation system that estimates uncertainty from depth or LiDAR and actively seeks better viewpoints before entering ambiguous regions.',
+      'Implemented perception-aware rover navigation that seeks better viewpoints before entering uncertain regions.',
     challenge:
       'A robot should not commit to a path when perception is degraded by fog, occlusion or incomplete observations.',
     architecture: [
@@ -791,6 +827,7 @@ export const projects: Project[] = [
     period: '2025',
     area: 'Perception · Manipulation',
     category: 'Computer Vision',
+    system: 'marine',
     status: 'Research Prototype',
     logos: [
       {
@@ -799,7 +836,7 @@ export const projects: Project[] = [
       }
     ],
     summary:
-      'An end-to-end perception pipeline for underwater enhancement, zero-shot detection, stereo depth and 3D keypoint extraction.',
+      'Estimated object pose for underwater manipulation using image enhancement, zero-shot detection, stereo depth and 3D keypoints.',
     challenge:
       'Manipulation requires stable geometric targets from visually degraded underwater images.',
     architecture: [
@@ -836,10 +873,11 @@ export const projects: Project[] = [
     period: '2026',
     area: 'Robotics · Autonomous Navigation',
     category: 'Mobile Robotics',
+    system: 'legged',
     status: 'Completed',
 
     summary:
-      'A ROS1-based autonomous exploration system enabling a Unitree Go1 quadruped to map and navigate unknown cluttered environments using 2D LiDAR, odometry and frontier-based planning.',
+      'Implemented LiDAR SLAM, frontier exploration and collision-aware navigation for a Unitree Go1 quadruped.',
 
     challenge:
       'The robot must build a consistent occupancy map, identify unexplored regions, generate collision-free paths and avoid becoming trapped near obstacles.',
@@ -894,9 +932,10 @@ export const projects: Project[] = [
     period: '2024–2025',
     area: 'TurtleBot · Mobile Robotics',
     category: 'SLAM, Localization & Navigation',
+    system: 'mobile',
     status: 'Completed',
     summary:
-      'A consolidated mobile-robot autonomy project covering LiDAR SLAM, probabilistic localization, classical planning and behavior-tree execution.',
+      'Built mobile-robot autonomy using LiDAR SLAM, probabilistic localization, classical planning and behavior-tree execution.',
     challenge:
       'Build and compare the core components of an end-to-end autonomy stack rather than isolated algorithms.',
     architecture: [
@@ -945,9 +984,10 @@ export const projects: Project[] = [
     period: '2025–2026',
     area: 'Visual Localization · Computer Vision',
     category: 'Computer Vision',
+    system: 'mobile',
     status: 'Completed',
     summary:
-      'A stereo visual odometry and SLAM pipeline with feature tracking, triangulation, PnP, bundle adjustment, loop closure and pose-graph optimization.',
+      'Implemented stereo visual odometry and SLAM with geometric estimation, bundle adjustment and loop closure.',
     challenge:
       'Recover consistent camera motion and map structure from stereo image sequences while limiting drift.',
     architecture: [
@@ -985,9 +1025,10 @@ export const projects: Project[] = [
     period: '2024–2025',
     area: 'Multi-Agent Systems',
     category: 'Multi-Agent & Aerial Robotics',
+    system: 'aerial',
     status: 'Completed',
     summary:
-      'A consolidated multi-robot project covering decentralized flocking, consensus formation and distributed task allocation.',
+      'Implemented flocking, consensus formation and auction-based task allocation for coordinated aerial robots.',
     challenge:
       'Coordinate multiple robots from local information without a single low-level controller.',
     architecture: [
@@ -1029,9 +1070,10 @@ export const projects: Project[] = [
     period: '2025–Present',
     area: 'Deep Learning · Underwater Perception',
     category: 'Computer Vision',
+    system: 'marine',
     status: 'Ongoing',
     summary:
-      'A stereo-depth research pipeline designed for underwater imagery with limited labels, colour distortion and backscatter.',
+      'Built a self-supervised stereo-depth pipeline for underwater imagery with limited labels and degraded visibility.',
     challenge:
       'Supervised stereo models depend on expensive ground truth and often degrade under underwater appearance changes.',
     architecture: [
@@ -1066,9 +1108,10 @@ export const projects: Project[] = [
     period: '2026',
     area: 'Embodied AI · Manipulation',
     category: 'Robot Learning & Manipulation',
+    system: 'manipulation',
     status: 'Research Prototype',
     summary:
-      'A simulated manipulation system that connects RGB observations and language instructions to OpenVLA action predictions.',
+      'Connected OpenVLA predictions to a simulated KUKA pick-and-place pipeline with inverse kinematics and retry logic.',
     challenge:
       'Vision-language-action outputs must be translated into safe, executable robot commands and evaluated geometrically.',
     architecture: [
@@ -1103,9 +1146,10 @@ export const projects: Project[] = [
     period: '2025–2026',
     area: 'Human–Robot Interaction',
     category: 'LLM/VLM & Agentic Robotics',
+    system: 'manipulation',
     status: 'Completed',
     summary:
-      'A multimodal assistant connecting language and vision-language reasoning with face and gesture interaction on the TiAGo platform.',
+      'Integrated language, vision, face and gesture interaction with TIAGo for task-oriented home assistance.',
     challenge:
       'Natural robot interaction requires perception, user-intent understanding and action execution to operate as a coherent system.',
     architecture: [
@@ -1138,9 +1182,10 @@ export const projects: Project[] = [
     period: '2025–2026',
     area: 'Aerial Robotics · Control',
     category: 'Multi-Agent & Aerial Robotics',
+    system: 'aerial',
     status: 'Completed',
     summary:
-      'A reinforcement-learning experiment for tuning PID gains in simulated drone altitude and position control.',
+      'Applied reinforcement learning to tune PID gains for simulated drone altitude and position control.',
     challenge:
       'Manual PID tuning can be slow and sensitive to changes in vehicle dynamics and task conditions.',
     architecture: [
@@ -1173,9 +1218,10 @@ export const projects: Project[] = [
     period: '2024–2025',
     area: 'Image Processing · Perception',
     category: 'Computer Vision',
+    system: 'marine',
     status: 'Completed',
     summary:
-      'A comparison of colour-space enhancement methods designed to improve visually degraded inputs before robot perception.',
+      'Evaluated HSV, RGB and YCbCr enhancement methods for more reliable perception in degraded underwater imagery.',
     challenge:
       'Poor contrast and colour casts can reduce detection, tracking and stereo-matching reliability.',
     architecture: [
