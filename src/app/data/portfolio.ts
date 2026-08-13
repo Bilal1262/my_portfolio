@@ -227,6 +227,57 @@ export const skills = [
 
 export const projects: Project[] = [
   {
+    id: 'tiago-navigation-integration',
+    title: 'TIAGo Navigation Integration',
+    subtitle:
+      'ROS 2 and Nav2 Integration with Fleet Interfaces, Diagnostics and Commissioning',
+    period: '2026',
+    area: 'ROS 2 Navigation · Systems Integration',
+    category: 'SLAM, Localization & Navigation',
+    status: 'Research Prototype',
+    featured: true,
+    summary:
+      'A production-style integration layer that turns the TIAGo Nav2 stack into a testable and observable navigation service. It accepts missions through ROS 2, REST and MQTT, manages the mission lifecycle, monitors navigation health and produces repeatable commissioning evidence.',
+    challenge:
+      'A working Nav2 demo is not yet an integration-ready robot. External systems need stable command interfaces, readiness checks, clear mission states, pause/resume/cancel control, fault evidence and measurable acceptance results without coupling directly to Nav2 internals.',
+    architecture: [
+      'Mission interfaces accept goals from a ROS 2 PoseStamped topic, a FastAPI REST service and a VDA5050-inspired MQTT fleet subset',
+      'A C++ integration adapter validates readiness, translates commands and manages goal, pause, resume and cancel state',
+      'The adapter uses the standard Nav2 NavigateToPose action for planning, control, feedback and terminal results',
+      'Gazebo simulates the TIAGo robot, LiDAR, odometry and motion while RViz exposes localization, costmaps and planned paths',
+      'A parallel monitor checks sensor freshness, AMCL, planner, controller, goal progress and stuck conditions',
+      'Commissioning and failure tooling writes CSV/JSON reports and MCAP evidence for repeatable diagnosis'
+    ],
+    contribution:
+      'Designed and implemented the complete integration layer: the C++ Nav2 adapter, Python health and failure tooling, REST and MQTT fleet gateway, pause/resume/cancel behavior, commissioning scenarios, structured reports and launch orchestration.',
+    role: 'Independent robotics software engineer and system integrator',
+    team: 'Solo portfolio project built on the TIAGo simulation and Nav2 stack',
+    evaluation:
+      'Executed three repeatable navigation missions in the PAL office simulation, exercised mission control through ROS and REST, inspected live Gazebo/RViz behavior and ran a controlled localization-degradation test with structured evidence capture.',
+    results: [
+      'Completed 3 of 3 commissioning missions successfully',
+      'Measured a mean navigation time of 8.53 seconds across the commissioning run',
+      'Measured 0.23 m mean final position error; the 0.10 m acceptance target remains unmet and is reported as a tuning gap',
+      'Verified readiness gating, goal feedback, stuck monitoring, pause/resume/cancel control and synthetic failure evidence'
+    ],
+    limitations:
+      'Current validation is simulation-based. Mean final position error remains above the configured acceptance target, collision count is not reported because no collision-event source is configured, and the MQTT interface implements a deliberately scoped VDA5050-inspired subset rather than full standard compliance.',
+    technologies: [
+      'ROS 2 Humble',
+      'Nav2',
+      'C++',
+      'Python',
+      'FastAPI',
+      'MQTT',
+      'VDA5050',
+      'Gazebo',
+      'RViz',
+      'MCAP'
+    ],
+    cover: '/projects_picture/tiago_navigation_integration.png',
+    gallery: ['/projects_picture/tiago_navigation_architecture.png']
+  },
+  {
     id: 'failure-aware-manipulation',
     title: 'Failure-Aware Multimodal Manipulation',
     subtitle:
