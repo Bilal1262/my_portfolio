@@ -42,6 +42,7 @@ const robotSystemLabels = Object.fromEntries(
 
 const featuredProjectIds = [
   'maestro',
+  'aquanav-fm',
   'tiago-navigation-integration',
   'frontier_exploration',
   'multi-robot',

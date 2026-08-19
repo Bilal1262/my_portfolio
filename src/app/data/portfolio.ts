@@ -426,6 +426,91 @@ export const projects: Project[] = [
     ]
   },
   {
+    id: 'aquanav-fm',
+    title: 'AquaNav-FM',
+    subtitle:
+      'Foundation-Model Place Localization and Short-Horizon AUV Navigation',
+    period: '2026',
+    area: 'Underwater Localization · Foundation Models',
+    category: 'Underwater & Marine Robotics',
+    system: 'marine',
+    capabilities: [
+      'Visual Localization',
+      'Foundation Models',
+      'Sensor Fusion',
+      'Robot Learning'
+    ],
+    status: 'Research Prototype',
+    featured: true,
+    summary:
+      'Built an AQUALOC-based research system that adapts frozen DINOv2 descriptors for underwater place localization and connects the representation to depth-assisted localization and learned two-second AUV waypoints.',
+    challenge:
+      'Underwater appearance changes can break visual place recognition, while a useful robotics system must connect retrieval to synchronized vehicle state and navigation outputs without overstating place recognition as SLAM or path planning.',
+    architecture: [
+      'Synchronizes 4,586 AQUALOC camera frames with 45,859 IMU measurements, 1,120 depth records and the corrected COLMAP trajectory',
+      'Uses a frozen DINOv2 ViT-S/14 encoder to produce normalized 384-dimensional global image descriptors',
+      'Applies six deterministic appearance shifts at three severities: low light, colour loss, turbidity, backscatter, blur and marine snow',
+      'Learns a zero-initialized 384→128→384 residual adapter with clean/degraded consistency, identity preservation and spatially distant negatives',
+      'Retrieves reference poses by cosine similarity with a 10-second temporal exclusion and a 1.5 m correctness radius',
+      'Connects adapted visual features to calibrated depth assistance and a learned relative waypoint at a two-second horizon'
+    ],
+    contribution:
+      'Designed and implemented the complete repository: multimodal synchronization, DINOv2 feature caching, underwater degradation suite, residual-adapter training, leakage-aware retrieval evaluation, sensor experiments, waypoint prediction, portfolio figures and synchronized baseline-versus-adapted videos.',
+    role: 'Independent robotics researcher and developer',
+    team: 'Solo research portfolio project using the published AQUALOC dataset',
+    evaluation:
+      'Used a chronological 60/20/20 train, validation and test split on AQUALOC Harbor Sequence 01. Retrieval was measured on 180 eligible held-out queries after temporal exclusion, with clean and degraded views evaluated using Recall@K, coverage and metric position error.',
+    results: [
+      'Improved clean Recall@1 from 0.433 to 0.500 and Recall@5 from 0.528 to 0.572',
+      'Reduced clean median localization error from 3.90 m to 1.50 m',
+      'Changed 96 of 180 clean retrievals, correcting 18 baseline failures while regressing 6 baseline successes',
+      'Reduced median two-second waypoint error from 1.09 m with raw DINOv2 features to 0.93 m with adapted visual features',
+      'Retained mixed robustness results: marine snow, low light, backscatter and blur improved at medium severity, while turbidity degraded'
+    ],
+    limitations:
+      'The experiment uses one AQUALOC sequence with environment overlap across its chronological split. Robustness gains are condition-dependent, calibrated depth did not improve median localization error, and the system is place-based localization with learned waypoint prediction rather than SLAM, obstacle avoidance or a complete path planner.',
+    technologies: [
+      'Python',
+      'PyTorch',
+      'DINOv2',
+      'AQUALOC',
+      'OpenCV',
+      'Scikit-learn',
+      'Visual Place Recognition',
+      'Multimodal Synchronization'
+    ],
+    cover: '/projects_picture/aquanaV_cover.png',
+    gallery: [
+      '/projects_picture/aquanaV_results_summary.png',
+      '/projects_picture/aquanaV_architecture.png',
+      '/projects_picture/aquanaV_baseline_vs_adapted.png',
+      '/projects_picture/aquanaV_waypoint_prediction.png'
+    ],
+    videos: [
+      {
+        src: '/projects_picture/aquanaV_comparison.mp4',
+        poster: '/projects_picture/aquanaV_results_summary.png',
+        caption:
+          'Same held-out query and reference database: raw DINOv2 versus AquaNav-FM retrieval and localization error.',
+        layout: 'wide'
+      },
+      {
+        src: '/projects_picture/aquanaV_dinov2_baseline.mp4',
+        poster: '/projects_picture/aquanaV_cover.png',
+        caption:
+          'Standalone raw DINOv2 baseline with retrieved references and trajectory-level localization error.',
+        layout: 'wide'
+      },
+      {
+        src: '/projects_picture/aquanaV_adapted_demo.mp4',
+        poster: '/projects_picture/aquanaV_cover.png',
+        caption:
+          'Standalone AquaNav-FM adapted retrieval on the identical held-out evaluation protocol.',
+        layout: 'wide'
+      }
+    ]
+  },
+  {
     id: 'aquaadapt',
     title: 'AquaAdapt',
     subtitle: 'Robust Underwater Place Recognition with DINOv2',
