@@ -7,7 +7,7 @@ import {
   Bars3Icon,
   XMarkIcon
 } from '@heroicons/react/24/outline'
-import { profile, type Project } from '../data/portfolio'
+import { capabilitiesForProject, profile, type Project } from '../data/portfolio'
 import { assetPath } from '../lib/paths'
 import ProjectImage from './ProjectImage'
 
@@ -25,6 +25,7 @@ const cardSummaries: Record<string, string> = {
   'tiago-navigation-integration': 'Integrated Nav2 with ROS 2, REST and MQTT mission interfaces, health monitoring and repeatable commissioning tests.',
   'failure-aware-manipulation': 'Built contact-aware failure detection and autonomous recovery for Franka manipulation.',
   bathygraph: 'Built lightweight bathymetric pose-graph SLAM for GPS-denied underwater navigation.',
+  'aquanav-fm': 'Connected adapted underwater visual place recognition to synchronized sensing and short-horizon AUV navigation.',
   aquaadapt: 'Trained a domain-adaptive underwater place-recognition pipeline for changing visual conditions.',
   maestro: 'Developed multi-agent fault diagnosis and operator-approved recovery for autonomous underwater missions.',
   minigirona: 'Integrated localization, perception, planning and intervention on the MiniGirona autonomous underwater robot.',
@@ -99,11 +100,11 @@ export function SiteHeader({ page = 'home' }: { page?: 'home' | 'projects' }) {
   const projectPage = assetPath('/projects/')
   const anchor = (id: string) => (page === 'home' ? `#${id}` : `${home}#${id}`)
   const links = [
-    ['Home', home],
-    ['Robot Systems', page === 'home' ? '#systems' : projectPage],
-    ['Experience', anchor('experience')],
+    ['Projects', projectPage],
+    ['Systems', anchor('systems')],
     ['Research', anchor('research')],
-    ['About', anchor('about')]
+    ['About', anchor('about')],
+    ['Contact', anchor('contact')]
   ]
 
   return (
@@ -117,9 +118,6 @@ export function SiteHeader({ page = 'home' }: { page?: 'home' | 'projects' }) {
           {links.map(([label, href]) => (
             <a href={href} key={label}>{label}</a>
           ))}
-          <a className="nav-resume" href={assetPath(profile.resume)} target="_blank" rel="noreferrer">
-            Resume <ArrowUpRightIcon />
-          </a>
         </div>
 
         <button
@@ -138,7 +136,6 @@ export function SiteHeader({ page = 'home' }: { page?: 'home' | 'projects' }) {
           {links.map(([label, href]) => (
             <a href={href} key={label} onClick={() => setOpen(false)}>{label}</a>
           ))}
-          <a href={assetPath(profile.resume)} target="_blank" rel="noreferrer">Resume</a>
         </div>
       </div>
     </header>
@@ -151,7 +148,7 @@ export function SiteFooter() {
       <div className="shell footer-layout">
         <div>
           <strong>Bilal Ahmed</strong>
-          <p>Robotics Software &amp; Research Engineer</p>
+          <p>Robotics Software &amp; Autonomy Engineer</p>
         </div>
         <p>© {new Date().getFullYear()} · Girona, Spain</p>
         <a href="#top">Back to top ↑</a>
@@ -252,7 +249,11 @@ export function ProjectModal({ project, onClose }: { project: Project; onClose: 
             <p>{project.challenge}</p>
           </section>
           <section>
-            <h3>My role</h3>
+            <h3>Role</h3>
+            <p>{project.role}</p>
+          </section>
+          <section>
+            <h3>My contribution</h3>
             <p>{project.contribution}</p>
           </section>
           {project.architecture.length ? (
@@ -278,7 +279,7 @@ export function ProjectModal({ project, onClose }: { project: Project; onClose: 
           ) : null}
 
           <div className="case-taxonomy">
-            <div><small>Capabilities</small>{(project.capabilities ?? [project.category]).map((item) => <span key={item}>{item}</span>)}</div>
+            <div><small>Capabilities</small>{(capabilitiesForProject(project).length ? capabilitiesForProject(project) : project.capabilities ?? [project.category]).map((item) => <span key={item}>{item}</span>)}</div>
             <div><small>Technology</small>{project.technologies.map((item) => <span key={item}>{item}</span>)}</div>
           </div>
 

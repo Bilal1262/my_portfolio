@@ -7,11 +7,11 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Bilal Ahmed | Robotics Software & Research Engineer',
+    default: 'Bilal Ahmed | Robotics Software & Autonomy Engineer',
     template: '%s | Bilal Ahmed'
   },
   description:
-    'Robotics software and research engineer building autonomous marine, mobile, legged, aerial and manipulation systems.',
+    'Robotics software and autonomy engineer building systems across perception, localization, planning and intelligent decision-making.',
   keywords: [
     'Bilal Ahmed',
     'robotics software engineer',
@@ -29,9 +29,9 @@ export const metadata: Metadata = {
   authors: [{ name: 'Bilal Ahmed' }],
   creator: 'Bilal Ahmed',
   openGraph: {
-    title: 'Bilal Ahmed | Robotics Software & Research Engineer',
+    title: 'Bilal Ahmed | Robotics Software & Autonomy Engineer',
     description:
-      'Autonomous systems across marine, mobile, legged, aerial and manipulation robotics.',
+      'Autonomous robotics from perception and localization through planning, execution and intelligent adaptation.',
     url: '/',
     siteName: 'Bilal Ahmed Portfolio',
     images: [
@@ -47,9 +47,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Bilal Ahmed | Robotics Software & Research Engineer',
+    title: 'Bilal Ahmed | Robotics Software & Autonomy Engineer',
     description:
-      'Robotics portfolio covering autonomous marine, mobile, legged, aerial and manipulation systems.',
+      'Robotics portfolio spanning perception, localization, planning, robot software and intelligent autonomy.',
     images: ['/projects_picture/minigirona_2.png']
   }
 }

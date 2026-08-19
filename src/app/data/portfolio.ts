@@ -53,7 +53,7 @@ export type Project = {
 
 export const profile = {
   name: 'Bilal Ahmed',
-  headline: 'Robotics Software & Research Engineer',
+  headline: 'Robotics Software & Autonomy Engineer',
   email: 'bk632723@gmail.com',
   location: 'Girona, Spain',
   github: 'https://github.com/Bilal1262',
@@ -70,6 +70,103 @@ export const roles = [
   'legged robot learning',
   'aerial robot coordination',
   'robot manipulation'
+]
+
+export type CapabilityId =
+  | 'perception'
+  | 'localization'
+  | 'navigation'
+  | 'learning'
+  | 'robot-software'
+
+export const capabilityGroups: Array<{
+  id: CapabilityId
+  stage: string
+  label: string
+  summary: string
+  projectIds: string[]
+}> = [
+  {
+    id: 'perception',
+    stage: 'Sense',
+    label: 'Perception',
+    summary: 'Stereo, sonar, vision and multimodal reconstruction in degraded field conditions.',
+    projectIds: [
+      'reconstruction',
+      'aquaadapt',
+      'aquanav-fm',
+      'stereo-perception',
+      'underwater-depth',
+      'stereo-visual-slam',
+      'colour-enhancement',
+      'failure-aware-manipulation'
+    ]
+  },
+  {
+    id: 'localization',
+    stage: 'Localize',
+    label: 'Localization & SLAM',
+    summary: 'Visual, bathymetric and multisensor state estimation for GPS-denied robots.',
+    projectIds: [
+      'bathygraph',
+      'stereo-visual-slam',
+      'minigirona',
+      'aquanav-fm',
+      'aquaadapt',
+      'active-navigation',
+      'mobile-autonomy'
+    ]
+  },
+  {
+    id: 'navigation',
+    stage: 'Plan',
+    label: 'Navigation & Planning',
+    summary: 'Nav2, mission planning, exploration and collision-aware robot motion.',
+    projectIds: [
+      'tiago-navigation-integration',
+      'minigirona',
+      'frontier_exploration',
+      'mobile-autonomy',
+      'active-navigation',
+      'marsim',
+      'multi-robot'
+    ]
+  },
+  {
+    id: 'robot-software',
+    stage: 'Act',
+    label: 'ROS & Robotics Software',
+    summary: 'Integrated ROS and ROS 2 systems, interfaces, validation and real-robot execution.',
+    projectIds: [
+      'minigirona',
+      'tiago-navigation-integration',
+      'maestro',
+      'marsim',
+      'reconstruction',
+      'can-robots-code',
+      'frontier_exploration',
+      'mobile-autonomy',
+      'tiago-assistant'
+    ]
+  },
+  {
+    id: 'learning',
+    stage: 'Adapt',
+    label: 'Robot Learning & AI',
+    summary: 'Foundation models, reinforcement learning and agentic decision-making for robots.',
+    projectIds: [
+      'maestro',
+      'failure-aware-manipulation',
+      'aquaadapt',
+      'aquanav-fm',
+      'humanoid',
+      'can-robots-code',
+      'underwater-depth',
+      'openvla',
+      'tiago-assistant',
+      'rl-pid-drone'
+    ]
+  }
 ]
 
 export const experience = [
@@ -1334,3 +1431,9 @@ export const projects: Project[] = [
   }
   
 ]
+
+export function capabilitiesForProject(project: Project) {
+  return capabilityGroups
+    .filter((capability) => capability.projectIds.includes(project.id))
+    .map((capability) => capability.label)
+}
