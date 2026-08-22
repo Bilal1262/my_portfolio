@@ -39,7 +39,7 @@ const cardSummaries: Record<string, string> = {
   'mobile-autonomy': 'Integrated SLAM, EKF localization, RRT* planning and behavior-tree execution on a mobile robot.',
   'stereo-visual-slam': 'Implemented stereo visual odometry and mapping with geometric estimation and bundle adjustment.',
   'multi-robot': 'Implemented consensus, flocking and task allocation for coordinated aerial robots.',
-  'underwater-depth': 'Learned underwater stereo depth without dense ground-truth supervision.',
+  'underwater-depth': 'Compared supervised and self-supervised metric depth on FLSea with strict scene splits and a 24.35% held-out AbsRel reduction.',
   openvla: 'Connected OpenVLA outputs to a simulated KUKA pick-and-place pipeline.',
   'tiago-assistant': 'Combined language and vision models with TIAGo for task-oriented home assistance.',
   'rl-pid-drone': 'Applied reinforcement learning to tune drone PID control gains in simulation.',
@@ -108,20 +108,24 @@ export function SiteHeader({ page = 'home' }: { page?: 'home' | 'projects' }) {
   ]
 
   return (
-    <header className="site-header">
-      <nav className="shell site-nav" aria-label="Main navigation">
-        <a className="nameplate" href={home} onClick={() => setOpen(false)}>
-          Bilal Ahmed
+    <header className="site-header scrolled">
+      <nav className="shell nav-bar" aria-label="Main navigation">
+        <a className="brand" href={home} onClick={() => setOpen(false)}>
+          <span>BQ</span>
+          <div>
+            <strong>{profile.name}</strong>
+            <small>{profile.headline}</small>
+          </div>
         </a>
 
-        <div className="desktop-links">
+        <div className="desktop-nav">
           {links.map(([label, href]) => (
             <a href={href} key={label}>{label}</a>
           ))}
         </div>
 
         <button
-          className="menu-toggle"
+          className="menu-button"
           type="button"
           aria-label="Toggle navigation"
           aria-expanded={open}
@@ -131,7 +135,7 @@ export function SiteHeader({ page = 'home' }: { page?: 'home' | 'projects' }) {
         </button>
       </nav>
 
-      <div className={`mobile-links${open ? ' open' : ''}`}>
+      <div className={`mobile-nav${open ? ' open' : ''}`}>
         <div className="shell">
           {links.map(([label, href]) => (
             <a href={href} key={label} onClick={() => setOpen(false)}>{label}</a>
@@ -144,13 +148,10 @@ export function SiteHeader({ page = 'home' }: { page?: 'home' | 'projects' }) {
 
 export function SiteFooter() {
   return (
-    <footer className="site-footer">
-      <div className="shell footer-layout">
-        <div>
-          <strong>Bilal Ahmed</strong>
-          <p>Robotics Software &amp; Autonomy Engineer</p>
-        </div>
-        <p>© {new Date().getFullYear()} · Girona, Spain</p>
+    <footer>
+      <div className="shell">
+        <p>© {new Date().getFullYear()} {profile.name}</p>
+        <p>Robotics · Autonomous Systems · Robot Learning</p>
         <a href="#top">Back to top ↑</a>
       </div>
     </footer>
@@ -169,22 +170,24 @@ export function ProjectCard({
   const system = systemMeta[project.system]
 
   return (
-    <article className={`project-card system-${project.system}${featured ? ' featured' : ''}`}>
-      <button className="project-card-media" type="button" onClick={() => onOpen(project)} aria-label={`View ${project.title}`}>
+    <article className={`archive-card system-${project.system}${featured ? ' featured' : ''}`}>
+      <button className="archive-image" type="button" onClick={() => onOpen(project)} aria-label={`View ${project.title}`}>
         <ProjectImage src={project.cover} alt={`${project.title} project`} />
+        <span><ArrowUpRightIcon /></span>
       </button>
-      <div className="project-card-copy">
-        <div className="project-card-meta">
-          <span>{system.number} / {system.label}</span>
+      <div className="archive-card-copy">
+        <div className="archive-card-meta">
+          <small>{system.label}</small>
           <time>{project.period}</time>
         </div>
         <h3>{project.title}</h3>
+        <h4>{project.subtitle}</h4>
         <p>{conciseSummary(project)}</p>
-        <div className="tech-list" aria-label="Key technologies">
-          {project.technologies.slice(0, 4).map((technology) => <span key={technology}>{technology}</span>)}
+        <div className="archive-tech" aria-label="Key technologies">
+          {project.technologies.slice(0, 3).map((technology) => <span key={technology}>{technology}</span>)}
         </div>
-        <button className="arrow-link" type="button" onClick={() => onOpen(project)}>
-          View project <span aria-hidden="true">→</span>
+        <button className="archive-open" type="button" onClick={() => onOpen(project)}>
+          View case study <span aria-hidden="true">→</span>
         </button>
       </div>
     </article>
@@ -211,17 +214,17 @@ export function ProjectModal({ project, onClose }: { project: Project; onClose: 
 
   return (
     <div className="modal-backdrop" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
-      <article className="case-study" role="dialog" aria-modal="true" aria-labelledby={`case-${project.id}`}>
+      <article className="project-modal" role="dialog" aria-modal="true" aria-labelledby={`case-${project.id}`}>
         <button ref={closeRef} className="modal-close" type="button" onClick={onClose} aria-label="Close project details">
           <XMarkIcon />
         </button>
 
-        <div className="case-media">
-          <div className="case-main-image">
+        <div className="modal-media">
+          <div className="modal-main-image">
             <ProjectImage src={activeImage} alt={`${project.title} project evidence`} eager />
           </div>
           {images.length > 1 ? (
-            <div className="case-thumbnails" aria-label="Project image gallery">
+            <div className="modal-thumbnails" aria-label="Project image gallery">
               {images.map((image, index) => (
                 <button className={activeImage === image ? 'active' : ''} type="button" onClick={() => setActiveImage(image)} key={image} aria-label={`Show image ${index + 1}`}>
                   <ProjectImage src={image} alt={`${project.title} view ${index + 1}`} />
@@ -230,61 +233,65 @@ export function ProjectModal({ project, onClose }: { project: Project; onClose: 
             </div>
           ) : null}
           {videos.map((video) => (
-            <figure className="case-video" key={video.src}>
-              <video controls playsInline preload="metadata" poster={assetPath(video.poster)}>
+            <figure className="modal-video" key={video.src}>
+              <div><span>Result video</span><small>{video.caption}</small></div>
+              <video className={video.layout === 'wide' ? 'wide' : undefined} controls playsInline preload="metadata" poster={assetPath(video.poster)}>
                 <source src={assetPath(video.src)} type="video/mp4" />
               </video>
-              <figcaption>{video.caption}</figcaption>
             </figure>
           ))}
         </div>
 
-        <div className="case-copy">
-          <p className="case-kicker">{systemMeta[project.system].label} Robotics · {project.period}</p>
+        <div className="modal-copy">
+          <div className="modal-meta">
+            <span>{systemMeta[project.system].label} Robotics · {project.area}</span>
+            <span>{project.period}</span>
+            <span>{project.status}</span>
+          </div>
           <h2 id={`case-${project.id}`}>{project.title}</h2>
-          <p className="case-intro">{project.summary}</p>
+          <h3>{project.subtitle}</h3>
+          <p className="modal-summary">{project.summary}</p>
 
-          <section>
-            <h3>Problem</h3>
-            <p>{project.challenge}</p>
-          </section>
-          <section>
-            <h3>Role</h3>
-            <p>{project.role}</p>
-          </section>
-          <section>
-            <h3>My contribution</h3>
-            <p>{project.contribution}</p>
-          </section>
+          <div className="modal-columns">
+            <section><p className="mini-label">Problem</p><p>{project.challenge}</p></section>
+            <section><p className="mini-label">My contribution</p><p>{project.contribution}</p></section>
+          </div>
           {project.architecture.length ? (
-            <section>
-              <h3>System architecture</h3>
-              <ol className="architecture-list">
+            <section className="modal-results">
+              <p className="mini-label">System architecture</p>
+              <ul>
                 {project.architecture.map((item) => <li key={item}>{item}</li>)}
-              </ol>
+              </ul>
             </section>
           ) : null}
+          <div className="modal-columns">
+            <section><p className="mini-label">Role</p><p>{project.role}</p></section>
+            <section><p className="mini-label">Team</p><p>{project.team}</p></section>
+          </div>
           <section>
-            <h3>Results</h3>
+            <p className="mini-label">Evaluation</p>
             <p>{project.evaluation}</p>
-            <ul className="result-list">
+          </section>
+          <section className="modal-results">
+            <p className="mini-label">Results</p>
+            <ul>
               {project.results.map((result) => <li key={result}>{result}</li>)}
             </ul>
           </section>
           {project.limitations ? (
             <section>
-              <h3>Limitations</h3>
+              <p className="mini-label">Limitations</p>
               <p>{project.limitations}</p>
             </section>
           ) : null}
 
-          <div className="case-taxonomy">
-            <div><small>Capabilities</small>{(capabilitiesForProject(project).length ? capabilitiesForProject(project) : project.capabilities ?? [project.category]).map((item) => <span key={item}>{item}</span>)}</div>
-            <div><small>Technology</small>{project.technologies.map((item) => <span key={item}>{item}</span>)}</div>
+          <div className="modal-technologies">
+            {(capabilitiesForProject(project).length ? capabilitiesForProject(project) : project.capabilities ?? [project.category]).map((item) => <span key={`capability-${item}`}>{item}</span>)}
+            {project.technologies.map((item) => <span key={item}>{item}</span>)}
           </div>
 
           {project.links?.length ? (
-            <div className="case-links">
+            <div className="modal-links">
               {project.links.map((link) => (
                 <a href={assetPath(link.href)} target="_blank" rel="noreferrer" key={link.href}>
                   {link.label} <ArrowUpRightIcon />

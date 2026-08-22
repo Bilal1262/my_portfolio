@@ -45,7 +45,7 @@ const robotSystemLabels = Object.fromEntries(
 const featuredProjectIds = [
   'minigirona',
   'bathygraph',
-  'stereo-visual-slam',
+  'underwater-depth',
   'tiago-navigation-integration',
   'maestro',
   'reconstruction'

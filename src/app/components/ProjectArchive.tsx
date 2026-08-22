@@ -57,43 +57,44 @@ export default function ProjectArchive() {
     <>
       <SiteHeader page="projects" />
       <main id="top" className="archive-page">
-        <section className="archive-hero">
+        <section className="section archive-page-intro">
           <div className="shell">
-            <p className="eyebrow">Autonomy engineering / complete archive</p>
-            <h1>One robotics foundation, applied across platforms.</h1>
-            <p>Explore all projects by robot system or by the capability most relevant to your role: perception, localization, navigation, robot software or learning.</p>
+            <div className="section-title archive-page-heading">
+              <div><span>00</span><p>Autonomy engineering / complete archive</p></div>
+              <h2>One robotics foundation, applied across platforms.</h2>
+              <p className="section-lead">Explore all projects by robot system or by the capability most relevant to your role: perception, localization, navigation, robot software or learning.</p>
+            </div>
           </div>
         </section>
 
-        <section className="archive-section">
+        <section className="section projects-section archive-section">
           <div className="shell">
-            <div className="system-filters" aria-label="Filter projects by robot system">
-              {systems.map((item) => (
-                <button className={system === item ? 'active' : ''} type="button" onClick={() => setSystem(item)} key={item}>
-                  {item === 'all' ? 'All' : systemMeta[item].label}
-                </button>
+            <div className="archive-toolbar">
+              <label className="archive-search">
+                <MagnifyingGlassIcon aria-hidden="true" />
+                <input value={query} type="search" onChange={(event) => setQuery(event.target.value)} placeholder="Search projects, tools or outcomes" aria-label="Search projects" />
+              </label>
+              <div className="archive-filters" aria-label="Filter projects by robot system">
+                {systems.map((item) => (
+                  <button className={system === item ? 'active' : ''} type="button" onClick={() => setSystem(item)} key={item}>
+                    {item === 'all' ? 'All systems' : systemMeta[item].label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="archive-capability-filters" aria-label="Filter projects by engineering capability">
+              <button className={capability === 'all' ? 'active' : ''} type="button" onClick={() => setCapability('all')}>All expertise</button>
+              {capabilityGroups.map((item) => (
+                <button className={capability === item.id ? 'active' : ''} type="button" onClick={() => setCapability(item.id)} key={item.id}>{item.label}</button>
               ))}
             </div>
 
-            <div className="secondary-filters">
-              <label className="project-search">
-                <MagnifyingGlassIcon aria-hidden="true" />
-                <input value={query} type="search" onChange={(event) => setQuery(event.target.value)} placeholder="Search technology or project" aria-label="Search projects" />
-              </label>
-              <label className="capability-filter">
-                <span>Capability</span>
-                <select value={capability} onChange={(event) => setCapability(event.target.value as 'all' | CapabilityId)}>
-                  <option value="all">All capabilities</option>
-                  {capabilityGroups.map((item) => <option value={item.id} key={item.id}>{item.label}</option>)}
-                </select>
-              </label>
-            </div>
-
-            <div className="archive-status">
+            <div className="archive-meta">
               <p><strong>{filteredProjects.length}</strong> {filteredProjects.length === 1 ? 'project' : 'projects'}</p>
               {system !== 'all' || capability !== 'all' || query ? (
                 <button type="button" onClick={() => { setSystem('all'); setCapability('all'); setQuery('') }}>Clear filters</button>
-              ) : <span>System, capability and technology remain separate.</span>}
+              ) : <span>Filter by platform, engineering capability or technology.</span>}
             </div>
 
             {filteredProjects.length ? (

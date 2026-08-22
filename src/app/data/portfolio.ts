@@ -1247,41 +1247,54 @@ export const projects: Project[] = [
   },
   {
     id: 'underwater-depth',
-    title: 'Self-Supervised Underwater Stereo Depth',
-    subtitle: 'Contrastive Representation Learning and Teacher–Student Consistency',
-    period: '2025–Present',
+    title: 'Supervised vs Self-Supervised Underwater Depth Estimation',
+    subtitle: 'Leakage-Free FLSea Evaluation, Domain-Shift Analysis and Metric Depth',
+    period: '2025–2026',
     area: 'Deep Learning · Underwater Perception',
     category: 'Computer Vision',
     system: 'marine',
-    status: 'Ongoing',
+    status: 'Completed',
     summary:
-      'Built a self-supervised stereo-depth pipeline for underwater imagery with limited labels and degraded visibility.',
+      'Built a reproducible underwater metric-depth study comparing supervised Depth Anything V2, self-supervised Monodepth2, classical stereo and FoundationStereo under strict scene-level separation.',
     challenge:
-      'Supervised stereo models depend on expensive ground truth and often degrade under underwater appearance changes.',
+      'Estimate metrically accurate depth despite underwater appearance degradation, sparse invalid labels and canyon-to-canyon domain shift—without leaking held-out canyon2 data into training or model selection.',
     architecture: [
-      'Stereo depth baseline',
-      'Contrastive representation pretraining',
-      'Teacher–student consistency',
-      'Underwater-specific augmentation',
-      'Depth and disparity evaluation'
+      'Calibrated and rectified FLSea stereo ingestion with corrupt-TIFF preflight auditing',
+      'Supervised Depth Anything V2 Metric Small fine-tuning on valid canyon1 depth only',
+      'Self-supervised Monodepth2 trained from stereo photometric reconstruction',
+      'Masked log-depth, metric Huber, multiscale-gradient and edge-aware losses',
+      'Validation-selected 672 × 378 inference with native metric scale and no per-frame fitting',
+      'Common-mask comparison against StereoSGBM and FoundationStereo'
     ],
     contribution:
-      'Implemented the training pipeline, dataset preparation, evaluation workflow and underwater augmentation strategy.',
+      'Implemented dataset preparation, supervised and self-supervised training, masked losses, checkpoint gating, depth-range diagnostics, fair common-mask benchmarking and fixed-scale qualitative and 3D visualizations.',
     role: 'Independent researcher and developer',
     team: 'Solo research project',
     evaluation:
-      'Evaluated with depth and disparity metrics on train, validation and held-out test splits.',
+      'Trained on 3,417 canyon1 frames, selected configurations on 375 separate canyon1 validation frames and evaluated once on 2,345 valid held-out canyon2 frames using native metric depth from 0.45–12 m.',
     results: [
-      'Prepared a large paired stereo and depth dataset',
-      'Implemented reproducible supervised and self-supervised baselines',
-      'Added underwater-specific photometric augmentation',
-      'Established evaluation using depth and stereo metrics'
+      'Reduced held-out AbsRel from 0.1995 to 0.1509 (24.35%)',
+      'Reduced RMSE from 0.8623 m to 0.7593 m and increased δ1 from 0.7148 to 0.8111',
+      'Maintained strict canyon1 train/validation and canyon2 test separation with no median or test-derived scaling',
+      'Benchmarked supervised, self-supervised, StereoSGBM and FoundationStereo predictions on identical IDs and common masks',
+      'Detected validation overfitting and rejected five additional fine-tuning epochs instead of promoting worse weights'
     ],
     limitations:
-      'Final architecture comparisons and broader cross-domain testing are still in progress.',
-    technologies: ['PyTorch', 'Stereo Depth', 'Self-Supervision', 'MoCo'],
-    cover: '/projects_picture/self_supervised_cover.png',
-    gallery: ['/projects_picture/self_supervised_cover.png']
+      'The final gain comes from validation-selected inference resolution rather than newly improved weights. FoundationStereo common-mask evidence is limited to two available frames, evaluation spans one training and one test canyon, and vertical striping was not measured with a dedicated metric.',
+    technologies: ['PyTorch', 'Depth Anything V2', 'Monodepth2', 'StereoSGBM', 'FLSea'],
+    cover: '/projects_picture/underwater_depth_cover.png',
+    gallery: [
+      '/projects_picture/underwater_depth_best_cases.png',
+      '/projects_picture/underwater_depth_failure_cases.png',
+      '/projects_picture/underwater_depth_benchmark.png',
+      '/projects_picture/underwater_depth_training.png',
+      '/projects_picture/underwater_depth_3d.png'
+    ],
+    video: {
+      src: '/projects_picture/underwater_depth_comparison.mp4',
+      poster: '/projects_picture/underwater_depth_cover.png',
+      caption: 'Held-out canyon2 comparison: RGB, FLSea ground truth, previous 448 × 252 prediction, recommended 672 × 378 prediction and fixed-scale absolute errors.'
+    }
   },
   {
     id: 'openvla',
