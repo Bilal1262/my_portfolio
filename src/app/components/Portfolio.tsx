@@ -43,12 +43,12 @@ const robotSystemLabels = Object.fromEntries(
 ) as Record<RobotSystem, string>
 
 const featuredProjectIds = [
-  'adaptive-sim2real-go2',
   'minigirona',
-  'bathygraph',
   'tiago-navigation-integration',
   'maestro',
-  'reconstruction'
+  'reconstruction',
+  'adaptive-sim2real-go2',
+  'failure-aware-manipulation'
 ]
 
 function Reveal({
@@ -255,7 +255,7 @@ function ProjectModal({
           />
 
           <h2 id={`project-title-${project.id}`}>{project.title}</h2>
-          <h3>{project.subtitle}</h3>
+          <p className="modal-stack">{(project.stack ?? project.technologies.slice(0, 5)).join(' · ')}</p>
           <p className="modal-summary">{project.summary}</p>
 
           <div className="modal-columns">
@@ -384,6 +384,8 @@ export default function Portfolio() {
         project.title,
         project.subtitle,
         project.summary,
+        ...(project.stack ?? []),
+        project.evidence ?? '',
         project.area,
         project.category,
         robotSystemLabels[project.system],
@@ -518,13 +520,19 @@ export default function Portfolio() {
               <h1>{profile.headline}</h1>
 
               <p className="hero-description">
-                Building autonomous robotic systems across perception,
-                localization, planning and intelligent decision-making.
+                Designing, integrating and validating autonomous robot systems
+                across perception, localization &amp; SLAM, navigation, planning,
+                manipulation and robot learning.
               </p>
 
               <p className="hero-stack">
-                ROS / ROS 2 · C++ / Python · Perception · SLAM · Sensor Fusion ·
-                Navigation · Autonomous Systems
+                ROS / ROS 2 · C++ / Python · SLAM &amp; Sensor Fusion · Nav2 &amp;
+                Motion Planning · 3D Perception · Robot Learning
+              </p>
+
+              <p className="hero-context">
+                Real-robot, simulation and research experience across underwater,
+                mobile, legged, aerial and manipulation systems.
               </p>
 
               <p className="hero-availability">{profile.availability}</p>
@@ -568,7 +576,26 @@ export default function Portfolio() {
                   alt={`${profile.name} with the MiniGirona autonomous underwater robot`}
                   eager
                 />
+                <figcaption>
+                  <span>Field robotics</span>
+                  <strong>MiniGirona autonomous underwater vehicle</strong>
+                  <small>Integrated real-robot deployment · CIRS Lab</small>
+                </figcaption>
               </figure>
+              <div className="floating-note note-one">
+                <i aria-hidden="true" />
+                <div>
+                  <strong>Real robot systems</strong>
+                  <span>Integrated &amp; validated</span>
+                </div>
+              </div>
+              <div className="floating-note note-two">
+                <b aria-hidden="true" />
+                <div>
+                  <strong>End-to-end autonomy</strong>
+                  <span>Sense · Localize · Plan · Act</span>
+                </div>
+              </div>
             </motion.div>
           </div>
         </section>
@@ -578,18 +605,19 @@ export default function Portfolio() {
             <Reveal>
               <p className="section-eyebrow light">About</p>
               <h2>
-                Autonomous systems across different robotic platforms.
+                End-to-End Autonomy Engineering Across Real and Simulated Robot Systems
               </h2>
             </Reveal>
 
             <Reveal className="about-text" delay={0.08}>
               <p>
-                I build autonomous robotic systems from sensing and state
-                estimation through planning, execution and intelligent
-                adaptation. I have applied that same engineering foundation
-                across marine, mobile, legged, aerial and manipulation robots,
-                from research prototypes to integrated ROS and ROS 2 systems
-                and real-robot deployment.
+                I build complete autonomous robot systems from sensing and state
+                estimation through localization, planning, execution and
+                intelligent adaptation. My work combines robotics software,
+                perception, SLAM, navigation, manipulation and robot learning
+                across underwater, mobile, legged and aerial platforms, with
+                experience spanning simulation, experimental research and
+                integrated real-robot deployment.
               </p>
               <div>
                 <a href={`mailto:${profile.email}`}>{profile.email}</a>
@@ -636,7 +664,7 @@ export default function Portfolio() {
                             onClick={() => setSelectedProject(project)}
                             key={project.id}
                           >
-                            {project.title}
+                            {project.name ?? project.title}
                           </button>
                         ) : null
                       })}
@@ -727,8 +755,12 @@ export default function Portfolio() {
                       className="project-context-logos"
                     />
                     <h3>{active.title}</h3>
-                    <h4>{active.subtitle}</h4>
+                    <p className="project-stack">{(active.stack ?? active.technologies.slice(0, 5)).join(' · ')}</p>
                     <p>{active.summary}</p>
+
+                    {active.evidence ? (
+                      <p className="project-evidence">{active.evidence}</p>
+                    ) : null}
 
                     <div className="showcase-results">
                       {active.results.slice(0, 3).map((result) => (
@@ -1085,7 +1117,7 @@ export default function Portfolio() {
               <div className="archive-grid">
                 {displayedProjects.map((project, index) => (
                   <Reveal
-                    className="archive-card"
+                    className={`archive-card system-${project.system}`}
                     delay={(index % 3) * 0.035}
                     key={project.id}
                   >
@@ -1116,14 +1148,11 @@ export default function Portfolio() {
                       />
 
                       <h3>{project.title}</h3>
-                      <h4>{project.subtitle}</h4>
+                      <p className="project-stack">{(project.stack ?? project.technologies.slice(0, 5)).join(' · ')}</p>
                       <p>{project.summary}</p>
-
-                      <div className="archive-tech">
-                        {project.technologies.slice(0, 3).map((item) => (
-                          <span key={item}>{item}</span>
-                        ))}
-                      </div>
+                      {project.evidence ? (
+                        <p className="project-evidence">{project.evidence}</p>
+                      ) : null}
 
                       <button
                         className="archive-open"

@@ -45,6 +45,8 @@ export default function ProjectArchive() {
       const searchable = [
         project.title,
         project.summary,
+        ...(project.stack ?? []),
+        project.evidence ?? '',
         project.system,
         project.category,
         ...project.technologies

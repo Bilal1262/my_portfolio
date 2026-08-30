@@ -21,34 +21,8 @@ export const systemMeta: Record<RobotSystem, { label: string; number: string }> 
   manipulation: { label: 'Manipulation', number: '05' }
 }
 
-const cardSummaries: Record<string, string> = {
-  'adaptive-sim2real-go2': 'Benchmarked nominal, domain-randomized and context-conditioned PPO locomotion across 1,410 controlled Go2 episodes.',
-  'tiago-navigation-integration': 'Integrated Nav2 with ROS 2, REST and MQTT mission interfaces, health monitoring and repeatable commissioning tests.',
-  'failure-aware-manipulation': 'Built contact-aware failure detection and autonomous recovery for Franka manipulation.',
-  bathygraph: 'Built lightweight bathymetric pose-graph SLAM for GPS-denied underwater navigation.',
-  'aquanav-fm': 'Connected adapted underwater visual place recognition to synchronized sensing and short-horizon AUV navigation.',
-  aquaadapt: 'Trained a domain-adaptive underwater place-recognition pipeline for changing visual conditions.',
-  maestro: 'Developed multi-agent fault diagnosis and operator-approved recovery for autonomous underwater missions.',
-  minigirona: 'Integrated localization, perception, planning and intervention on the MiniGirona autonomous underwater robot.',
-  marsim: 'Built a ROS 2 planetary rover simulator with terrain-aware dynamics and configurable sensors.',
-  reconstruction: 'Fused stereo, sonar and vehicle poses for underwater 3D reconstruction of offshore structures.',
-  humanoid: 'Trained a curriculum-based PPO locomotion policy for a humanoid robot in MuJoCo.',
-  'can-robots-code': 'Built an LLM agent that generates, validates and tests ROS 2 robot software.',
-  'active-navigation': 'Planned perception-aware rover motion using localization and terrain uncertainty.',
-  'stereo-perception': 'Estimated object pose from underwater stereo imagery for autonomous manipulation.',
-  frontier_exploration: 'Implemented frontier exploration, SLAM and navigation for a Unitree Go1 quadruped.',
-  'mobile-autonomy': 'Integrated SLAM, EKF localization, RRT* planning and behavior-tree execution on a mobile robot.',
-  'stereo-visual-slam': 'Implemented stereo visual odometry and mapping with geometric estimation and bundle adjustment.',
-  'multi-robot': 'Implemented consensus, flocking and task allocation for coordinated aerial robots.',
-  'underwater-depth': 'Compared supervised and self-supervised metric depth on FLSea with strict scene splits and a 24.35% held-out AbsRel reduction.',
-  openvla: 'Connected OpenVLA outputs to a simulated KUKA pick-and-place pipeline.',
-  'tiago-assistant': 'Combined language and vision models with TIAGo for task-oriented home assistance.',
-  'rl-pid-drone': 'Applied reinforcement learning to tune drone PID control gains in simulation.',
-  'colour-enhancement': 'Evaluated color-space enhancement methods for more reliable underwater perception.'
-}
-
 export function conciseSummary(project: Project) {
-  return cardSummaries[project.id] || project.summary.split(/(?<=[.!?])\s/)[0]
+  return project.summary
 }
 
 export function Reveal({
@@ -182,11 +156,9 @@ export function ProjectCard({
           <time>{project.period}</time>
         </div>
         <h3>{project.title}</h3>
-        <h4>{project.subtitle}</h4>
+        <p className="project-stack">{(project.stack ?? project.technologies.slice(0, 5)).join(' · ')}</p>
         <p>{conciseSummary(project)}</p>
-        <div className="archive-tech" aria-label="Key technologies">
-          {project.technologies.slice(0, 3).map((technology) => <span key={technology}>{technology}</span>)}
-        </div>
+        {project.evidence ? <p className="project-evidence">{project.evidence}</p> : null}
         <button className="archive-open" type="button" onClick={() => onOpen(project)}>
           View case study <span aria-hidden="true">→</span>
         </button>
@@ -250,7 +222,7 @@ export function ProjectModal({ project, onClose }: { project: Project; onClose: 
             <span>{project.status}</span>
           </div>
           <h2 id={`case-${project.id}`}>{project.title}</h2>
-          <h3>{project.subtitle}</h3>
+          <p className="modal-stack">{(project.stack ?? project.technologies.slice(0, 5)).join(' · ')}</p>
           <p className="modal-summary">{project.summary}</p>
 
           <div className="modal-columns">
