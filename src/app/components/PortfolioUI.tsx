@@ -22,6 +22,7 @@ export const systemMeta: Record<RobotSystem, { label: string; number: string }> 
 }
 
 const cardSummaries: Record<string, string> = {
+  'adaptive-sim2real-go2': 'Benchmarked nominal, domain-randomized and context-conditioned PPO locomotion across 1,410 controlled Go2 episodes.',
   'tiago-navigation-integration': 'Integrated Nav2 with ROS 2, REST and MQTT mission interfaces, health monitoring and repeatable commissioning tests.',
   'failure-aware-manipulation': 'Built contact-aware failure detection and autonomous recovery for Franka manipulation.',
   bathygraph: 'Built lightweight bathymetric pose-graph SLAM for GPS-denied underwater navigation.',

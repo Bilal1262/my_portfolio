@@ -155,6 +155,7 @@ export const capabilityGroups: Array<{
     label: 'Robot Learning & AI',
     summary: 'Foundation models, reinforcement learning and agentic decision-making for robots.',
     projectIds: [
+      'adaptive-sim2real-go2',
       'maestro',
       'failure-aware-manipulation',
       'aquaadapt',
@@ -348,6 +349,79 @@ export const skills = [
 ]
 
 export const projects: Project[] = [
+  {
+    id: 'adaptive-sim2real-go2',
+    title: 'AdaptiveSim2Real-Go2',
+    subtitle:
+      'Domain-Randomized PPO and Context-Conditioned Locomotion under Dynamics Shift',
+    period: '2026',
+    area: 'Robot Learning · Robust Legged Locomotion',
+    category: 'Robot Learning & Control',
+    system: 'legged',
+    status: 'Research Prototype',
+    featured: true,
+    summary:
+      'Built and benchmarked nominal, domain-randomized and context-conditioned PPO controllers for Unitree Go2 locomotion under controlled dynamics shifts.',
+    challenge:
+      'A locomotion policy that walks well under nominal simulation dynamics can fail under changed mass, contact friction, payload, actuator authority, latency, terrain or disturbances. The comparison needed fixed checkpoints, shared scenarios and seeds, non-privileged observations, recoverable raw evidence and explicit reporting of failure cases.',
+    architecture: [
+      'MuJoCo and Gymnasium Unitree Go2 velocity-tracking environment with PD joint control and a 48-dimensional proprioceptive observation that excludes hidden dynamics parameters',
+      'Staged warm-start pipeline from nominal PPO to DR-PPO and Context-DR-PPO, with curriculum randomization and history-based context features',
+      'Controlled dynamics sweeps for mass, friction, payload, motor strength, latency and incline, plus rough terrain, pushes, combined OOD conditions and sudden parameter shifts',
+      'Seeded evaluation runner that streams per-step and per-episode telemetry, progress and ETA while preserving partial evidence after interruption',
+      'Automated bootstrap/Wilson reporting and headless 720p video generation with synchronized policies, telemetry overlays and a physical challenge arena'
+    ],
+    contribution:
+      'Designed and implemented the complete research prototype: environment and control stack, domain randomization, staged PPO training, context encoder, event-driven dynamics, benchmark suite, statistical reports, automated tests and portfolio visualization pipeline.',
+    role: 'Independent robot-learning research engineer and developer',
+    team: 'Solo research portfolio project',
+    evaluation:
+      'Compared three frozen controllers across 47 nominal, in-distribution and out-of-distribution scenarios with 10 seeded episodes per policy/scenario pair, producing 1,410 episodes and full trajectory telemetry. The evaluation covers parameter sweeps, rough terrain, pushes, combined shifts and sudden payload, friction and motor events.',
+    results: [
+      'Evaluated 3 controllers over 1,410 controlled episodes spanning 47 scenarios',
+      'DR-PPO reduced mean OOD linear-tracking RMSE by 22.3% relative to nominal PPO',
+      'Measured 86.5% aggregate success and 0.222 m/s mean tracking RMSE across the complete three-policy benchmark',
+      'Measured 5.49 s mean recorded recovery time for Context-DR-PPO across sudden dynamics shifts',
+      'Validated the implementation with 25 automated tests and reproducible raw-data, plot, report and video generation'
+    ],
+    limitations:
+      'Results are simulation-only and do not establish transfer to a physical Go2. Robustness is not uniform across all shifts: in the compact challenge arena DR-PPO reaches the payload, motor-fault and push zones before falling, while nominal and Context-DR controllers stall near the rough/ramp transition. Hardware validation and further terrain/event curriculum training remain future work.',
+    technologies: [
+      'Python',
+      'MuJoCo',
+      'Gymnasium',
+      'Stable-Baselines3',
+      'PPO',
+      'Domain Randomization',
+      'PyTorch',
+      'Context Encoder',
+      'Statistical Evaluation',
+      'OpenCV',
+      'FFmpeg'
+    ],
+    cover: '/projects_picture/adaptive_sim2real_go2_cover.png',
+    gallery: [
+      '/projects_picture/adaptive_sim2real_go2_comparison.png',
+      '/projects_picture/adaptive_sim2real_go2_success.png',
+      '/projects_picture/adaptive_sim2real_go2_recovery.png'
+    ],
+    videos: [
+      {
+        src: '/projects_picture/adaptive_sim2real_go2_challenge.mp4',
+        poster: '/projects_picture/adaptive_sim2real_go2_comparison.png',
+        caption:
+          'Synchronized nominal, DR and Context-DR controllers on the compact physical challenge course with position-triggered payload, motor and push events.',
+        layout: 'ultrawide'
+      },
+      {
+        src: '/projects_picture/adaptive_sim2real_go2_recovery.mp4',
+        poster: '/projects_picture/adaptive_sim2real_go2_cover.png',
+        caption:
+          'Context-DR-PPO responding to a sudden 4 kg payload event with command, dynamics and performance telemetry.',
+        layout: 'wide'
+      }
+    ]
+  },
   {
     id: 'tiago-navigation-integration',
     title: 'TIAGo Navigation Integration',

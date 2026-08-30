@@ -43,9 +43,9 @@ const robotSystemLabels = Object.fromEntries(
 ) as Record<RobotSystem, string>
 
 const featuredProjectIds = [
+  'adaptive-sim2real-go2',
   'minigirona',
   'bathygraph',
-  'underwater-depth',
   'tiago-navigation-integration',
   'maestro',
   'reconstruction'
