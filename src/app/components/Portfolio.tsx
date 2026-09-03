@@ -270,7 +270,7 @@ function ProjectModal({
               <p>{project.challenge}</p>
             </section>
             <section>
-              <p className="mini-label">What I built</p>
+              <p className="mini-label">My contribution</p>
               <p>{project.contribution}</p>
             </section>
           </div>
@@ -311,7 +311,7 @@ function ProjectModal({
 
           {project.limitations ? (
             <section>
-              <p className="mini-label">Limitations &amp; next engineering step</p>
+              <p className="mini-label">Limitations</p>
               <p>{project.limitations}</p>
             </section>
           ) : null}
@@ -520,8 +520,9 @@ export default function Portfolio() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.72 }}
             >
-              <p className="hero-kicker">Field Robotics · Autonomous Systems</p>
+              <p className="hero-name">{profile.name}</p>
               <h1>{profile.headline}</h1>
+              <p className="hero-kicker">Field Robotics · Autonomous Systems</p>
 
               <p className="hero-description">
                 I develop autonomous robotic systems with experience in ROS/ROS 2,
@@ -531,12 +532,12 @@ export default function Portfolio() {
 
               <p className="hero-education">
                 Erasmus Mundus MSc — Intelligent Field Robotic Systems
-                <strong>9.4 / 10</strong>
+                <strong>GPA: 9.4/10</strong>
               </p>
 
               <p className="hero-stack">
-                ROS / ROS 2 · C++ / Python · SLAM &amp; Sensor Fusion · Nav2 &amp;
-                Motion Planning · 3D Perception · Robot Learning
+                ROS / ROS 2 · C++ / Python · SLAM &amp; Sensor Fusion · Nav2 ·
+                3D Perception · Robot Learning
               </p>
 
               <div className="hero-actions">
@@ -587,10 +588,7 @@ export default function Portfolio() {
 
         <section className="section systems-section" id="systems">
           <div className="shell">
-            <SectionTitle
-              title="Robotics Platforms"
-              description="Projects across marine, mobile, legged, aerial and manipulation robotics."
-            />
+            <SectionTitle title="Robotics Platforms" />
 
             <div
               className="platform-grid"
@@ -613,7 +611,7 @@ export default function Portfolio() {
           <div className="shell">
             <SectionTitle
               title="Selected Robotics Projects"
-              description="Eight projects covering real robots, simulation and real-world robotics datasets."
+              description="Selected projects from my MSc and research work."
             />
 
             <div className="flagship-grid">
@@ -650,10 +648,7 @@ export default function Portfolio() {
 
         <section className="section capability-section" id="technical-areas">
           <div className="shell">
-            <SectionTitle
-              title="Technical Areas"
-              description="Projects grouped by the main robotics areas I have worked on."
-            />
+            <SectionTitle title="Technical Areas" />
 
             <div className="autonomy-flow" aria-label="Technical areas">
               {capabilityGroups.map((capability, index) => (
@@ -839,9 +834,9 @@ export default function Portfolio() {
 
             <Reveal className="about-text" delay={0.08}>
               <p>
-                My Erasmus Mundus MSc in Intelligent Field Robotic Systems has given me
-                experience across different robotic platforms. My work focuses mainly on
-                ROS/ROS 2, localization, perception, navigation, planning and robot learning,
+                My MSc in Intelligent Field Robotic Systems has given me experience
+                across different robotic platforms. My work focuses on ROS/ROS 2,
+                localization, perception, navigation, planning and robot learning,
                 with projects across underwater, mobile, legged, aerial and manipulation systems.
               </p>
               <div>
@@ -858,7 +853,7 @@ export default function Portfolio() {
           <div className="shell">
             <SectionTitle
               title="Additional Projects"
-              description="Other robotics projects from my MSc, research work and independent development."
+              description="Other robotics projects from my MSc, research and independent work."
             />
 
             <div className="archive-toolbar">
@@ -868,7 +863,7 @@ export default function Portfolio() {
                   type="search"
                   value={archiveSearch}
                   onChange={(event) => setArchiveSearch(event.target.value)}
-                  placeholder="Search projects, tools or outcomes"
+                  placeholder="Search projects"
                   aria-label="Search project archive"
                 />
               </label>

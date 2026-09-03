@@ -509,18 +509,24 @@ body {
   z-index: 2;
 }
 
+.hero-name {
+  margin: 0 0 12px;
+  color: var(--ink);
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
 .hero-kicker {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 26px;
-}
-
-.hero-kicker::before {
-  width: 34px;
-  height: 2px;
-  background: var(--orange);
-  content: '';
+  margin: 16px 0 0;
+  color: var(--blue);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .hero h1 {

@@ -62,8 +62,10 @@ export default function ProjectArchive() {
         <section className="section archive-page-intro">
           <div className="shell">
             <div className="section-title archive-page-heading">
-              <h2>All Projects</h2>
-              <p className="section-lead">Filter by platform or technical area.</p>
+              <h2>Projects</h2>
+              <p className="section-lead">
+                Robotics projects across marine, mobile, legged, aerial and manipulation systems.
+              </p>
             </div>
           </div>
         </section>
@@ -73,7 +75,7 @@ export default function ProjectArchive() {
             <div className="archive-toolbar">
               <label className="archive-search">
                 <MagnifyingGlassIcon aria-hidden="true" />
-                <input value={query} type="search" onChange={(event) => setQuery(event.target.value)} placeholder="Search projects, tools or outcomes" aria-label="Search projects" />
+                <input value={query} type="search" onChange={(event) => setQuery(event.target.value)} placeholder="Search projects" aria-label="Search projects" />
               </label>
               <div className="archive-filters" aria-label="Filter projects by robot system">
                 {systems.map((item) => (

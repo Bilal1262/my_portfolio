@@ -13,12 +13,12 @@ import ProjectImage from './ProjectImage'
 
 export type RobotSystem = Project['system']
 
-export const systemMeta: Record<RobotSystem, { label: string; number: string }> = {
-  marine: { label: 'Marine', number: '01' },
-  mobile: { label: 'Mobile', number: '02' },
-  legged: { label: 'Legged', number: '03' },
-  aerial: { label: 'Aerial', number: '04' },
-  manipulation: { label: 'Manipulation', number: '05' }
+export const systemMeta: Record<RobotSystem, { label: string }> = {
+  marine: { label: 'Marine' },
+  mobile: { label: 'Mobile' },
+  legged: { label: 'Legged' },
+  aerial: { label: 'Aerial' },
+  manipulation: { label: 'Manipulation' }
 }
 
 export function conciseSummary(project: Project) {
@@ -231,7 +231,7 @@ export function ProjectModal({ project, onClose }: { project: Project; onClose: 
 
           <div className="modal-columns">
             <section><p className="mini-label">Problem</p><p>{project.challenge}</p></section>
-            <section><p className="mini-label">What I built</p><p>{project.contribution}</p></section>
+            <section><p className="mini-label">My contribution</p><p>{project.contribution}</p></section>
           </div>
           {project.architecture.length ? (
             <section className="modal-results">
@@ -257,7 +257,7 @@ export function ProjectModal({ project, onClose }: { project: Project; onClose: 
           </section>
           {project.limitations ? (
             <section>
-              <p className="mini-label">Limitations &amp; next engineering step</p>
+              <p className="mini-label">Limitations</p>
               <p>{project.limitations}</p>
             </section>
           ) : null}
