@@ -22,6 +22,13 @@ export type RobotSystem =
   | 'aerial'
   | 'manipulation'
 
+export type Deployment =
+  | 'REAL ROBOT'
+  | 'SIMULATION'
+  | 'REAL ROBOT DATA'
+  | 'BENCHMARK / DATASET'
+  | 'ROS 2 SIMULATION'
+
 export type Project = {
   id: string
   name?: string
@@ -84,16 +91,14 @@ export type CapabilityId =
 
 export const capabilityGroups: Array<{
   id: CapabilityId
-  stage: string
   label: string
   summary: string
   projectIds: string[]
 }> = [
   {
     id: 'perception',
-    stage: 'Sense',
     label: 'Perception',
-    summary: 'Stereo, sonar, vision and multimodal reconstruction in degraded field conditions.',
+    summary: 'Stereo, sonar, vision and multimodal reconstruction.',
     projectIds: [
       'reconstruction',
       'aquaadapt',
@@ -107,7 +112,6 @@ export const capabilityGroups: Array<{
   },
   {
     id: 'localization',
-    stage: 'Localize',
     label: 'Localization & SLAM',
     summary: 'Visual, bathymetric and multisensor state estimation for GPS-denied robots.',
     projectIds: [
@@ -122,7 +126,6 @@ export const capabilityGroups: Array<{
   },
   {
     id: 'navigation',
-    stage: 'Plan',
     label: 'Navigation & Planning',
     summary: 'Nav2, mission planning, exploration and collision-aware robot motion.',
     projectIds: [
@@ -137,9 +140,8 @@ export const capabilityGroups: Array<{
   },
   {
     id: 'robot-software',
-    stage: 'Act',
     label: 'ROS & Robotics Software',
-    summary: 'Integrated ROS and ROS 2 systems, interfaces, validation and real-robot execution.',
+    summary: 'ROS and ROS 2 systems, interfaces, validation and real-robot execution.',
     projectIds: [
       'minigirona',
       'tiago-navigation-integration',
@@ -154,9 +156,8 @@ export const capabilityGroups: Array<{
   },
   {
     id: 'learning',
-    stage: 'Adapt',
-    label: 'Robot Learning & AI',
-    summary: 'Foundation models, reinforcement learning and agentic decision-making for robots.',
+    label: 'Robot Learning & Intelligent Autonomy',
+    summary: 'Foundation models, reinforcement learning and agentic systems for robots.',
     projectIds: [
       'adaptive-sim2real-go2',
       'maestro',
@@ -180,7 +181,7 @@ export const experience = [
     role: 'Visiting Scholar — Agentic Recovery for Marine Robotics',
     logo: '/companies_logo/herriot_watt.png',
     description:
-      'Developing MAESTRO, a multi-agent ROS 2 framework for anomaly diagnosis, mission-impact reasoning and operator-approved recovery synthesis for autonomous underwater vehicles.'
+      'Developing MAESTRO, a multi-agent ROS 2 framework for autonomous underwater recovery · 255 fault/recovery scenarios · 89% recovery-decision accuracy.'
   },
   {
     period: '2025',
@@ -188,7 +189,7 @@ export const experience = [
     role: 'Research Intern — Multimodal Underwater 3D Reconstruction',
     logo: '/companies_logo/coe_marble.png',
     description:
-      'Developed stereo, sonar and vehicle-pose fusion methods for offshore-structure reconstruction and probabilistic reduction of sonar vertical ambiguity.'
+      'Developed stereo, sonar and AUV-pose fusion for offshore-structure reconstruction on real underwater data · presented at Breaking the Surface 2025.'
   },
   {
     period: '2024–2025',
@@ -196,7 +197,7 @@ export const experience = [
     role: 'Volunteer Researcher — MiniGirona AUV',
     logo: '/companies_logo/cirs_girona.png',
     description:
-      'Contributed to sonar-based initialization, DVL/INS localization, mission planning, stereo perception and task-priority manipulation on a real autonomous underwater vehicle.'
+      'Integrated sonar initialization, DVL/INS localization, mission behaviors and manipulation on the real MiniGirona I-AUV · RAMI 2025 2nd Place · ROBOT 2025.'
   }
 ]
 
@@ -259,7 +260,7 @@ export const awards = [
     organisation: 'RAMI Marine Robots Competition',
     logo: '/companies_logo/rami_competition.png',
     description:
-      'Contributed to the MiniGirona AUV autonomy stack used for navigation, inspection and intervention tasks.',
+      'Contributed to MiniGirona AUV software for navigation, inspection and intervention tasks.',
     year: 'June 2025',
     location: 'La Spezia, Italy'
   },
@@ -282,72 +283,26 @@ export const projectCategories = [
   'Manipulation'
 ]
 
-export const skills = [
+export const technicalSkills = [
   {
-    group: 'Robot Software',
-    headline: 'Integrated software for autonomous robot systems.',
-    items: [
-      'ROS and ROS 2',
-      'Python and C++',
-      'Behavior Trees',
-      'Testing and debugging'
-    ],
-    proof: 'Applied in MAESTRO, MiniGirona, TIAGo, MarsSim and mobile-robot autonomy projects.'
+    group: 'Robotics',
+    items: 'ROS / ROS 2 · Nav2 · Behavior Trees · SLAM · EKF · Path Planning'
+  },
+  {
+    group: 'Programming',
+    items: 'C++ · Python · PyTorch'
   },
   {
     group: 'Perception',
-    headline: 'Perception across optical and range sensors.',
-    items: [
-      'Computer vision',
-      'LiDAR and sonar',
-      'Stereo vision',
-      'Point-cloud reconstruction'
-    ],
-    proof: 'Used in underwater reconstruction, manipulation perception, rover sensing and stereo SLAM.'
+    items: 'OpenCV · Stereo Vision · Sonar · LiDAR · PCL · Open3D'
   },
   {
-    group: 'Localization & Mapping',
-    headline: 'State estimation and mapping under uncertain sensing.',
-    items: [
-      'SLAM and visual odometry',
-      'EKF and particle filters',
-      'Pose graphs',
-      'Bathymetric mapping'
-    ],
-    proof: 'Implemented for AUVs, mobile robots, stereo datasets and bathymetric mapping.'
-  },
-  {
-    group: 'Navigation & Planning',
-    headline: 'Navigation from mission goals to safe robot motion.',
-    items: [
-      'Nav2',
-      'Path planning',
-      'Behavior Trees',
-      'Exploration'
-    ],
-    proof: 'Used in TIAGo commissioning, Unitree exploration, rover navigation and AUV missions.'
-  },
-  {
-    group: 'Robot Learning & Embodied AI',
-    headline: 'Learned policies and foundation models connected to robot actions.',
-    items: [
-      'PyTorch',
-      'Reinforcement learning',
-      'Behavior cloning',
-      'VLA, VLM and LLM systems'
-    ],
-    proof: 'Demonstrated in locomotion, manipulation, recovery and robot-software generation.'
+    group: 'Learning',
+    items: 'PPO · Behavior Cloning · DINOv2 · VLA / VLM / LLM systems'
   },
   {
     group: 'Simulation',
-    headline: 'Reproducible environments for robotics development and evaluation.',
-    items: [
-      'MuJoCo and Panda3D',
-      'Gazebo and StoneFish',
-      'Sensor simulation',
-      'Benchmarking and evaluation'
-    ],
-    proof: 'Used to build MarsSim and evaluate navigation, learning and recovery systems.'
+    items: 'Gazebo · MuJoCo · StoneFish · Panda3D'
   }
 ]
 
@@ -1528,175 +1483,152 @@ type ProjectPresentation = Pick<Project, 'title' | 'summary'> &
 
 const projectPresentation: Record<string, ProjectPresentation> = {
   'adaptive-sim2real-go2': {
-    title:
-      'Adaptive Sim-to-Real Locomotion for Unitree Go2 — Domain-Randomized & Context-Conditioned PPO',
-    stack: ['PPO', 'MuJoCo', 'Domain Randomization', 'Context Adaptation', 'Robust Control'],
+    title: 'Adaptive Go2 Locomotion under Dynamics Shift',
+    stack: ['PPO', 'MuJoCo', 'Domain Randomization', 'Context Adaptation'],
     summary:
-      'Developed and benchmarked nominal, domain-randomized and context-conditioned PPO locomotion policies under controlled dynamics shift, quantifying generalization beyond nominal training conditions.',
+      'Developed and evaluated nominal, domain-randomized and context-conditioned PPO policies for Unitree Go2 locomotion under changes in robot dynamics.',
     evidence: '1,410 Go2 evaluation episodes · 47 controlled scenarios'
   },
   'tiago-navigation-integration': {
-    title:
-      'TIAGo ROS 2 Navigation — Nav2 Integration, Fleet Interfaces, Diagnostics & Commissioning',
-    stack: ['ROS 2 Humble', 'Nav2', 'C++', 'REST', 'MQTT', 'Diagnostics'],
+    title: 'TIAGo ROS 2 Navigation Integration',
+    stack: ['ROS 2 Humble', 'Nav2', 'C++', 'REST / MQTT'],
     summary:
-      'Integrated Nav2 into a TIAGo mobile-robot software stack with ROS 2, REST/MQTT mission interfaces, health monitoring and repeatable commissioning tests for reliable autonomous navigation.',
+      'Integrated TIAGo navigation with ROS 2, Nav2, REST and MQTT interfaces, health monitoring and repeatable commissioning tests.',
     evidence: '3/3 commissioning missions completed'
   },
   'failure-aware-manipulation': {
-    title:
-      'Failure-Aware Franka Manipulation — Behavior Cloning, Contact Detection & Autonomous Recovery',
-    stack: ['PyTorch', 'Behavior Cloning', 'MuJoCo', 'Contact Sensing', 'Recovery'],
+    title: 'Failure-Aware Franka Manipulation',
+    stack: ['PyTorch', 'Behavior Cloning', 'MuJoCo', 'Recovery'],
     summary:
-      'Built a Franka peg-insertion pipeline combining behavior-cloned policies with contact-aware failure detection and autonomous recovery, extending learned manipulation beyond successful nominal trajectories.',
+      'Built a Franka peg-insertion system using behavior cloning, force-based failure detection and autonomous recovery.',
     evidence: '200 successful demonstrations · closed-loop recovery'
   },
   bathygraph: {
-    title:
-      'BathyGraph-Lite — Bathymetric Pose-Graph SLAM for GPS-Denied AUV Navigation',
-    stack: ['Pose-Graph SLAM', 'Bathymetry', 'Submap Registration', 'Open3D', 'AUVLib'],
+    title: 'BathyGraph-Lite',
+    stack: ['Pose-Graph SLAM', 'GTSAM', 'GICP', 'AUVLib'],
     summary:
-      'Developed a lightweight underwater SLAM pipeline using dead-reckoning-initialized bathymetric submap registration and pose-graph optimization for drift correction in GPS-denied AUV navigation.',
+      'Developed an underwater SLAM pipeline using bathymetric submap registration and pose-graph optimization to reduce navigation drift in GPS-denied AUV missions.',
     evidence: 'GPS-denied navigation · 296 measured submaps'
   },
   'aquanav-fm': {
-    title:
-      'AquaNav-FM — DINOv2 Place Localization & Short-Horizon AUV Navigation',
-    stack: ['DINOv2', 'PyTorch', 'Visual Place Recognition', 'Localization', 'Learned Navigation'],
+    title: 'AquaNav-FM',
+    stack: ['DINOv2', 'PyTorch', 'Visual Place Recognition', 'Localization'],
     summary:
-      'Adapted frozen DINOv2 visual representations to AQUALOC underwater imagery and connected place recognition with synchronized sensing, depth-assisted localization and learned short-horizon AUV waypoint prediction.',
+      'Adapted frozen DINOv2 descriptors for underwater place localization on AQUALOC and connected the representation to depth-assisted localization and learned two-second AUV waypoints.',
     evidence: 'Median localization error reduced from 3.90 m to 1.50 m'
   },
   aquaadapt: {
-    title:
-      'AquaAdapt — Self-Supervised DINOv2 Adaptation for Underwater Place Recognition',
+    title: 'AquaAdapt',
     stack: ['DINOv2', 'Self-Supervised Learning', 'PyTorch', 'Visual Localization'],
     summary:
-      'Developed a domain-adaptive underwater place-recognition pipeline designed for severe appearance changes including low light, haze, colour attenuation, blur and marine snow.',
+      'Adapted DINOv2 for underwater place recognition under low light, haze, colour attenuation, blur and marine snow.',
     evidence: 'Outperformed raw DINOv2 across all 15 corruption tests'
   },
   maestro: {
-    title:
-      'MAESTRO — Multi-Agent Fault Diagnosis, Mission Reasoning & Recovery for Autonomous Underwater Robots',
-    stack: ['ROS 2', 'LLM Agents', 'RAG', 'Fault Diagnosis', 'Mission Reasoning'],
+    title: 'MAESTRO',
+    stack: ['ROS 2', 'Fault Diagnosis', 'Mission Reasoning', 'Recovery'],
     summary:
-      'Developed a multi-agent ROS 2 architecture for anomaly diagnosis, mission-impact reasoning and operator-approved recovery synthesis, targeting resilient autonomous underwater missions rather than isolated fault classification.',
+      'Developed a multi-agent ROS 2 system for fault diagnosis, mission-impact analysis and operator-approved recovery for autonomous underwater missions.',
     evidence: '89% recovery-decision accuracy across 255 scenarios'
   },
   minigirona: {
-    title:
-      'MiniGirona AUV Autonomy — Sonar/DVL Localization, Behavior-Tree Missions & Manipulation',
-    stack: ['ROS', 'AUV', 'Sonar', 'DVL/INS', 'Behavior Trees', 'Stereo Vision'],
+    title: 'MiniGirona AUV Autonomy',
+    stack: ['ROS', 'EKF', 'DVL / INS', 'Sonar', 'Behavior Trees'],
     summary:
-      'Integrated sonar-based initialization, DVL/INS localization, behavior-tree mission execution, stereo perception and manipulation on the real MiniGirona autonomous underwater vehicle.',
+      'Integrated sonar initialization, DVL/INS localization, behavior-tree missions, stereo perception and manipulation on the MiniGirona AUV.',
     evidence: '2nd Place — RAMI 2025 · Real MiniGirona AUV'
   },
   marsim: {
-    title:
-      'MarsSim — ROS 2 Planetary Rover Simulation with Terrain-Aware Dynamics & Sensor Models',
-    stack: ['ROS 2', 'Panda3D', 'Python', 'Rover Simulation', 'Sensor Simulation'],
+    title: 'MarsSim',
+    stack: ['ROS 2', 'Panda3D', 'Python', 'Sensor Simulation'],
     summary:
-      'Built a configurable ROS 2 planetary field-robotics simulator with terrain-aware rover motion, environmental effects and simulated sensing for autonomy development and repeatable experimentation.'
+      'Built a ROS 2 planetary rover simulator with terrain-aware motion, environmental effects and configurable sensors.'
   },
   reconstruction: {
-    title:
-      'Multimodal Underwater 3D Reconstruction — Stereo, Sonar & AUV-Pose Fusion for Offshore Inspection',
-    stack: ['FoundationStereo', 'Sonar', 'Particle Filtering', 'Point Clouds', 'Sensor Fusion'],
+    title: 'Multimodal Underwater 3D Reconstruction',
+    stack: ['FoundationStereo', 'Sonar', 'Particle Filter', 'Point Clouds'],
     summary:
-      'Developed a multimodal reconstruction pipeline combining stereo depth, sonar observations and vehicle poses to recover offshore structures while addressing the vertical ambiguity inherent in sonar measurements.',
+      'Fused stereo depth, forward-looking sonar and AUV poses to reconstruct offshore structures underwater.',
     evidence: 'Stereo + sonar + AUV-pose sensor fusion'
   },
   humanoid: {
-    title:
-      'Humanoid Locomotion & Goal Navigation — Curriculum-Trained PPO in MuJoCo',
-    stack: ['PPO', 'MuJoCo', 'Stable-Baselines3', 'Curriculum Learning', 'Navigation'],
+    title: 'Humanoid PPO Locomotion & Navigation',
+    stack: ['PPO', 'MuJoCo', 'Stable-Baselines3', 'Curriculum Learning'],
     summary:
-      'Trained a curriculum-based PPO policy that progresses from humanoid walking to goal reaching and obstacle-aware navigation, providing a controlled testbed for learned locomotion and navigation.'
+      'Trained a curriculum-based PPO policy for humanoid walking, goal reaching and obstacle navigation in MuJoCo.'
   },
   'can-robots-code': {
-    title:
-      'LLM-Agent ROS 2 Software Generation — Automated Validation, Testing & Iterative Repair',
-    stack: ['ROS 2', 'LLM Agents', 'RAG', 'Code Generation', 'Automated Testing'],
+    title: 'LLM ROS 2 Code Generation',
+    stack: ['ROS 2', 'LLM Agents', 'RAG', 'Automated Testing'],
     summary:
-      'Built an agentic software-engineering pipeline that generates ROS 2 robot code, validates the generated system, executes tests and iteratively repairs failures instead of treating code generation as a one-shot task.'
+      'Built an LLM pipeline that generates, validates and iteratively repairs ROS 2 robot software.'
   },
   'active-navigation': {
-    title:
-      'Uncertainty-Aware Active Navigation — Perception-Aware Planning under Localization & Terrain Uncertainty',
-    stack: ['ROS 2', 'Active Perception', 'LiDAR', 'Planning', 'Uncertainty'],
+    title: 'Uncertainty-Aware Active Navigation',
+    stack: ['ROS 2', 'Active Perception', 'LiDAR', 'Planning'],
     summary:
-      'Developed an active-navigation pipeline that incorporates localization confidence and terrain uncertainty into rover motion planning, allowing navigation decisions to account for perception quality rather than geometry alone.'
+      'Implemented perception-aware rover navigation that seeks better viewpoints before entering uncertain regions.'
   },
   'stereo-perception': {
-    title:
-      'Underwater Manipulation Perception — Stereo Depth, 3D Keypoints & Object-Pose Estimation',
-    stack: ['YOLOE', 'Stereo Vision', 'PCL', 'OpenCV', '3D Perception'],
+    title: 'Underwater Stereo Manipulation Perception',
+    stack: ['YOLOE', 'Stereo Vision', 'PCL', 'OpenCV'],
     summary:
-      'Built an underwater manipulation-perception pipeline from object detection and stereo depth to point-cloud processing, task-relevant 3D keypoints and object-orientation estimation for autonomous intervention.'
+      'Estimated object pose for underwater manipulation using image enhancement, zero-shot detection, stereo depth and 3D keypoints.'
   },
   frontier_exploration: {
-    title:
-      'Unitree Go1 Autonomous Exploration — Frontier Planning, SLAM & Obstacle-Aware Navigation',
+    title: 'Unitree Go1 Frontier Exploration',
     stack: ['ROS', 'Gazebo', 'SLAM', 'Frontier Exploration', 'Navigation'],
     summary:
-      'Implemented autonomous frontier exploration for a Unitree Go1 quadruped by integrating SLAM, exploration-goal selection, navigation and obstacle avoidance into a closed autonomy loop.'
+      'Implemented LiDAR SLAM, frontier exploration and collision-aware navigation for a Unitree Go1 quadruped.'
   },
   'mobile-autonomy': {
-    title:
-      'ROS 2 Mobile Robot Autonomy — SLAM, EKF Localization, RRT* Planning & Behavior Trees',
+    title: 'ROS 2 Mobile Robot Autonomy',
     stack: ['ROS 2', 'SLAM', 'EKF', 'RRT*', 'Behavior Trees'],
     summary:
-      'Integrated mapping, state estimation, sampling-based path planning and behavior-tree execution into a modular ROS 2 mobile-robot autonomy stack.'
+      'Built mobile-robot autonomy using LiDAR SLAM, probabilistic localization, classical planning and behavior-tree execution.'
   },
   'stereo-visual-slam': {
-    title:
-      'Stereo Visual Odometry & SLAM — Geometric Pose Estimation, PnP, Bundle Adjustment & Mapping',
-    stack: ['Stereo Vision', 'KITTI', 'PnP', 'Bundle Adjustment', 'Visual Odometry'],
+    title: 'Stereo Visual Odometry & SLAM',
+    stack: ['Stereo Vision', 'KITTI', 'PnP', 'Bundle Adjustment'],
     summary:
-      'Implemented stereo visual odometry and mapping on KITTI using geometric feature estimation, PnP-based camera pose recovery and bundle adjustment for trajectory and map refinement.'
+      'Implemented stereo visual odometry and SLAM with geometric estimation, bundle adjustment and loop closure on KITTI.'
   },
   'multi-robot': {
-    title:
-      'Multi-Robot Aerial Coordination — Flocking, Consensus & Auction-Based Task Allocation',
-    stack: ['Multi-Robot Systems', 'Consensus', 'Flocking', 'Task Allocation', 'Auctions'],
+    title: 'Multi-Robot Aerial Coordination',
+    stack: ['Consensus', 'Flocking', 'Task Allocation', 'Auctions'],
     summary:
-      'Implemented decentralized coordination methods for aerial robot teams, including consensus, flocking and auction-based task allocation for cooperative multi-robot behavior.'
+      'Implemented flocking, consensus formation and auction-based task allocation for coordinated aerial robots.'
   },
   'underwater-depth': {
-    title:
-      'Underwater Metric Depth Estimation — Leakage-Free Supervised vs Self-Supervised Evaluation on FLSea',
-    stack: ['PyTorch', 'Depth Anything V2', 'Monodepth2', 'FLSea', 'Domain Shift'],
+    title: 'Underwater Metric Depth Estimation',
+    stack: ['PyTorch', 'Depth Anything V2', 'Monodepth2', 'FLSea'],
     summary:
       'Built a leakage-free underwater depth benchmark with strict scene-level splits and compared supervised and self-supervised metric-depth approaches under domain shift.',
     evidence: '24.35% held-out AbsRel reduction'
   },
   openvla: {
-    title:
-      'OpenVLA Vision-Language-Action Control for KUKA Pick-and-Place Manipulation',
-    stack: ['OpenVLA', 'PyBullet', 'KUKA', 'Vision-Language-Action', 'Manipulation'],
+    title: 'OpenVLA Pick-and-Place',
+    stack: ['OpenVLA', 'PyBullet', 'KUKA', 'Inverse Kinematics'],
     summary:
-      'Integrated OpenVLA outputs with a simulated KUKA manipulation pipeline to investigate how vision-language-action representations can drive task-level pick-and-place execution.'
+      'Connected OpenVLA predictions to a simulated KUKA pick-and-place pipeline with inverse kinematics and retry logic.'
   },
   'tiago-assistant': {
-    title:
-      'TIAGo Multimodal HRI — LLM/VLM, Face & Gesture Recognition for Task-Oriented Assistance',
-    stack: ['TIAGo', 'ROS', 'LLM', 'VLM', 'Face Recognition', 'Gesture Recognition'],
+    title: 'TIAGo LLM–VLM Assistant',
+    stack: ['TIAGo', 'ROS', 'LLM', 'VLM', 'HRI'],
     summary:
-      'Built a smart-home HRI pipeline combining language and vision models with face and gesture recognition to transform multimodal human requests into task-oriented robot actions.'
+      'Integrated language, vision, face and gesture interaction with TIAGo for task-oriented home assistance.'
   },
   'rl-pid-drone': {
-    title:
-      'Reinforcement-Learning PID Auto-Tuning for Drone Altitude & Position Control',
-    stack: ['Reinforcement Learning', 'PID Control', 'UAV', 'Simulation'],
+    title: 'RL-Based PID Tuning for Drone Control',
+    stack: ['Reinforcement Learning', 'PID', 'UAV', 'Simulation'],
     summary:
-      'Applied reinforcement learning to automatic PID gain selection for simulated drone altitude and position tracking, investigating learned controller tuning as an alternative to manual gain selection.'
+      'Applied reinforcement learning to tune PID gains for simulated drone altitude and position control.'
   },
   'colour-enhancement': {
-    title:
-      'Underwater Image Enhancement for Robot Perception — HSV, RGB & YCbCr Evaluation',
-    stack: ['OpenCV', 'HSV', 'RGB', 'YCbCr', 'Underwater Vision'],
+    title: 'Colour Enhancement for Robot Perception',
+    stack: ['OpenCV', 'HSV', 'RGB', 'YCbCr'],
     summary:
-      'Evaluated multiple colour-space enhancement strategies for degraded underwater imagery to determine how preprocessing choices affect the reliability of downstream robotic perception.'
+      'Evaluated HSV, RGB and YCbCr enhancement methods for more reliable perception in degraded underwater imagery.'
   }
 }
 
@@ -1705,6 +1637,23 @@ export const projects: Project[] = projectRecords.map((project) => ({
   name: project.title,
   ...projectPresentation[project.id]
 }))
+
+const deploymentByProject: Partial<Record<string, Deployment>> = {
+  minigirona: 'REAL ROBOT',
+  'tiago-navigation-integration': 'ROS 2 SIMULATION',
+  'adaptive-sim2real-go2': 'SIMULATION',
+  'failure-aware-manipulation': 'SIMULATION',
+  maestro: 'ROS 2 SIMULATION',
+  reconstruction: 'REAL ROBOT DATA',
+  bathygraph: 'REAL ROBOT DATA',
+  'underwater-depth': 'BENCHMARK / DATASET',
+  aquaadapt: 'REAL ROBOT DATA',
+  'aquanav-fm': 'REAL ROBOT DATA'
+}
+
+export function deploymentForProject(project: Project) {
+  return deploymentByProject[project.id]
+}
 
 export function capabilitiesForProject(project: Project) {
   return capabilityGroups

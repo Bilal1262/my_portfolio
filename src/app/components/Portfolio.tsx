@@ -4,8 +4,6 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import {
   ArrowDownIcon,
-  ArrowLeftIcon,
-  ArrowRightIcon,
   ArrowUpRightIcon,
   Bars3Icon,
   MagnifyingGlassIcon,
@@ -14,12 +12,13 @@ import {
 import {
   awards,
   capabilityGroups,
+  deploymentForProject,
   education,
   experience,
   profile,
   projects,
   research,
-  skills,
+  technicalSkills,
   type CapabilityId,
   type Project,
   type RobotSystem
@@ -30,12 +29,13 @@ import ProjectImage from './ProjectImage'
 const robotSystems: Array<{
   id: RobotSystem
   label: string
+  evidence: string
 }> = [
-  { id: 'marine', label: 'Marine Robotics' },
-  { id: 'mobile', label: 'Mobile Robotics' },
-  { id: 'legged', label: 'Legged Robotics' },
-  { id: 'aerial', label: 'Aerial Robotics' },
-  { id: 'manipulation', label: 'Manipulation & Embodied AI' }
+  { id: 'marine', label: 'Marine', evidence: 'AUV autonomy · SLAM · underwater perception' },
+  { id: 'mobile', label: 'Mobile', evidence: 'ROS 2 · Nav2 · SLAM · navigation' },
+  { id: 'legged', label: 'Legged', evidence: 'Locomotion · reinforcement learning · exploration' },
+  { id: 'aerial', label: 'Aerial', evidence: 'Control · coordination · inspection' },
+  { id: 'manipulation', label: 'Manipulation', evidence: 'Perception · learning · recovery · HRI' }
 ]
 
 const robotSystemLabels = Object.fromEntries(
@@ -45,11 +45,24 @@ const robotSystemLabels = Object.fromEntries(
 const featuredProjectIds = [
   'minigirona',
   'tiago-navigation-integration',
+  'adaptive-sim2real-go2',
+  'failure-aware-manipulation',
   'maestro',
   'reconstruction',
-  'adaptive-sim2real-go2',
-  'failure-aware-manipulation'
+  'bathygraph',
+  'underwater-depth'
 ]
+
+const flagshipContribution: Record<string, string> = {
+  minigirona: 'Sonar initialization · EKF integration · mission behaviors',
+  'tiago-navigation-integration': 'C++ Nav2 adapter · fleet interfaces · diagnostics',
+  'adaptive-sim2real-go2': 'Environment · PPO training · 47-scenario benchmark',
+  'failure-aware-manipulation': 'BC pipeline · failure detector · recovery skills',
+  maestro: 'System architecture · recovery agents · ROS 2 validation',
+  reconstruction: 'Stereo-sonar fusion · particle filtering · point clouds',
+  bathygraph: 'Data ingestion · GICP registration · pose-graph optimization',
+  'underwater-depth': 'Leakage-free benchmark · training · evaluation'
+}
 
 function Reveal({
   children,
@@ -80,22 +93,14 @@ function Reveal({
 }
 
 function SectionTitle({
-  number,
-  eyebrow,
   title,
   description
 }: {
-  number: string
-  eyebrow: string
   title: string
   description?: string
 }) {
   return (
     <Reveal className="section-title">
-      <div>
-        <span>{number}</span>
-        <p>{eyebrow}</p>
-      </div>
       <h2>{title}</h2>
       {description ? <p className="section-lead">{description}</p> : null}
     </Reveal>
@@ -247,6 +252,7 @@ function ProjectModal({
             </span>
             <span>{project.period}</span>
             <span>{project.status}</span>
+            {deploymentForProject(project) ? <span className="deployment-badge">{deploymentForProject(project)}</span> : null}
           </div>
 
           <ContextLogos
@@ -264,7 +270,7 @@ function ProjectModal({
               <p>{project.challenge}</p>
             </section>
             <section>
-              <p className="mini-label">My contribution</p>
+              <p className="mini-label">What I built</p>
               <p>{project.contribution}</p>
             </section>
           </div>
@@ -305,7 +311,7 @@ function ProjectModal({
 
           {project.limitations ? (
             <section>
-              <p className="mini-label">Limitations</p>
+              <p className="mini-label">Limitations &amp; next engineering step</p>
               <p>{project.limitations}</p>
             </section>
           ) : null}
@@ -340,8 +346,6 @@ function ProjectModal({
 export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [slide, setSlide] = useState(0)
-  const [paused, setPaused] = useState(false)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [archiveCategory, setArchiveCategory] =
     useState<'All' | RobotSystem>('All')
@@ -358,8 +362,6 @@ export default function Portfolio() {
         .filter((project): project is Project => Boolean(project)),
     []
   )
-  const active = showcase[slide]
-
   const archiveCategories: Array<{
     id: 'All' | RobotSystem
     label: string
@@ -412,22 +414,8 @@ export default function Portfolio() {
   }, [])
 
   useEffect(() => {
-    if (paused || reduce || showcase.length < 2) return
-    const timer = window.setInterval(
-      () => setSlide((index) => (index + 1) % showcase.length),
-      5600
-    )
-    return () => window.clearInterval(timer)
-  }, [paused, reduce, showcase.length])
-
-  useEffect(() => {
     setVisibleProjects(6)
   }, [archiveCapability, archiveCategory, archiveSearch])
-
-  const moveSlide = (direction: number) =>
-    setSlide(
-      (index) => (index + direction + showcase.length) % showcase.length
-    )
 
   const exploreSystem = (system: RobotSystem) => {
     setArchiveCategory(system)
@@ -451,7 +439,7 @@ export default function Portfolio() {
 
   const nav = [
     ['Projects', '#work'],
-    ['Systems', '#systems'],
+    ['Platforms', '#systems'],
     ['Research', '#research'],
     ['About', '#about'],
     ['Contact', '#contact']
@@ -479,6 +467,14 @@ export default function Portfolio() {
                 {label}
               </a>
             ))}
+            <a
+              className="nav-cv"
+              href={assetPath(profile.resume)}
+              target="_blank"
+              rel="noreferrer"
+            >
+              CV ↗
+            </a>
           </div>
 
           <button
@@ -501,6 +497,14 @@ export default function Portfolio() {
                 {label}
               </a>
             ))}
+            <a
+              href={assetPath(profile.resume)}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => setMenuOpen(false)}
+            >
+              Download CV ↗
+            </a>
           </div>
         </div>
       </header>
@@ -516,13 +520,18 @@ export default function Portfolio() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.72 }}
             >
-              <p className="hero-kicker">{profile.name}</p>
+              <p className="hero-kicker">Field Robotics · Autonomous Systems</p>
               <h1>{profile.headline}</h1>
 
               <p className="hero-description">
-                Designing, integrating and validating autonomous robot systems
-                across perception, localization &amp; SLAM, navigation, planning,
-                manipulation and robot learning.
+                I develop autonomous robotic systems with experience in ROS/ROS 2,
+                localization, perception, navigation and robot learning across marine,
+                mobile, legged, aerial and manipulation platforms.
+              </p>
+
+              <p className="hero-education">
+                Erasmus Mundus MSc — Intelligent Field Robotic Systems
+                <strong>9.4 / 10</strong>
               </p>
 
               <p className="hero-stack">
@@ -530,38 +539,28 @@ export default function Portfolio() {
                 Motion Planning · 3D Perception · Robot Learning
               </p>
 
-              <p className="hero-context">
-                Real-robot, simulation and research experience across underwater,
-                mobile, legged, aerial and manipulation systems.
-              </p>
-
-              <p className="hero-availability">{profile.availability}</p>
-
               <div className="hero-actions">
                 <a className="primary-button" href="#work">
-                  Explore selected work
+                  View Projects
                   <ArrowDownIcon />
                 </a>
-                <a className="secondary-button" href="#capabilities">
-                  Explore by expertise
+                <a
+                  className="secondary-button cv-button"
+                  href={assetPath(profile.resume)}
+                  target="_blank"
+                  rel="noreferrer"
+                  download
+                >
+                  Download CV
                   <ArrowDownIcon />
+                </a>
+                <a className="secondary-button" href={profile.github} target="_blank" rel="noreferrer">
+                  GitHub
+                  <ArrowUpRightIcon />
                 </a>
               </div>
 
-              <div className="hero-stats">
-                <div>
-                  <strong>Sense → Act</strong>
-                  <span>Across the autonomy stack</span>
-                </div>
-                <div>
-                  <strong>ROS / ROS 2</strong>
-                  <span>Integrated robot systems</span>
-                </div>
-                <div>
-                  <strong>Research</strong>
-                  <span>Evaluated, documented work</span>
-                </div>
-              </div>
+              <p className="hero-availability">{profile.availability}</p>
             </motion.div>
 
             <motion.div
@@ -577,142 +576,34 @@ export default function Portfolio() {
                   eager
                 />
                 <figcaption>
-                  <span>Field robotics</span>
-                  <strong>MiniGirona autonomous underwater vehicle</strong>
-                  <small>Integrated real-robot deployment · CIRS Lab</small>
+                  <span>MiniGirona I-AUV · CIRS Lab</span>
+                  <strong>Localization, mission autonomy and manipulation</strong>
+                  <small>RAMI 2025 · 2nd Place</small>
                 </figcaption>
               </figure>
-              <div className="floating-note note-one">
-                <i aria-hidden="true" />
-                <div>
-                  <strong>Real robot systems</strong>
-                  <span>Integrated &amp; validated</span>
-                </div>
-              </div>
-              <div className="floating-note note-two">
-                <b aria-hidden="true" />
-                <div>
-                  <strong>End-to-end autonomy</strong>
-                  <span>Sense · Localize · Plan · Act</span>
-                </div>
-              </div>
             </motion.div>
-          </div>
-        </section>
-
-        <section className="dark-section" id="about">
-          <div className="shell about-layout">
-            <Reveal>
-              <p className="section-eyebrow light">About</p>
-              <h2>
-                End-to-End Autonomy Engineering Across Real and Simulated Robot Systems
-              </h2>
-            </Reveal>
-
-            <Reveal className="about-text" delay={0.08}>
-              <p>
-                I build complete autonomous robot systems from sensing and state
-                estimation through localization, planning, execution and
-                intelligent adaptation. My work combines robotics software,
-                perception, SLAM, navigation, manipulation and robot learning
-                across underwater, mobile, legged and aerial platforms, with
-                experience spanning simulation, experimental research and
-                integrated real-robot deployment.
-              </p>
-              <div>
-                <a href={`mailto:${profile.email}`}>{profile.email}</a>
-                <a href={profile.github} target="_blank" rel="noreferrer">
-                  GitHub ↗
-                </a>
-                <a href={profile.linkedin} target="_blank" rel="noreferrer">
-                  LinkedIn ↗
-                </a>
-              </div>
-            </Reveal>
-          </div>
-        </section>
-
-        <section className="section capability-section" id="capabilities">
-          <div className="shell">
-            <SectionTitle
-              number="01"
-              eyebrow="Explore by expertise"
-              title="One autonomy stack. Multiple ways into the work."
-              description="Follow the capability most relevant to your role, then open the projects that provide direct engineering evidence."
-            />
-
-            <div className="autonomy-flow" aria-label="Autonomy engineering capability map">
-              {capabilityGroups.map((capability, index) => (
-                <Reveal
-                  className="capability-card"
-                  delay={index * 0.045}
-                  key={capability.id}
-                >
-                  <article id={capability.id}>
-                    <div className="capability-stage">
-                      <span>{String(index + 1).padStart(2, '0')}</span>
-                      <strong>{capability.stage}</strong>
-                    </div>
-                    <h3>{capability.label}</h3>
-                    <p>{capability.summary}</p>
-                    <div className="capability-projects">
-                      {capability.projectIds.slice(0, 3).map((projectId) => {
-                        const project = projects.find((item) => item.id === projectId)
-                        return project ? (
-                          <button
-                            type="button"
-                            onClick={() => setSelectedProject(project)}
-                            key={project.id}
-                          >
-                            {project.name ?? project.title}
-                          </button>
-                        ) : null
-                      })}
-                    </div>
-                    <button
-                      className="capability-open"
-                      type="button"
-                      onClick={() => exploreCapability(capability.id)}
-                    >
-                      Explore related work <span>→</span>
-                    </button>
-                  </article>
-                </Reveal>
-              ))}
-            </div>
-
-            <div className="applied-platforms">
-              <span>Applied across</span>
-              {robotSystems.map((system) => (
-                <a href={`#${system.id}`} key={system.id}>{system.label}</a>
-              ))}
-            </div>
           </div>
         </section>
 
         <section className="section systems-section" id="systems">
           <div className="shell">
             <SectionTitle
-              number="02"
-              eyebrow="Robot systems"
-              title="Explore projects by robotic platform."
-              description="Work across marine, mobile, legged, aerial and manipulation systems, with technical capabilities retained on every project."
+              title="Robotics Platforms"
+              description="Projects across marine, mobile, legged, aerial and manipulation robotics."
             />
 
             <div
-              className="archive-filters system-tabs"
+              className="platform-grid"
               aria-label="Explore projects by robot system"
             >
-              {robotSystems.map((system) => (
-                <button
-                  id={system.id}
-                  className={archiveCategory === system.id ? 'active' : ''}
-                  onClick={() => exploreSystem(system.id)}
-                  key={system.id}
-                >
-                  {system.label} ·{' '}
-                  {projects.filter((project) => project.system === system.id).length}
-                </button>
+              {robotSystems.map((system, index) => (
+                <Reveal className="platform-card" delay={index * 0.04} key={system.id}>
+                  <button id={system.id} onClick={() => exploreSystem(system.id)}>
+                    <strong>{system.label}</strong>
+                    <small>{system.evidence}</small>
+                    <i aria-hidden="true">→</i>
+                  </button>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -721,116 +612,67 @@ export default function Portfolio() {
         <section className="section showcase-section" id="work">
           <div className="shell">
             <SectionTitle
-              number="03"
-              eyebrow="Selected work"
-              title="Complete robotic systems with measurable outcomes."
-              description="Six projects that best represent my systems engineering, research and implementation work."
+              title="Selected Robotics Projects"
+              description="Eight projects covering real robots, simulation and real-world robotics datasets."
             />
 
-            <div
-              className="showcase"
-              onMouseEnter={() => setPaused(true)}
-              onMouseLeave={() => setPaused(false)}
-            >
-              <div className="showcase-copy">
-                <div className="counter">
-                  <span>{String(slide + 1).padStart(2, '0')}</span>
-                  <i />
-                  <span>{String(showcase.length).padStart(2, '0')}</span>
-                </div>
-
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={active.id}
-                    initial={reduce ? false : { opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={reduce ? undefined : { opacity: 0, y: -12 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <p className="project-area">
-                      {robotSystemLabels[active.system]} · {active.area}
-                    </p>
-                    <ContextLogos
-                      logos={active.logos}
-                      className="project-context-logos"
-                    />
-                    <h3>{active.title}</h3>
-                    <p className="project-stack">{(active.stack ?? active.technologies.slice(0, 5)).join(' · ')}</p>
-                    <p>{active.summary}</p>
-
-                    {active.evidence ? (
-                      <p className="project-evidence">{active.evidence}</p>
-                    ) : null}
-
-                    <div className="showcase-results">
-                      {active.results.slice(0, 3).map((result) => (
-                        <span key={result}>{result}</span>
-                      ))}
-                    </div>
-
-                    <button
-                      className="text-button"
-                      onClick={() => setSelectedProject(active)}
-                    >
-                      View engineering case study
-                      <ArrowUpRightIcon />
+            <div className="flagship-grid">
+              {showcase.map((project, index) => (
+                <Reveal className={`flagship-card system-${project.system}`} delay={(index % 2) * 0.04} key={project.id}>
+                  <article>
+                    <button className="flagship-image" type="button" onClick={() => setSelectedProject(project)} aria-label={`Open ${project.title}`}>
+                      <ProjectImage src={project.cover} alt={`${project.title} project`} eager={index < 2} />
+                      <span>View project <ArrowUpRightIcon /></span>
                     </button>
-                  </motion.div>
-                </AnimatePresence>
+                    <div className="flagship-copy">
+                      <div className="flagship-meta">
+                        <span className="deployment-badge">{deploymentForProject(project)}</span>
+                        <small>{robotSystemLabels[project.system]}</small>
+                      </div>
+                      <h3>{project.title}</h3>
+                      <p className="project-stack">{(project.stack ?? project.technologies.slice(0, 5)).slice(0, 5).join(' · ')}</p>
+                      <p className="flagship-summary">{project.summary}</p>
+                      {project.evidence ? <p className="project-evidence">{project.evidence}</p> : null}
+                      <div className="ownership-line">
+                        <span>My contribution</span>
+                        <p>{flagshipContribution[project.id]}</p>
+                      </div>
+                      <button className="archive-open" type="button" onClick={() => setSelectedProject(project)}>
+                        View project <span>→</span>
+                      </button>
+                    </div>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
 
-                <div className="carousel-controls">
-                  <button
-                    onClick={() => moveSlide(-1)}
-                    aria-label="Previous project"
-                  >
-                    <ArrowLeftIcon />
-                  </button>
-                  <div>
-                    {showcase.map((item, index) => (
-                      <button
-                        className={slide === index ? 'active' : ''}
-                        onClick={() => setSlide(index)}
-                        aria-label={`Show ${item.title}`}
-                        key={item.id}
-                      />
-                    ))}
-                  </div>
-                  <button
-                    onClick={() => moveSlide(1)}
-                    aria-label="Next project"
-                  >
-                    <ArrowRightIcon />
-                  </button>
-                </div>
-              </div>
+        <section className="section capability-section" id="technical-areas">
+          <div className="shell">
+            <SectionTitle
+              title="Technical Areas"
+              description="Projects grouped by the main robotics areas I have worked on."
+            />
 
-              <div className="showcase-media">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    className="showcase-image"
-                    key={active.cover}
-                    initial={
-                      reduce ? false : { opacity: 0, scale: 1.025 }
-                    }
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={
-                      reduce ? undefined : { opacity: 0, scale: 0.985 }
-                    }
-                    transition={{ duration: 0.5 }}
-                  >
-                    <ProjectImage
-                      src={active.cover}
-                      alt={active.title}
-                      eager={slide === 0}
-                    />
-                  </motion.div>
-                </AnimatePresence>
-
-                <div className="media-caption">
-                  <span>{active.period}</span>
-                  <span>{active.technologies.slice(0, 3).join(' · ')}</span>
-                </div>
-              </div>
+            <div className="autonomy-flow" aria-label="Technical areas">
+              {capabilityGroups.map((capability, index) => (
+                <Reveal className="capability-card" delay={index * 0.045} key={capability.id}>
+                  <article id={capability.id}>
+                    <h3>{capability.label}</h3>
+                    <p>{capability.summary}</p>
+                    <div className="capability-projects">
+                      {capability.projectIds.slice(0, 3).map((projectId) => {
+                        const project = projects.find((item) => item.id === projectId)
+                        return project ? <button type="button" onClick={() => setSelectedProject(project)} key={project.id}>{project.name ?? project.title}</button> : null
+                      })}
+                    </div>
+                    <button className="capability-open" type="button" onClick={() => exploreCapability(capability.id)}>
+                      View related projects <span>→</span>
+                    </button>
+                  </article>
+                </Reveal>
+              ))}
             </div>
           </div>
         </section>
@@ -840,12 +682,7 @@ export default function Portfolio() {
           id="experience"
         >
           <div className="shell">
-            <SectionTitle
-              number="04"
-              eyebrow="Experience"
-              title="Research and engineering across the autonomy stack."
-              description="Work spanning mission reasoning, multimodal perception, localization and real-robot integration."
-            />
+            <SectionTitle title="Experience" />
 
             <div className="experience-list">
               {experience.map((item, index) => (
@@ -854,7 +691,6 @@ export default function Portfolio() {
                   delay={index * 0.05}
                   key={item.role}
                 >
-                  <span>{String(index + 1).padStart(2, '0')}</span>
                   <div className="row-logo-tile">
                     <img
                       src={assetPath(item.logo)}
@@ -875,12 +711,7 @@ export default function Portfolio() {
 
         <section className="section research-section" id="research">
           <div className="shell">
-            <SectionTitle
-              number="05"
-              eyebrow="Research & communication"
-              title="Research in autonomy, perception and resilient robot systems."
-              description="Peer-reviewed work, technical presentations and thesis research across the autonomy stack."
-            />
+            <SectionTitle title="Publications & Research" />
 
             <div className="research-list">
               {research.map((item, index) => (
@@ -889,7 +720,6 @@ export default function Portfolio() {
                   delay={index * 0.05}
                   key={item.title}
                 >
-                  <span>{String(index + 1).padStart(2, '0')}</span>
                   <div className="row-logo-tile">
                     <img
                       src={assetPath(item.logo)}
@@ -924,14 +754,7 @@ export default function Portfolio() {
 
         <section className="section recognition-block">
           <div className="shell">
-            <div className="recognition-heading">
-              <p className="section-eyebrow">Selected recognition</p>
-              <h3>Awards tied to research and robot performance.</h3>
-              <p>
-                External recognition for technical research, integrated
-                robotic systems, and applied AI engineering.
-              </p>
-            </div>
+            <SectionTitle title="Awards" />
 
             <div className="awards-grid">
               {awards.map((award, index) => (
@@ -940,10 +763,6 @@ export default function Portfolio() {
                   delay={index * 0.05}
                   key={`${award.achievement}-${award.year}`}
                 >
-                  <div className="award-number">
-                    {String(index + 1).padStart(2, '0')}
-                  </div>
-
                   <div className="award-card-content">
                     {'logo' in award && award.logo ? (
                       <div className="award-logo-tile">
@@ -975,27 +794,13 @@ export default function Portfolio() {
 
         <section className="section skills-section" id="skills">
           <div className="shell">
-            <SectionTitle
-              number="06"
-              eyebrow="Capabilities"
-              title="Tools organised around engineering problems."
-            />
+            <SectionTitle title="Technical Skills" />
 
-            <div className="skills-grid">
-              {skills.map((skill, index) => (
-                <Reveal
-                  className="skill-card"
-                  delay={index * 0.05}
-                  key={skill.group}
-                >
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <h3>{skill.group}</h3>
-                  <div>
-                    {skill.items.map((item) => (
-                      <p key={item}>{item}</p>
-                    ))}
-                  </div>
-                  <p className="skill-proof">{skill.proof}</p>
+            <div className="technical-skills-list">
+              {technicalSkills.map((skill, index) => (
+                <Reveal className="technical-skill-row" delay={index * 0.04} key={skill.group}>
+                  <strong>{skill.group}</strong>
+                  <span>{skill.items}</span>
                 </Reveal>
               ))}
             </div>
@@ -1004,12 +809,7 @@ export default function Portfolio() {
 
         <section className="section education-section" id="education">
           <div className="shell">
-            <SectionTitle
-              number="07"
-              eyebrow="Education"
-              title="International training in intelligent field robotics."
-              description="A multidisciplinary path combining robotics, perception, control, autonomous systems and field deployment."
-            />
+            <SectionTitle title="Education" />
 
             <div className="education-list">
               {education.map((item, index) => (
@@ -1018,7 +818,6 @@ export default function Portfolio() {
                   delay={index * 0.06}
                   key={item.degree}
                 >
-                  <span>{String(index + 1).padStart(2, '0')}</span>
                   <time>{item.period}</time>
                   <div className="education-main">
                     <small>{item.institution}</small>
@@ -1032,13 +831,34 @@ export default function Portfolio() {
           </div>
         </section>
 
+        <section className="dark-section" id="about">
+          <div className="shell about-layout">
+            <Reveal>
+              <h2>About</h2>
+            </Reveal>
+
+            <Reveal className="about-text" delay={0.08}>
+              <p>
+                My Erasmus Mundus MSc in Intelligent Field Robotic Systems has given me
+                experience across different robotic platforms. My work focuses mainly on
+                ROS/ROS 2, localization, perception, navigation, planning and robot learning,
+                with projects across underwater, mobile, legged, aerial and manipulation systems.
+              </p>
+              <div>
+                <a href={`mailto:${profile.email}`}>{profile.email}</a>
+                <a href={profile.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+                <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
+                <a href={assetPath(profile.resume)} target="_blank" rel="noreferrer">CV ↗</a>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
         <section className="section projects-section" id="archive">
           <div className="shell">
             <SectionTitle
-              number="08"
-              eyebrow="Additional robotics work"
-              title="More systems, experiments and engineering studies."
-              description="The six flagship case studies stay above. Filter the remaining work by expertise or platform, or open the complete project archive."
+              title="Additional Projects"
+              description="Other robotics projects from my MSc, research work and independent development."
             />
 
             <div className="archive-toolbar">
@@ -1079,7 +899,7 @@ export default function Portfolio() {
                 className={archiveCapability === 'All' ? 'active' : ''}
                 onClick={() => setArchiveCapability('All')}
               >
-                All expertise
+                All areas
               </button>
               {capabilityGroups.map((capability) => (
                 <button
@@ -1108,9 +928,7 @@ export default function Portfolio() {
                 >
                   Clear filters
                 </button>
-              ) : (
-                <span>Flagship projects are presented separately above.</span>
-              )}
+              ) : null}
             </div>
 
             {displayedProjects.length ? (
@@ -1142,6 +960,10 @@ export default function Portfolio() {
                         <time>{project.period}</time>
                       </div>
 
+                      {deploymentForProject(project) ? (
+                        <span className="deployment-badge archive-deployment">{deploymentForProject(project)}</span>
+                      ) : null}
+
                       <ContextLogos
                         logos={project.logos}
                         className="archive-context-logos"
@@ -1158,7 +980,7 @@ export default function Portfolio() {
                         className="archive-open"
                         onClick={() => setSelectedProject(project)}
                       >
-                        View case study <span>→</span>
+                        View project <span>→</span>
                       </button>
                     </div>
                   </Reveal>
@@ -1195,8 +1017,7 @@ export default function Portfolio() {
         <section className="contact-section" id="contact">
           <div className="shell contact-layout">
             <Reveal>
-              <p className="section-eyebrow">Contact</p>
-              <h2>Let&apos;s build autonomous robots that work outside the lab.</h2>
+              <h2>Contact</h2>
             </Reveal>
 
             <Reveal className="contact-copy" delay={0.08}>

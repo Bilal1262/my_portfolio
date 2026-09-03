@@ -62,9 +62,8 @@ export default function ProjectArchive() {
         <section className="section archive-page-intro">
           <div className="shell">
             <div className="section-title archive-page-heading">
-              <div><span>00</span><p>Autonomy engineering / complete archive</p></div>
-              <h2>One robotics foundation, applied across platforms.</h2>
-              <p className="section-lead">Explore all projects by robot system or by the capability most relevant to your role: perception, localization, navigation, robot software or learning.</p>
+              <h2>All Projects</h2>
+              <p className="section-lead">Filter by platform or technical area.</p>
             </div>
           </div>
         </section>
@@ -86,7 +85,7 @@ export default function ProjectArchive() {
             </div>
 
             <div className="archive-capability-filters" aria-label="Filter projects by engineering capability">
-              <button className={capability === 'all' ? 'active' : ''} type="button" onClick={() => setCapability('all')}>All expertise</button>
+              <button className={capability === 'all' ? 'active' : ''} type="button" onClick={() => setCapability('all')}>All areas</button>
               {capabilityGroups.map((item) => (
                 <button className={capability === item.id ? 'active' : ''} type="button" onClick={() => setCapability(item.id)} key={item.id}>{item.label}</button>
               ))}
@@ -96,7 +95,7 @@ export default function ProjectArchive() {
               <p><strong>{filteredProjects.length}</strong> {filteredProjects.length === 1 ? 'project' : 'projects'}</p>
               {system !== 'all' || capability !== 'all' || query ? (
                 <button type="button" onClick={() => { setSystem('all'); setCapability('all'); setQuery('') }}>Clear filters</button>
-              ) : <span>Filter by platform, engineering capability or technology.</span>}
+              ) : null}
             </div>
 
             {filteredProjects.length ? (

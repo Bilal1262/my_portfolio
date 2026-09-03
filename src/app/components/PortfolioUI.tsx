@@ -7,7 +7,7 @@ import {
   Bars3Icon,
   XMarkIcon
 } from '@heroicons/react/24/outline'
-import { capabilitiesForProject, profile, type Project } from '../data/portfolio'
+import { capabilitiesForProject, deploymentForProject, profile, type Project } from '../data/portfolio'
 import { assetPath } from '../lib/paths'
 import ProjectImage from './ProjectImage'
 
@@ -97,6 +97,7 @@ export function SiteHeader({ page = 'home' }: { page?: 'home' | 'projects' }) {
           {links.map(([label, href]) => (
             <a href={href} key={label}>{label}</a>
           ))}
+          <a className="nav-cv" href={assetPath(profile.resume)} target="_blank" rel="noreferrer">CV ↗</a>
         </div>
 
         <button
@@ -115,6 +116,7 @@ export function SiteHeader({ page = 'home' }: { page?: 'home' | 'projects' }) {
           {links.map(([label, href]) => (
             <a href={href} key={label} onClick={() => setOpen(false)}>{label}</a>
           ))}
+          <a href={assetPath(profile.resume)} target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>Download CV ↗</a>
         </div>
       </div>
     </header>
@@ -155,12 +157,13 @@ export function ProjectCard({
           <small>{system.label}</small>
           <time>{project.period}</time>
         </div>
+        {deploymentForProject(project) ? <span className="deployment-badge archive-deployment">{deploymentForProject(project)}</span> : null}
         <h3>{project.title}</h3>
         <p className="project-stack">{(project.stack ?? project.technologies.slice(0, 5)).join(' · ')}</p>
         <p>{conciseSummary(project)}</p>
         {project.evidence ? <p className="project-evidence">{project.evidence}</p> : null}
         <button className="archive-open" type="button" onClick={() => onOpen(project)}>
-          View case study <span aria-hidden="true">→</span>
+          View project <span aria-hidden="true">→</span>
         </button>
       </div>
     </article>
@@ -220,6 +223,7 @@ export function ProjectModal({ project, onClose }: { project: Project; onClose: 
             <span>{systemMeta[project.system].label} Robotics · {project.area}</span>
             <span>{project.period}</span>
             <span>{project.status}</span>
+            {deploymentForProject(project) ? <span className="deployment-badge">{deploymentForProject(project)}</span> : null}
           </div>
           <h2 id={`case-${project.id}`}>{project.title}</h2>
           <p className="modal-stack">{(project.stack ?? project.technologies.slice(0, 5)).join(' · ')}</p>
@@ -227,7 +231,7 @@ export function ProjectModal({ project, onClose }: { project: Project; onClose: 
 
           <div className="modal-columns">
             <section><p className="mini-label">Problem</p><p>{project.challenge}</p></section>
-            <section><p className="mini-label">My contribution</p><p>{project.contribution}</p></section>
+            <section><p className="mini-label">What I built</p><p>{project.contribution}</p></section>
           </div>
           {project.architecture.length ? (
             <section className="modal-results">
@@ -253,7 +257,7 @@ export function ProjectModal({ project, onClose }: { project: Project; onClose: 
           </section>
           {project.limitations ? (
             <section>
-              <p className="mini-label">Limitations</p>
+              <p className="mini-label">Limitations &amp; next engineering step</p>
               <p>{project.limitations}</p>
             </section>
           ) : null}
