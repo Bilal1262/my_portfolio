@@ -525,9 +525,9 @@ export default function Portfolio() {
               <p className="hero-kicker">Field Robotics · Autonomous Systems</p>
 
               <p className="hero-description">
-                I develop autonomous robotic systems with experience in ROS/ROS 2,
-                localization, perception, navigation and robot learning across marine,
-                mobile, legged, aerial and manipulation platforms.
+                I build autonomy software for marine, mobile, legged and aerial robots,
+                as well as robotic manipulators. My work includes ROS and ROS 2,
+                localization, perception, navigation and robot learning.
               </p>
 
               <p className="hero-education">
@@ -834,10 +834,11 @@ export default function Portfolio() {
 
             <Reveal className="about-text" delay={0.08}>
               <p>
-                My MSc in Intelligent Field Robotic Systems has given me experience
-                across different robotic platforms. My work focuses on ROS/ROS 2,
-                localization, perception, navigation, planning and robot learning,
-                with projects across underwater, mobile, legged, aerial and manipulation systems.
+                I am completing an Erasmus Mundus MSc in Intelligent Field Robotic
+                Systems. During the programme, I have worked on underwater vehicles,
+                mobile and legged robots, UAVs and manipulators. Most of my projects
+                involve ROS or ROS 2, with a focus on localization, perception,
+                navigation, planning and robot learning.
               </p>
               <div>
                 <a href={`mailto:${profile.email}`}>{profile.email}</a>

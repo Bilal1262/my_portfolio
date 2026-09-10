@@ -71,7 +71,7 @@ export const profile = {
   resume: '/resume/Bilal_Ahmed_Qaimkhani_CV.pdf',
   heroImage: '/projects_picture/minigirona_1.png',
   availability:
-    'Open to robotics software, autonomy and research engineering roles across Europe.'
+    'I am open to robotics software, autonomy and research engineering roles across Europe.'
 }
 
 export const roles = [
@@ -135,7 +135,8 @@ export const capabilityGroups: Array<{
       'mobile-autonomy',
       'active-navigation',
       'marsim',
-      'multi-robot'
+      'multi-robot',
+      'wind-turbine-inspection'
     ]
   },
   {
@@ -151,7 +152,8 @@ export const capabilityGroups: Array<{
       'can-robots-code',
       'frontier_exploration',
       'mobile-autonomy',
-      'tiago-assistant'
+      'tiago-assistant',
+      'wind-turbine-inspection'
     ]
   },
   {
@@ -181,7 +183,7 @@ export const experience = [
     role: 'Visiting Scholar — Agentic Recovery for Marine Robotics',
     logo: '/companies_logo/herriot_watt.png',
     description:
-      'Developing MAESTRO, a multi-agent ROS 2 framework for autonomous underwater recovery · 255 fault/recovery scenarios · 89% recovery-decision accuracy.'
+      'I am developing MAESTRO, a multi-agent ROS 2 framework for fault diagnosis and recovery in autonomous underwater missions. It has been evaluated on 255 fault-recovery scenarios, with 89% recovery-decision accuracy.'
   },
   {
     period: '2025',
@@ -189,7 +191,7 @@ export const experience = [
     role: 'Research Intern — Multimodal Underwater 3D Reconstruction',
     logo: '/companies_logo/coe_marble.png',
     description:
-      'Developed stereo, sonar and AUV-pose fusion for offshore-structure reconstruction on real underwater data · presented at Breaking the Surface 2025.'
+      'I developed a stereo, sonar and AUV-pose fusion pipeline for reconstructing offshore structures from real underwater data, and presented the work at Breaking the Surface 2025.'
   },
   {
     period: '2024–2025',
@@ -197,7 +199,7 @@ export const experience = [
     role: 'Volunteer Researcher — MiniGirona AUV',
     logo: '/companies_logo/cirs_girona.png',
     description:
-      'Integrated sonar initialization, DVL/INS localization, mission behaviors and manipulation on the real MiniGirona I-AUV · RAMI 2025 2nd Place · ROBOT 2025.'
+      'I worked on sonar initialization, DVL/INS localization, mission behaviors and manipulation for the MiniGirona I-AUV. The team placed second at RAMI 2025, and the work was published at ROBOT 2025.'
   }
 ]
 
@@ -302,7 +304,7 @@ export const technicalSkills = [
   },
   {
     group: 'Simulation',
-    items: 'Gazebo · MuJoCo · StoneFish · Panda3D'
+    items: 'Gazebo · Webots · MuJoCo · StoneFish · Panda3D'
   }
 ]
 
@@ -319,31 +321,32 @@ const projectRecords: Project[] = [
     status: 'Research Prototype',
     featured: true,
     summary:
-      'Built and benchmarked nominal, domain-randomized and context-conditioned PPO controllers for Unitree Go2 locomotion under controlled dynamics shifts.',
+      'I trained and compared three Unitree Go2 locomotion controllers: nominal PPO, domain-randomized PPO and context-conditioned PPO. The benchmark applies controlled changes to the robot dynamics.',
     challenge:
-      'A locomotion policy that walks well under nominal simulation dynamics can fail under changed mass, contact friction, payload, actuator authority, latency, terrain or disturbances. The comparison needed fixed checkpoints, shared scenarios and seeds, non-privileged observations, recoverable raw evidence and explicit reporting of failure cases.',
+      'A policy trained under nominal simulation conditions may fail when the mass, contact friction, payload, actuator authority, latency or terrain changes, or when the robot is disturbed. To compare the controllers fairly, I used fixed checkpoints, the same scenarios and seeds, non-privileged observations, recoverable raw data and explicit failure reporting.',
     architecture: [
       'MuJoCo and Gymnasium Unitree Go2 velocity-tracking environment with PD joint control and a 48-dimensional proprioceptive observation that excludes hidden dynamics parameters',
       'Staged warm-start pipeline from nominal PPO to DR-PPO and Context-DR-PPO, with curriculum randomization and history-based context features',
       'Controlled dynamics sweeps for mass, friction, payload, motor strength, latency and incline, plus rough terrain, pushes, combined OOD conditions and sudden parameter shifts',
       'Seeded evaluation runner that streams per-step and per-episode telemetry, progress and ETA while preserving partial evidence after interruption',
-      'Automated bootstrap/Wilson reporting and headless 720p video generation with synchronized policies, telemetry overlays and a physical challenge arena'
+      'Automated bootstrap/Wilson reporting and headless 720p video generation with synchronized policies, minimal tracking telemetry and a physical challenge arena'
     ],
     contribution:
-      'Designed and implemented the complete research prototype: environment and control stack, domain randomization, staged PPO training, context encoder, event-driven dynamics, benchmark suite, statistical reports, automated tests and portfolio visualization pipeline.',
+      'I built the environment and control stack, set up domain randomization and staged PPO training, and implemented the context encoder and event-driven dynamics. I also wrote the benchmark runner, statistical reports, automated tests and visualization tools.',
     role: 'Independent robot-learning research engineer and developer',
     team: 'Solo research portfolio project',
     evaluation:
-      'Compared three frozen controllers across 47 nominal, in-distribution and out-of-distribution scenarios with 10 seeded episodes per policy/scenario pair, producing 1,410 episodes and full trajectory telemetry. The evaluation covers parameter sweeps, rough terrain, pushes, combined shifts and sudden payload, friction and motor events.',
+      'I evaluated three frozen controllers in 47 nominal, in-distribution and out-of-distribution scenarios. Each policy-scenario pair used 10 seeded episodes, giving 1,410 episodes with full trajectory telemetry. The tests include parameter sweeps, rough terrain, pushes, combined shifts, and sudden changes to payload, friction and motor strength.',
     results: [
       'Evaluated 3 controllers over 1,410 controlled episodes spanning 47 scenarios',
       'DR-PPO reduced mean OOD linear-tracking RMSE by 22.3% relative to nominal PPO',
+      'Context-DR-PPO achieved the highest overall success rate at 89.4%',
       'Measured 86.5% aggregate success and 0.222 m/s mean tracking RMSE across the complete three-policy benchmark',
       'Measured 5.49 s mean recorded recovery time for Context-DR-PPO across sudden dynamics shifts',
-      'Validated the implementation with 25 automated tests and reproducible raw-data, plot, report and video generation'
+      'Validated the implementation with 28 automated tests and reproducible raw-data, plot, report and video generation'
     ],
     limitations:
-      'Results are simulation-only and do not establish transfer to a physical Go2. Robustness is not uniform across all shifts: in the compact challenge arena DR-PPO reaches the payload, motor-fault and push zones before falling, while nominal and Context-DR controllers stall near the rough/ramp transition. Hardware validation and further terrain/event curriculum training remain future work.',
+      'These results are limited to simulation and do not establish transfer to a physical Go2. The challenge arena combines low friction, foot-scale roughness, an incline, payload changes, actuator loss and a lateral push; some policies still terminate before reaching the finish. The next steps are hardware tests and further training on terrain and event changes.',
     technologies: [
       'Python',
       'MuJoCo',
@@ -354,11 +357,12 @@ const projectRecords: Project[] = [
       'PyTorch',
       'Context Encoder',
       'Statistical Evaluation',
-      'OpenCV',
+      'Pillow',
       'FFmpeg'
     ],
     cover: '/projects_picture/adaptive_sim2real_go2_cover.png',
     gallery: [
+      '/projects_picture/adaptive_sim2real_go2_architecture.png',
       '/projects_picture/adaptive_sim2real_go2_comparison.png',
       '/projects_picture/adaptive_sim2real_go2_success.png',
       '/projects_picture/adaptive_sim2real_go2_recovery.png'
@@ -368,15 +372,21 @@ const projectRecords: Project[] = [
         src: '/projects_picture/adaptive_sim2real_go2_challenge.mp4',
         poster: '/projects_picture/adaptive_sim2real_go2_comparison.png',
         caption:
-          'Synchronized nominal, DR and Context-DR controllers on the compact physical challenge course with position-triggered payload, motor and push events.',
+          'Synchronized nominal, DR and Context-DR controllers on the revised challenge course with foot-scale roughness and position-triggered payload, motor and push events.',
         layout: 'ultrawide'
       },
       {
         src: '/projects_picture/adaptive_sim2real_go2_recovery.mp4',
         poster: '/projects_picture/adaptive_sim2real_go2_cover.png',
         caption:
-          'Context-DR-PPO responding to a sudden 4 kg payload event with command, dynamics and performance telemetry.',
+          'Context-DR-PPO responding to a sudden 4 kg payload event with a minimal target-versus-speed overlay.',
         layout: 'wide'
+      }
+    ],
+    links: [
+      {
+        label: 'GitHub repository',
+        href: 'https://github.com/Bilal1262/AdaptiveSim2Real-Go2'
       }
     ]
   },
@@ -392,9 +402,9 @@ const projectRecords: Project[] = [
     status: 'Research Prototype',
     featured: true,
     summary:
-      'Integrated TIAGo navigation with ROS 2, Nav2, REST and MQTT interfaces, health monitoring and repeatable commissioning tests.',
+      'I connected TIAGo navigation to ROS 2 and Nav2, then added REST and MQTT interfaces, health monitoring and repeatable commissioning tests.',
     challenge:
-      'A working Nav2 demo is not yet an integration-ready robot. External systems need stable command interfaces, readiness checks, clear mission states, pause/resume/cancel control, fault evidence and measurable acceptance results without coupling directly to Nav2 internals.',
+      'A Nav2 demonstration does not by itself provide an interface for external systems. The integration needed stable commands, readiness checks, explicit mission states, pause, resume and cancel controls, recorded fault evidence and measurable acceptance tests without exposing Nav2 internals.',
     architecture: [
       'Mission interfaces accept goals from a ROS 2 PoseStamped topic, a FastAPI REST service and a VDA5050-inspired MQTT fleet subset',
       'A C++ integration adapter validates readiness, translates commands and manages goal, pause, resume and cancel state',
@@ -404,11 +414,11 @@ const projectRecords: Project[] = [
       'Commissioning and failure tooling writes CSV/JSON reports and MCAP evidence for repeatable diagnosis'
     ],
     contribution:
-      'Designed and implemented the complete integration layer: the C++ Nav2 adapter, Python health and failure tooling, REST and MQTT fleet gateway, pause/resume/cancel behavior, commissioning scenarios, structured reports and launch orchestration.',
+      'I wrote the C++ Nav2 adapter, the Python health monitor and failure tools, and the REST and MQTT fleet gateway. I also implemented pause, resume and cancel handling, then added commissioning scenarios, structured reports and launch files.',
     role: 'Independent robotics software engineer and system integrator',
     team: 'Solo portfolio project built on the TIAGo simulation and Nav2 stack',
     evaluation:
-      'Executed three repeatable navigation missions in the PAL office simulation, exercised mission control through ROS and REST, inspected live Gazebo/RViz behavior and ran a controlled localization-degradation test with structured evidence capture.',
+      'I ran three repeatable navigation missions in the PAL office simulation and controlled them through both ROS and REST. I inspected the robot in Gazebo and RViz, then ran a controlled localization-degradation test and recorded the results in a structured format.',
     results: [
       'Completed 3 of 3 commissioning missions successfully',
       'Measured a mean navigation time of 8.53 seconds across the commissioning run',
@@ -444,22 +454,22 @@ const projectRecords: Project[] = [
     status: 'Research Prototype',
     featured: true,
     summary:
-      'Built contact-aware failure detection and autonomous recovery for behavior-cloned Franka peg insertion in MuJoCo.',
+      'I added contact-based failure detection and autonomous recovery to a behavior-cloned Franka peg-insertion task in MuJoCo.',
     challenge:
-      'Contact-rich insertion compounds perception, alignment and force-control errors. A policy can achieve low held-out action error yet drift outside the demonstration distribution in closed loop, while recovery must respond without exceeding robot safety limits.',
+      'Peg insertion can fail through errors in perception, alignment or force control. Low action error on held-out data does not guarantee that a policy will remain within the demonstration distribution during a closed-loop rollout. Any recovery action must also stay within the robot safety limits.',
     architecture: [
       'MuJoCo/Gymnasium square-peg environment with a collision-enabled Franka Menagerie presentation model and a checkpoint-compatible training proxy',
       'HDF5 pipeline for 200 demonstrations containing front and wrist RGB, joint state, gripper width, force/torque, actions, task phase and failure labels',
       'PyTorch state-only and multimodal vision/state/force behavior-cloning policies with deterministic training histories and checkpointed validation loss',
       'Windowed rule-based failure detector feeding a retry-limited recovery manager with regrasp, spiral search, withdraw/retry and safe-abort skills',
-      'Seeded evaluation, controlled disturbance injection, structured metrics and truthful 16:9 rollout visualization'
+      'Seeded evaluation, controlled disturbance injection, structured metrics and 16:9 rollout visualization based on recorded telemetry'
     ],
     contribution:
-      'Designed and implemented the complete project: simulator and Cartesian control, scripted demonstration policy, dataset schema, state and multimodal BC models, temporal failure rules, recovery skills, evaluation reports, tests and portfolio-ready visual diagnostics.',
+      'I developed the simulator and Cartesian controller, scripted the demonstration policy, and defined the dataset format. I trained the state-only and multimodal behavior-cloning models, then added temporal failure rules, recovery skills, evaluation reports, tests and rollout visualizations.',
     role: 'Independent robotics research engineer and developer',
     team: 'Solo research project',
     evaluation:
-      'Collected 200 successful randomized demonstrations, compared state and multimodal BC on held-out transitions, executed both checkpoints in closed loop, and ran a controlled object-slip test on the collision-enabled Franka with measured detection, recovery, force and task outcome.',
+      'I collected 200 successful randomized demonstrations and compared the state-only and multimodal behavior-cloning models on held-out transitions. I then ran both checkpoints in closed loop and tested a controlled object slip on the collision-enabled Franka, recording detection, recovery, force and task outcome.',
     results: [
       'Completed the nominal collision-enabled Franka insertion in 110 control steps with 9.7 N peak measured force',
       'Detected a controlled OBJECT_SLIP, selected REGRASP once and resumed the task to successful insertion at step 175',
@@ -468,7 +478,7 @@ const projectRecords: Project[] = [
       'Validated the implementation with Ruff, mypy and 16 automated tests'
     ],
     limitations:
-      'The learned checkpoints were trained on the lightweight proxy and did not complete end-to-end insertion within 500 steps. The selected object-slip recovery succeeded, but broader detector precision and recovery robustness still require evaluation across more seeds and contact disturbances before making general success-rate claims.',
+      'The learned checkpoints were trained on the lightweight proxy and did not complete end-to-end insertion within 500 steps. The selected object-slip recovery succeeded, but detector precision and recovery performance still need to be tested across more seeds and contact disturbances before reporting a general success rate.',
     technologies: [
       'Python',
       'PyTorch',
@@ -516,9 +526,9 @@ const projectRecords: Project[] = [
     status: 'Research Prototype',
     featured: true,
     summary:
-      'Built bathymetric pose-graph SLAM from real AUV dead-reckoning and multibeam records for GPS-denied navigation.',
+      'I implemented bathymetric pose-graph SLAM using real AUV dead-reckoning and multibeam records collected without GNSS.',
     challenge:
-      'Underwater vehicles accumulate dead-reckoning drift without GNSS, while sparse or repetitive seabed geometry makes reliable submap association and registration difficult.',
+      'Without GNSS, an underwater vehicle accumulates dead-reckoning drift. Sparse or repetitive seabed geometry also makes it difficult to associate and register bathymetric submaps reliably.',
     architecture: [
       'Streaming index for 34,048,732 XYZ measurements and an exact-layout decoder for 97,318 AUVLib Cereal pings',
       'Quality-checked monotonic association of 296 measured submaps with representative DR states',
@@ -526,11 +536,11 @@ const projectRecords: Project[] = [
       'Huber-robust GTSAM Pose2 optimization with trajectory, map-consistency and candidate-audit outputs'
     ],
     contribution:
-      'Designed and implemented the complete pipeline: large-file ingestion, Cereal decoding, submap-to-ping association, point-cloud preprocessing, GICP registration, robust graph optimization, sensitivity analysis and reproducible reporting.',
+      'I implemented the pipeline from data ingestion to graph optimization, including the Cereal decoder, submap-to-ping association, point-cloud preprocessing and GICP registration. I also ran the sensitivity analysis and produced the reports.',
     role: 'Independent researcher and developer',
     team: 'Solo research project using the published KTH Antarctica 2019 dataset',
     evaluation:
-      'Ran all 296 embedded submaps and manually audited all seven proposed candidates independently of the algorithm decision. Repeated the experiment after excluding associations above 30 m and 20 m to test sensitivity to the inferred mapping.',
+      'I processed all 296 embedded submaps and manually reviewed the seven proposed candidates without using the algorithm decision as a guide. I repeated the experiment after removing associations above 30 m and 20 m to check sensitivity to the inferred mapping.',
     results: [
       'Decoded 97,318 DR states and 36,087,441 multibeam points from the AUVLib Cereal archive',
       'Improved accepted-edge bathymetric overlap consistency by 6.3% while reducing the robust graph objective',
@@ -572,9 +582,9 @@ const projectRecords: Project[] = [
     status: 'Research Prototype',
     featured: true,
     summary:
-      'Built an AQUALOC-based research system that adapts frozen DINOv2 descriptors for underwater place localization and connects the representation to depth-assisted localization and learned two-second AUV waypoints.',
+      'Using AQUALOC, I adapted frozen DINOv2 descriptors for underwater place localization. I also tested depth-assisted localization and used the visual representation to predict AUV waypoints two seconds ahead.',
     challenge:
-      'Underwater appearance changes can break visual place recognition, while a useful robotics system must connect retrieval to synchronized vehicle state and navigation outputs without overstating place recognition as SLAM or path planning.',
+      'Changes in underwater appearance can alter visual place-recognition results. The project therefore links image retrieval to synchronized vehicle state and navigation outputs, while treating place recognition separately from SLAM and path planning.',
     architecture: [
       'Synchronizes 4,586 AQUALOC camera frames with 45,859 IMU measurements, 1,120 depth records and the corrected COLMAP trajectory',
       'Uses a frozen DINOv2 ViT-S/14 encoder to produce normalized 384-dimensional global image descriptors',
@@ -584,11 +594,11 @@ const projectRecords: Project[] = [
       'Connects adapted visual features to calibrated depth assistance and a learned relative waypoint at a two-second horizon'
     ],
     contribution:
-      'Designed and implemented the complete repository: multimodal synchronization, DINOv2 feature caching, underwater degradation suite, residual-adapter training, leakage-aware retrieval evaluation, sensor experiments, waypoint prediction, portfolio figures and synchronized baseline-versus-adapted videos.',
+      'I implemented the multimodal synchronization, DINOv2 feature cache, underwater degradation suite and residual-adapter training. The repository also includes retrieval evaluation with temporal exclusion, sensor experiments, waypoint prediction, figures and synchronized comparison videos.',
     role: 'Independent robotics researcher and developer',
     team: 'Solo research portfolio project using the published AQUALOC dataset',
     evaluation:
-      'Used a chronological 60/20/20 train, validation and test split on AQUALOC Harbor Sequence 01. Retrieval was measured on 180 eligible held-out queries after temporal exclusion, with clean and degraded views evaluated using Recall@K, coverage and metric position error.',
+      'I split AQUALOC Harbor Sequence 01 chronologically into 60% training, 20% validation and 20% test data. After temporal exclusion, 180 held-out queries were eligible for retrieval evaluation. I measured clean and degraded views using Recall@K, coverage and metric position error.',
     results: [
       'Improved clean Recall@1 from 0.433 to 0.500 and Recall@5 from 0.528 to 0.572',
       'Reduced clean median localization error from 3.90 m to 1.50 m',
@@ -650,9 +660,9 @@ const projectRecords: Project[] = [
     status: 'Research Prototype',
     featured: true,
     summary:
-      'Adapted DINOv2 for underwater place recognition under low light, haze, colour attenuation, blur and marine snow.',
+      'I adapted DINOv2 for underwater place recognition and tested it under low light, haze, colour attenuation, blur and marine snow.',
     challenge:
-      'Foundation visual descriptors are strong on clean imagery but underwater lighting loss, backscatter, colour attenuation and suspended particles can change retrieval rankings precisely when reliable loop closures are needed.',
+      'Descriptors that work on clean images may retrieve different places when underwater images lose light and colour or contain backscatter and suspended particles. These are also the conditions in which a system needs dependable loop-closure candidates.',
     architecture: [
       'ROS1 image extraction at 5 Hz with TUM timestamp–pose association',
       'Frozen DINOv2 ViT-S/14 with a zero-initialized 384→512→384 residual adapter',
@@ -660,11 +670,11 @@ const projectRecords: Project[] = [
       'Exact cosine retrieval with temporal exclusion and pose-based Recall@K evaluation'
     ],
     contribution:
-      'Designed and implemented the complete research pipeline: bag ingestion, leakage-resistant manifests, controlled underwater augmentation, residual-adapter training, descriptor retrieval, robustness evaluation and qualitative reporting.',
+      'I implemented ROS bag ingestion, dataset manifests, controlled underwater augmentations and residual-adapter training. I then evaluated descriptor retrieval on the held-out trajectory and prepared the quantitative and qualitative comparisons.',
     role: 'Independent researcher and developer',
     team: 'Solo research project',
     evaluation:
-      'Trained on balanced MCLab1, MCLab2 and Fjord1 trajectories, then froze the checkpoint and evaluated on untouched Fjord2. Of 1,095 candidate queries, 665 had a valid geometric revisit after temporal exclusion.',
+      'I trained on the balanced MCLab1, MCLab2 and Fjord1 trajectories. After freezing the checkpoint, I evaluated it on the untouched Fjord2 trajectory. Temporal exclusion left 665 of the 1,095 candidate queries with a valid geometric revisit.',
     results: [
       'Improved clean Recall@5 from 49.32% to 51.13% on held-out Fjord2',
       'Improved macro Recall@1 by +1.77, +3.34 and +5.41 percentage points at corruption severities 1–3',
@@ -711,9 +721,9 @@ const projectRecords: Project[] = [
       }
     ],
     summary:
-      'Developed multi-agent fault diagnosis, mission-impact reasoning and operator-approved ROS 2 recovery for autonomous underwater missions.',
+      'I am developing a multi-agent system that diagnoses faults, assesses their effect on a mission and proposes ROS 2 recovery actions for operator approval.',
     challenge:
-      'Long-duration AUV missions must diagnose and recover from sensor, localization and thruster faults despite incomplete pre-programmed recovery logic and limited communication.',
+      'During a long AUV mission, sensor, localization or thruster faults may occur outside the cases covered by pre-programmed recovery logic. Communication with an operator may also be limited.',
     architecture: [
       'Residual-based anomaly evidence',
       'Multi-agent diagnosis and mission-impact reasoning',
@@ -721,11 +731,11 @@ const projectRecords: Project[] = [
       'Validation and operator approval before deployment'
     ],
     contribution:
-      'Designed the multi-agent architecture, mission-impact reasoning, evaluation workflow and constrained ROS 2 code-generation pipeline.',
+      'I designed the multi-agent architecture and mission-impact reasoning, and built the evaluation workflow and constrained ROS 2 code-generation pipeline.',
     role: 'Primary researcher and system architect',
     team: 'Research project supervised at Heriot-Watt University',
     evaluation:
-      'Evaluated across 255 fault-recovery scenarios with model benchmarking, operator/judge modes and validated ROS 2 node generation.',
+      'The current evaluation covers 255 fault-recovery scenarios. It compares models, includes operator and judge modes, and checks generated ROS 2 nodes before they are used.',
     results: [
       '89% recovery-decision accuracy across 255 scenarios',
       'Improved Coordinated Success Score from 2.42 to 3.92',
@@ -733,7 +743,7 @@ const projectRecords: Project[] = [
       'Operator approval retained before recovery deployment'
     ],
     limitations:
-      'Current evaluation is primarily simulation-based; broader hardware trials remain ongoing.',
+      'Most of the current evaluation is simulation-based. Hardware trials are still in progress.',
     technologies: ['ROS 2', 'LLM Agents', 'RAG', 'FAISS', 'StoneFish'],
     cover: '/projects_picture/maestro_cover.png',
     gallery: [
@@ -766,9 +776,9 @@ const projectRecords: Project[] = [
       }
     ],
     summary:
-      'Integrated sonar initialization, DVL/INS localization, behavior-tree missions, stereo perception and manipulation on the MiniGirona AUV.',
+      'I worked on sonar initialization, DVL/INS localization, behavior-tree missions, stereo perception and manipulation for the MiniGirona AUV.',
     challenge:
-      'Underwater autonomy requires multiple perception, localization, planning and intervention modules to cooperate under poor visibility and uncertain sensing.',
+      'The AUV has to coordinate perception, localization, planning and intervention modules despite poor visibility and uncertain sensor measurements.',
     architecture: [
       'Mechanical-sonar voting initialization',
       'DVL/INS/sonar EKF localization',
@@ -776,11 +786,11 @@ const projectRecords: Project[] = [
       'Stereo perception and task-priority manipulation'
     ],
     contribution:
-      'Owned major parts of initialization, localization updates, mission integration, stereo perception and manipulation behavior development.',
+      'I worked on sonar initialization, localization updates, mission integration, stereo perception and manipulation behaviors.',
     role: 'Autonomy and localization contributor',
     team: 'CIRS Lab MiniGirona research team',
     evaluation:
-      'Validated in simulation and real-robot experiments and integrated into RAMI 2025 competition missions in La Spezia, Italy.',
+      'The software was tested in simulation and on the physical AUV, then used in the RAMI 2025 competition missions in La Spezia, Italy.',
     results: [
       '2nd place at RAMI 2025 in La Spezia, Italy',
       'Validated sonar-based initialization on MiniGirona',
@@ -818,9 +828,9 @@ const projectRecords: Project[] = [
     status: 'Ongoing',
     featured: true,
     summary:
-      'Built a ROS 2 planetary rover simulator with terrain-aware motion, environmental effects and configurable sensors.',
+      'I built a ROS 2 simulator for planetary rovers with terrain-dependent motion, environmental effects and configurable sensors.',
     challenge:
-      'Planetary autonomy needs repeatable testing across terrain, wheel slip, sinkage, rocks, dust and degraded sensing.',
+      'Testing planetary autonomy requires repeatable control over the terrain, wheel slip, sinkage, rocks, dust and sensor degradation.',
     architecture: [
       'Panda3D rendering and terrain system',
       'Rover motion and terramechanics abstractions',
@@ -828,11 +838,11 @@ const projectRecords: Project[] = [
       'ROS 2 telemetry and autonomy interfaces'
     ],
     contribution:
-      'Designed the simulator architecture, environment, sensor interfaces, rover abstractions and ROS 2 integration.',
+      'I designed the simulator architecture and environment, then implemented the sensor interfaces, rover abstractions and ROS 2 integration.',
     role: 'Independent developer',
     team: 'Solo project',
     evaluation:
-      'Used to test perception, localization and navigation modules under configurable environmental conditions.',
+      'I used the simulator to test perception, localization and navigation modules under configurable environmental conditions.',
     results: [
       'Publishes odometry, IMU, stereo, LiDAR and environment topics',
       'Supports terrain, dust, wind, rocks and lighting controls',
@@ -877,9 +887,9 @@ const projectRecords: Project[] = [
       }
     ],
     summary:
-      'Fused stereo depth, forward-looking sonar and AUV poses to reconstruct offshore structures underwater.',
+      'I combined stereo depth, forward-looking sonar and AUV poses to reconstruct underwater offshore structures.',
     challenge:
-      'Forward-looking sonar has weak vertical observability, making direct 3D reconstruction geometrically ambiguous.',
+      'Forward-looking sonar provides little information about elevation, so a direct conversion from sonar measurements to 3D geometry is ambiguous.',
     architecture: [
       'FoundationStereo disparity',
       'AUV pose transformation',
@@ -888,11 +898,11 @@ const projectRecords: Project[] = [
       'Point-cloud fusion'
     ],
     contribution:
-      'Developed the multimodal fusion workflow, probabilistic height estimation and point-cloud generation pipeline.',
+      'I developed the multimodal fusion workflow, the probabilistic height estimator and the point-cloud generation pipeline.',
     role: 'Research intern and primary implementation contributor',
     team: 'COE MARBLE research team',
     evaluation:
-      'Compared reconstruction consistency across multiple passes and examined the effect of probabilistic elevation estimation.',
+      'I compared reconstruction consistency over several passes and examined how probabilistic elevation estimation affected the result.',
     results: [
       'Generated dense stereo point clouds from AUV imagery',
       'Reduced sonar vertical ambiguity using particle filtering',
@@ -921,9 +931,9 @@ const projectRecords: Project[] = [
     status: 'Completed',
     featured: true,
     summary:
-      'Trained a curriculum-based PPO policy for humanoid walking, goal reaching and obstacle navigation in MuJoCo.',
+      'I trained a PPO policy in MuJoCo using separate curriculum stages for walking, reaching a goal and navigating around obstacles.',
     challenge:
-      'Training balance, locomotion and navigation simultaneously produced unstable policies and frequent falls.',
+      'When balance, locomotion and navigation were trained at the same time, the policies were unstable and the humanoid fell frequently.',
     architecture: [
       'MuJoCo humanoid environment',
       'PPO training pipeline',
@@ -932,11 +942,11 @@ const projectRecords: Project[] = [
       'Automated evaluation scripts'
     ],
     contribution:
-      'Implemented the environment, curriculum, reward design, training workflow and evaluation tooling.',
+      'I implemented the MuJoCo environment, staged curriculum and reward functions, then set up training and evaluation.',
     role: 'Independent developer',
     team: 'Solo project',
     evaluation:
-      'Evaluated each curriculum stage across five fixed evaluation episodes after tuning.',
+      'After tuning, I evaluated each curriculum stage on the same five fixed episodes.',
     results: [
       'Completed 5/5 walking evaluations with 1,000-step episodes',
       'Reached goals in 5/5 evaluation runs',
@@ -966,9 +976,9 @@ const projectRecords: Project[] = [
     status: 'Completed',
     featured: true,
     summary:
-      'Built an LLM pipeline that generates, validates and iteratively repairs ROS 2 robot software.',
+      'I built an LLM pipeline that generates ROS 2 robot software, tests it and uses the failures to make another attempt.',
     challenge:
-      'General coding agents often generate plausible ROS 2 code that fails because of missing interfaces, package assumptions or runtime integration errors.',
+      'Generated ROS 2 code can appear correct but still fail because an interface is missing, a package assumption is wrong or the node does not integrate at runtime.',
     architecture: [
       'Prompt expansion',
       'RAG-supported implementation',
@@ -977,11 +987,11 @@ const projectRecords: Project[] = [
       'Failure-driven refinement'
     ],
     contribution:
-      'Designed and implemented the complete generation, validation and refinement loop.',
+      'I built the generation, validation and repair loop, including the checks used to feed execution failures back into the next attempt.',
     role: 'Independent researcher and developer',
     team: 'Solo project',
     evaluation:
-      'Evaluated on 50 ROS 2 tasks with separate checks for task expansion, syntax validity and executable behavior.',
+      'I evaluated the pipeline on 50 ROS 2 tasks, checking task expansion, syntax and executable behavior separately.',
     results: [
       '50/50 prompts expanded into detailed task specifications',
       '45/50 generated nodes were syntactically valid',
@@ -1008,9 +1018,9 @@ const projectRecords: Project[] = [
     system: 'mobile',
     status: 'Research Prototype',
     summary:
-      'Implemented perception-aware rover navigation that seeks better viewpoints before entering uncertain regions.',
+      'I implemented a rover navigation method that selects another viewpoint before entering a region with uncertain perception.',
     challenge:
-      'A robot should not commit to a path when perception is degraded by fog, occlusion or incomplete observations.',
+      'Fog, occlusion and incomplete observations can leave a rover with too little information to commit safely to a path.',
     architecture: [
       'Depth/LiDAR uncertainty estimator',
       'Safety-aware planner cost',
@@ -1018,11 +1028,11 @@ const projectRecords: Project[] = [
       'Condition-specific evaluation'
     ],
     contribution:
-      'Implemented the complete uncertainty estimation, viewpoint selection and evaluation workflow.',
+      'I implemented the uncertainty estimator, viewpoint selection method and evaluation workflow.',
     role: 'Independent developer',
     team: 'Solo project',
     evaluation:
-      'Compared collision rate, success rate, path efficiency and uncertainty under clear, foggy and occluded conditions.',
+      'I compared collision rate, success rate, path efficiency and estimated uncertainty in clear, foggy and occluded conditions.',
     results: [
       'Integrated uncertainty into navigation cost',
       'Triggered additional observations before risky motion',
@@ -1050,9 +1060,9 @@ const projectRecords: Project[] = [
       }
     ],
     summary:
-      'Estimated object pose for underwater manipulation using image enhancement, zero-shot detection, stereo depth and 3D keypoints.',
+      'I estimated object poses for underwater manipulation using image enhancement, zero-shot detection, stereo depth and 3D keypoints.',
     challenge:
-      'Manipulation requires stable geometric targets from visually degraded underwater images.',
+      'The manipulation planner needs stable geometric targets, but the available underwater images are visually degraded.',
     architecture: [
       'Underwater image enhancement',
       'YOLOE zero-shot detection',
@@ -1061,11 +1071,11 @@ const projectRecords: Project[] = [
       'PCA-based 3D keypoints'
     ],
     contribution:
-      'Integrated the complete perception pipeline and implemented geometric keypoint extraction.',
+      'I integrated the image enhancement, detection and stereo stages, and implemented the geometric keypoint extraction.',
     role: 'Primary perception developer',
     team: 'MiniGirona research context',
     evaluation:
-      'Tested on valves, buoys and damaged-structure targets in underwater imagery.',
+      'I tested the pipeline on underwater images containing valves, buoys and damaged-structure targets.',
     results: [
       'Produced object-level 3D keypoints for manipulation planning',
       'Combined zero-shot detection with stereo geometry',
@@ -1091,10 +1101,10 @@ const projectRecords: Project[] = [
     status: 'Completed',
 
     summary:
-      'Implemented LiDAR SLAM, frontier exploration and collision-aware navigation for a Unitree Go1 quadruped.',
+      'I combined LiDAR SLAM, frontier exploration and collision-aware navigation for a Unitree Go1 quadruped.',
 
     challenge:
-      'The robot must build a consistent occupancy map, identify unexplored regions, generate collision-free paths and avoid becoming trapped near obstacles.',
+      'The Go1 needs to map an unknown environment, select unexplored regions and plan collision-free paths without becoming trapped near obstacles.',
 
     architecture: [
       'GMapping occupancy-grid SLAM',
@@ -1105,13 +1115,13 @@ const projectRecords: Project[] = [
     ],
 
     contribution:
-      'Integrated the complete exploration stack and developed a velocity safety layer for smooth Go1 motion, obstacle recovery and safe cmd_vel execution.',
+      'I integrated the exploration stack and developed a velocity safety layer for smoother Go1 motion, obstacle recovery and bounded cmd_vel commands.',
 
     role: 'Independent developer',
     team: 'Independent robotics project',
 
     evaluation:
-      'Evaluated in custom cluttered Gazebo environments using live SLAM maps, frontier goals, global paths, local trajectories and obstacle-avoidance behaviour.',
+      'I evaluated the system in custom cluttered Gazebo environments while monitoring the live SLAM map, frontier goals, global paths, local trajectories and obstacle-avoidance behavior.',
 
     results: [
       'Generated occupancy maps of previously unknown environments',
@@ -1149,9 +1159,9 @@ const projectRecords: Project[] = [
     system: 'mobile',
     status: 'Completed',
     summary:
-      'Built mobile-robot autonomy using LiDAR SLAM, probabilistic localization, classical planning and behavior-tree execution.',
+      'I built a mobile-robot autonomy stack with LiDAR SLAM, probabilistic localization, classical planners and behavior-tree execution.',
     challenge:
-      'Build and compare the core components of an end-to-end autonomy stack rather than isolated algorithms.',
+      'The aim was to connect and compare the main parts of an autonomy stack instead of testing each algorithm in isolation.',
     architecture: [
       'LiDAR mapping',
       'PF/KF/EKF localization',
@@ -1160,11 +1170,11 @@ const projectRecords: Project[] = [
       'ROS 2 interfaces'
     ],
     contribution:
-      'Implemented the planners, filters, ROS 2 integration and behavior-tree execution.',
+      'I implemented the planners and state-estimation filters, connected them through ROS 2, and used behavior trees for execution.',
     role: 'Independent developer',
     team: 'Course and personal project work',
     evaluation:
-      'Compared planning and state-estimation methods on common simulated environments.',
+      'I compared the planning and state-estimation methods in the same simulated environments.',
     results: [
       'Compared five classical planning methods',
       'Implemented PF, KF and EKF localization',
@@ -1201,9 +1211,9 @@ const projectRecords: Project[] = [
     system: 'mobile',
     status: 'Completed',
     summary:
-      'Implemented stereo visual odometry and SLAM with geometric estimation, bundle adjustment and loop closure.',
+      'I implemented stereo visual odometry and SLAM using geometric pose estimation, bundle adjustment and loop closure.',
     challenge:
-      'Recover consistent camera motion and map structure from stereo image sequences while limiting drift.',
+      'The task was to estimate camera motion and map structure from stereo image sequences while limiting trajectory drift.',
     architecture: [
       'Feature detection and tracking',
       'Stereo matching and triangulation',
@@ -1212,11 +1222,11 @@ const projectRecords: Project[] = [
       'Loop closure and pose graph'
     ],
     contribution:
-      'Implemented the complete visual-odometry and mapping workflow and evaluation scripts.',
+      'I implemented the visual-odometry and mapping pipeline, including the evaluation scripts for ATE and RPE.',
     role: 'Independent developer',
     team: 'Academic project',
     evaluation:
-      'Evaluated on KITTI using Absolute Trajectory Error and Relative Pose Error.',
+      'I evaluated the estimated trajectories on KITTI using Absolute Trajectory Error and Relative Pose Error.',
     results: [
       'Built an end-to-end stereo odometry pipeline',
       'Added bundle adjustment and loop closure',
@@ -1242,9 +1252,9 @@ const projectRecords: Project[] = [
     system: 'aerial',
     status: 'Completed',
     summary:
-      'Implemented flocking, consensus formation and auction-based task allocation for coordinated aerial robots.',
+      'I implemented flocking, consensus-based formation and auction-based task allocation for a group of aerial robots.',
     challenge:
-      'Coordinate multiple robots from local information without a single low-level controller.',
+      'The robots had to coordinate from local information without relying on one low-level controller for the whole group.',
     architecture: [
       'Reynolds flocking rules',
       'Consensus-based formation',
@@ -1252,11 +1262,11 @@ const projectRecords: Project[] = [
       'Crazyflie simulation'
     ],
     contribution:
-      'Implemented and evaluated the coordination and allocation algorithms.',
+      'I implemented the flocking, consensus and auction-based allocation methods and evaluated them in simulation.',
     role: 'Primary algorithm developer',
     team: 'Academic multi-agent project',
     evaluation:
-      'Assessed group motion, formation behavior and distributed task assignment in simulation.',
+      'I evaluated group motion, formation behavior and distributed task assignment in simulation.',
     results: [
       'Achieved coordinated flock motion',
       'Implemented consensus-based formation',
@@ -1287,9 +1297,9 @@ const projectRecords: Project[] = [
     system: 'marine',
     status: 'Completed',
     summary:
-      'Built a reproducible underwater metric-depth study comparing supervised Depth Anything V2, self-supervised Monodepth2, classical stereo and FoundationStereo under strict scene-level separation.',
+      'I compared four methods for underwater metric depth: supervised Depth Anything V2, self-supervised Monodepth2, classical stereo and FoundationStereo. Training, validation and test data were separated by scene.',
     challenge:
-      'Estimate metrically accurate depth despite underwater appearance degradation, sparse invalid labels and canyon-to-canyon domain shift—without leaking held-out canyon2 data into training or model selection.',
+      'The models had to estimate metric depth from degraded underwater images with sparse invalid labels and a domain shift between canyons. The held-out canyon2 data could not be used for training or model selection.',
     architecture: [
       'Calibrated and rectified FLSea stereo ingestion with corrupt-TIFF preflight auditing',
       'Supervised Depth Anything V2 Metric Small fine-tuning on valid canyon1 depth only',
@@ -1299,11 +1309,11 @@ const projectRecords: Project[] = [
       'Common-mask comparison against StereoSGBM and FoundationStereo'
     ],
     contribution:
-      'Implemented dataset preparation, supervised and self-supervised training, masked losses, checkpoint gating, depth-range diagnostics, fair common-mask benchmarking and fixed-scale qualitative and 3D visualizations.',
+      'I prepared the dataset, trained the supervised and self-supervised models, and implemented the masked losses and checkpoint selection. I also added depth-range diagnostics, common-mask benchmarking and fixed-scale 2D and 3D visualizations.',
     role: 'Independent researcher and developer',
     team: 'Solo research project',
     evaluation:
-      'Trained on 3,417 canyon1 frames, selected configurations on 375 separate canyon1 validation frames and evaluated once on 2,345 valid held-out canyon2 frames using native metric depth from 0.45–12 m.',
+      'I trained on 3,417 canyon1 frames and selected the configuration using 375 separate canyon1 validation frames. The final evaluation was run once on 2,345 valid held-out canyon2 frames, using native metric depth from 0.45 to 12 m.',
     results: [
       'Reduced held-out AbsRel from 0.1995 to 0.1509 (24.35%)',
       'Reduced RMSE from 0.8623 m to 0.7593 m and increased δ1 from 0.7148 to 0.8111',
@@ -1338,9 +1348,9 @@ const projectRecords: Project[] = [
     system: 'manipulation',
     status: 'Research Prototype',
     summary:
-      'Connected OpenVLA predictions to a simulated KUKA pick-and-place pipeline with inverse kinematics and retry logic.',
+      'I connected OpenVLA predictions to a simulated KUKA arm through an inverse-kinematics adapter and added retry logic for pick-and-place tasks.',
     challenge:
-      'Vision-language-action outputs must be translated into safe, executable robot commands and evaluated geometrically.',
+      'The vision-language-action output has to be converted into safe, executable robot commands, and task success needs a geometric measure.',
     architecture: [
       'RGB and language input',
       'OpenVLA 7D action prediction',
@@ -1349,11 +1359,11 @@ const projectRecords: Project[] = [
       'Object-to-target success evaluation'
     ],
     contribution:
-      'Integrated OpenVLA with the simulation, implemented the IK adapter, retry logic and task evaluation.',
+      'I connected OpenVLA to the simulation and implemented the inverse-kinematics adapter, retry logic and geometric task evaluation.',
     role: 'Independent developer',
     team: 'Solo project',
     evaluation:
-      'Evaluated simulated pick-and-place completion using final object-to-target distance.',
+      'I evaluated each simulated pick-and-place attempt using the final distance between the object and its target.',
     results: [
       'Converted VLA outputs into executable arm commands',
       'Added multi-camera retries for failed observations',
@@ -1376,9 +1386,9 @@ const projectRecords: Project[] = [
     system: 'manipulation',
     status: 'Completed',
     summary:
-      'Integrated language, vision, face and gesture interaction with TIAGo for task-oriented home assistance.',
+      'I connected language, vision, face and gesture input to TIAGo actions for a home-assistance task.',
     challenge:
-      'Natural robot interaction requires perception, user-intent understanding and action execution to operate as a coherent system.',
+      'The perception, intent interpretation and robot actions had to work together so that a user could issue a command through more than one interaction mode.',
     architecture: [
       'Face-based activation',
       'Gesture interpretation',
@@ -1386,11 +1396,11 @@ const projectRecords: Project[] = [
       'ROS action execution'
     ],
     contribution:
-      'Integrated the language, visual interaction and robot-action components.',
+      'I connected the language and visual interaction components to the robot action interface.',
     role: 'Robotics and AI integration contributor',
     team: 'Academic team project',
     evaluation:
-      'Demonstrated multimodal commands and robot responses in a smart-home scenario.',
+      'We demonstrated multimodal commands and the corresponding robot actions in a smart-home scenario.',
     results: [
       'Enabled face-triggered interaction',
       'Connected gesture and language commands to robot actions',
@@ -1403,6 +1413,54 @@ const projectRecords: Project[] = [
     gallery: []
   },
   {
+    id: 'wind-turbine-inspection',
+    title: 'Autonomous Wind Turbine Inspection',
+    subtitle: '3D Coverage Planning and Collision-Aware UAV Path Execution',
+    period: '2026',
+    area: 'Aerial Robotics · Coverage & Motion Planning',
+    category: 'Multi-Agent & Aerial Robotics',
+    system: 'aerial',
+    status: 'Research Prototype',
+    summary:
+      'I built a ROS 2 and Webots pipeline that selects inspection viewpoints around a wind turbine, connects them with collision-checked 3D paths and displays the UAV route in RViz.',
+    challenge:
+      'The route needs to observe the tower, nacelle, hub and blades while keeping the surfaces visible to the camera, clearing the turbine geometry and providing stable commands to the simulated UAV.',
+    architecture: [
+      'Webots environment with a Mavic 2 Pro, turbine geometry and ground-truth pose feedback',
+      'Surface sampling across the tower, nacelle, hub and three blades',
+      'Camera-frustum and occlusion checks followed by greedy viewpoint selection',
+      'A* or RRT* planning between ordered inspection viewpoints with collision-aware smoothing',
+      'ROS 2 waypoint follower with bounded velocity, acceleration, attitude and crash safeguards',
+      'RViz visualization of candidates, selected viewpoints, planned route, live UAV pose and executed path'
+    ],
+    contribution:
+      'I implemented the coverage planner, geometric collision model, A* and RRT* planners, and trajectory smoothing. I also wrote the ROS 2 nodes and waypoint follower, added automated tests, and set up the RViz displays.',
+    role: 'Independent robotics software developer',
+    team: 'Solo portfolio project',
+    evaluation:
+      'I compared A* and RRT* using the same 306 inspection targets and 1,027 candidate viewpoints. Every segment of the final paths was checked at 0.5 m resolution, and 13 automated tests covered the planner and visualization code.',
+    results: [
+      'Reached 100% modeled surface coverage with 31 selected viewpoints',
+      'A* planned in 2.91 s with a 443.77 m raw path and a 408.70 m smoothed path',
+      'RRT* planned in 4.06 s with a 567.37 m raw path and a 408.73 m smoothed path',
+      'Both planners completed with zero failed segments and 3.08 m minimum geometric clearance',
+      'Published the planned route, active waypoint, live UAV pose and executed trail in RViz'
+    ],
+    limitations:
+      'The evaluation is simulation-only and uses simplified turbine collision primitives and ground-truth localization. Stable completion of the full inspection flight is still being validated.',
+    technologies: [
+      'ROS 2 Humble',
+      'Webots',
+      'Python',
+      'A*',
+      'RRT*',
+      'RViz',
+      '3D Coverage Planning'
+    ],
+    cover: '/projects_picture/wind_turbine_inspection_architecture.png',
+    gallery: []
+  },
+  {
     id: 'rl-pid-drone',
     title: 'RL-Based PID Tuning for Drone Control',
     subtitle: 'Automatic Gain Selection for Altitude and Position Tracking',
@@ -1412,9 +1470,9 @@ const projectRecords: Project[] = [
     system: 'aerial',
     status: 'Completed',
     summary:
-      'Applied reinforcement learning to tune PID gains for simulated drone altitude and position control.',
+      'I used reinforcement learning to select PID gains for altitude and position control in a drone simulation.',
     challenge:
-      'Manual PID tuning can be slow and sensitive to changes in vehicle dynamics and task conditions.',
+      'PID gains chosen by hand can take time to tune and may respond differently when the vehicle dynamics or task conditions change.',
     architecture: [
       'Drone dynamics simulation',
       'PID controller',
@@ -1422,11 +1480,11 @@ const projectRecords: Project[] = [
       'Tracking-error evaluation'
     ],
     contribution:
-      'Connected the learning agent to PID parameters and evaluated closed-loop responses.',
+      'I connected the learning agent to the PID gains and evaluated the resulting closed-loop responses.',
     role: 'Independent developer',
     team: 'Academic project',
     evaluation:
-      'Compared tracking behavior and control response across learned gain configurations.',
+      'I compared tracking behavior and closed-loop response across the learned gain configurations.',
     results: [
       'Automated PID gain selection',
       'Evaluated altitude and position tracking',
@@ -1448,9 +1506,9 @@ const projectRecords: Project[] = [
     system: 'marine',
     status: 'Completed',
     summary:
-      'Evaluated HSV, RGB and YCbCr enhancement methods for more reliable perception in degraded underwater imagery.',
+      'I compared image-processing methods in HSV, RGB and YCbCr for degraded underwater images.',
     challenge:
-      'Poor contrast and colour casts can reduce detection, tracking and stereo-matching reliability.',
+      'Low contrast and colour casts can make detection, tracking and stereo matching less reliable.',
     architecture: [
       'HSV enhancement',
       'RGB-domain processing',
@@ -1458,18 +1516,18 @@ const projectRecords: Project[] = [
       'Visual and downstream comparison'
     ],
     contribution:
-      'Implemented the enhancement variants and compared their behavior.',
+      'I implemented the three colour-space pipelines and compared their outputs as inputs to later perception stages.',
     role: 'Independent developer',
     team: 'Academic project',
     evaluation:
-      'Compared enhanced images visually and for suitability as perception inputs.',
+      'I compared the processed images visually and considered how suitable they were as inputs to later perception stages.',
     results: [
       'Implemented multiple colour-space pipelines',
       'Produced repeatable enhancement comparisons',
       'Identified trade-offs for downstream perception'
     ],
     limitations:
-      'The study requires broader quantitative evaluation against downstream detection and depth metrics.',
+      'The study still needs quantitative evaluation using downstream detection and depth metrics.',
     technologies: ['OpenCV', 'HSV', 'RGB', 'YCbCr'],
     cover: '/projects_picture/enhancement.png',
     gallery: ['/projects_picture/enhancement_1.png']
@@ -1486,149 +1544,156 @@ const projectPresentation: Record<string, ProjectPresentation> = {
     title: 'Unitree Go2 Robust Locomotion with Domain-Randomized PPO',
     stack: ['MuJoCo', 'PPO', 'Domain Randomization', 'Context Adaptation'],
     summary:
-      'Developed and evaluated nominal, domain-randomized and context-conditioned PPO policies for Unitree Go2 locomotion under changes in robot dynamics.',
-    evidence: '1,410 Go2 evaluation episodes · 47 controlled scenarios'
+      'The evaluation compares three Unitree Go2 locomotion policies: nominal, domain-randomized and context-conditioned PPO. Each is tested under controlled changes to the robot dynamics.',
+    evidence: 'DR-PPO: 22.3% lower OOD RMSE · Context-DR-PPO: 89.4% success'
   },
   'tiago-navigation-integration': {
     title: 'TIAGo ROS 2 Navigation & Mission Integration',
     stack: ['ROS 2 Humble', 'Nav2', 'C++', 'REST / MQTT'],
     summary:
-      'Integrated TIAGo navigation with ROS 2, Nav2, REST and MQTT interfaces, health monitoring and repeatable commissioning tests.',
+      'The TIAGo integration combines ROS 2 and Nav2 with REST and MQTT interfaces, health monitoring and repeatable commissioning tests.',
     evidence: '3/3 commissioning missions completed'
   },
   'failure-aware-manipulation': {
     title: 'Failure-Aware Franka Manipulation with Behavior Cloning & Recovery',
     stack: ['PyTorch', 'Behavior Cloning', 'MuJoCo', 'Force/Torque Sensing'],
     summary:
-      'Built a Franka peg-insertion system using behavior cloning, contact-based failure detection and autonomous recovery.',
+      'The Franka peg-insertion system uses behavior cloning, contact-based failure detection and autonomous recovery.',
     evidence: '200 successful demonstrations · closed-loop recovery'
   },
   bathygraph: {
     title: 'BathyGraph-Lite — Bathymetric Pose-Graph SLAM for AUVs',
     stack: ['Pose-Graph SLAM', 'GTSAM', 'GICP', 'AUVLib'],
     summary:
-      'Developed an underwater SLAM pipeline using bathymetric submap registration and pose-graph optimization to reduce navigation drift in GPS-denied AUV missions.',
+      'BathyGraph-Lite registers bathymetric submaps and optimizes a pose graph using real AUV data collected without GNSS.',
     evidence: '296 measured submaps · GPS-denied navigation'
   },
   'aquanav-fm': {
     title: 'AquaNav-FM — Underwater Visual Localization & Waypoint Prediction',
     stack: ['DINOv2', 'PyTorch', 'Visual Place Recognition', 'AQUALOC'],
     summary:
-      'Adapted DINOv2 for underwater visual place recognition and combined it with depth-assisted localization and short-horizon waypoint prediction.',
+      'AquaNav-FM adapts DINOv2 for underwater place recognition and tests depth-assisted localization and waypoint prediction at a two-second horizon.',
     evidence: 'Median localization error: 3.90 m → 1.50 m'
   },
   aquaadapt: {
     title: 'AquaAdapt — Underwater Visual Place Recognition with DINOv2',
     stack: ['DINOv2', 'Self-Supervised Learning', 'PyTorch', 'FAISS'],
     summary:
-      'Adapted DINOv2 for underwater place recognition under low light, haze, colour attenuation, blur and marine snow.',
+      'AquaAdapt trains a residual adapter on frozen DINOv2 descriptors for place recognition under low light, haze, colour attenuation, blur and marine snow.',
     evidence: 'Outperformed raw DINOv2 across all 15 corruption tests'
   },
   maestro: {
     title: 'MAESTRO — AUV Fault Diagnosis & Autonomous Recovery with ROS 2',
     stack: ['ROS 2', 'Fault Diagnosis', 'Multi-Agent Systems', 'RAG'],
     summary:
-      'Developed a multi-agent ROS 2 system for fault diagnosis, mission-impact analysis and operator-approved recovery in autonomous underwater missions.',
+      'MAESTRO diagnoses faults, assesses their effect on an underwater mission and proposes ROS 2 recovery actions for operator approval.',
     evidence: '89% recovery-decision accuracy across 255 scenarios'
   },
   minigirona: {
     title: 'MiniGirona AUV Localization & Autonomous Mission Control',
     stack: ['ROS', 'EKF', 'DVL / INS', 'Sonar', 'Behavior Trees'],
     summary:
-      'Integrated sonar initialization, DVL/INS localization, behavior-tree missions, stereo perception and manipulation on the MiniGirona AUV.',
+      'My work on MiniGirona covered sonar initialization, DVL/INS localization, behavior-tree missions, stereo perception and manipulation.',
     evidence: '2nd Place — RAMI 2025'
   },
   marsim: {
     title: 'MarsSim — ROS 2 Planetary Rover Simulation & Sensor Modeling',
     stack: ['ROS 2', 'Panda3D', 'Python', 'Sensor Simulation'],
     summary:
-      'Built a ROS 2 planetary rover simulator with terrain-aware motion, environmental effects and configurable sensor simulation.'
+      'MarsSim is a ROS 2 planetary rover simulator with terrain-dependent motion, environmental effects and configurable sensors.'
   },
   reconstruction: {
     title: 'Underwater 3D Reconstruction with Stereo, Sonar & AUV Pose Fusion',
     stack: ['FoundationStereo', 'Sonar', 'Particle Filter', 'Point Clouds'],
     summary:
-      'Fused stereo depth, forward-looking sonar and AUV poses to reconstruct offshore structures underwater.',
+      'The reconstruction pipeline combines stereo depth, forward-looking sonar and AUV poses to reconstruct underwater offshore structures.',
     evidence: 'Stereo + sonar + AUV-pose fusion'
   },
   humanoid: {
     title: 'Humanoid Locomotion & Goal Navigation with PPO',
     stack: ['PPO', 'MuJoCo', 'Stable-Baselines3', 'Curriculum Learning'],
     summary:
-      'Trained a curriculum-based PPO policy for humanoid walking, goal reaching and obstacle-aware navigation in MuJoCo.'
+      'A PPO policy is trained in MuJoCo through separate curriculum stages for walking, reaching a goal and navigating around obstacles.'
   },
   'can-robots-code': {
     title: 'LLM-Based ROS 2 Code Generation, Testing & Repair',
     stack: ['ROS 2', 'LLM Agents', 'RAG', 'Automated Testing'],
     summary:
-      'Built an LLM pipeline that generates, validates and iteratively repairs ROS 2 robot software.'
+      'The LLM pipeline generates ROS 2 software, tests it and uses validation failures to repair the code.'
   },
   'active-navigation': {
     title: 'Uncertainty-Aware Rover Navigation with Active Perception',
     stack: ['ROS 2', 'Active Perception', 'LiDAR', 'Path Planning'],
     summary:
-      'Developed a rover planner that considers localization confidence and terrain uncertainty when selecting navigation paths.'
+      'The rover planner uses localization confidence and terrain uncertainty when selecting a path.'
   },
   'stereo-perception': {
     title: 'Underwater Object Pose Estimation with Stereo 3D Perception',
     stack: ['YOLOE', 'Stereo Vision', 'PCL', 'OpenCV'],
     summary:
-      'Estimated object pose for underwater manipulation using image enhancement, zero-shot detection, stereo depth and 3D keypoints.'
+      'The perception pipeline estimates object poses for underwater manipulation using image enhancement, zero-shot detection, stereo depth and 3D keypoints.'
   },
   frontier_exploration: {
     title: 'Unitree Go1 Autonomous Exploration with SLAM & Frontier Planning',
     stack: ['ROS', 'Gazebo', 'GMapping', 'Frontier Exploration', 'move_base'],
     summary:
-      'Integrated SLAM, frontier selection, navigation and obstacle avoidance for autonomous exploration with a Unitree Go1.'
+      'The Unitree Go1 stack combines SLAM, frontier selection, navigation and obstacle avoidance for autonomous exploration.'
   },
   'mobile-autonomy': {
     title: 'ROS 2 Mobile Robot SLAM, Localization & RRT* Navigation',
     stack: ['ROS 2', 'SLAM', 'EKF', 'RRT*', 'Behavior Trees'],
     summary:
-      'Built mobile-robot autonomy using LiDAR SLAM, probabilistic localization, classical planning and behavior-tree execution.'
+      'This mobile-robot stack combines LiDAR SLAM, probabilistic localization, classical planners and behavior-tree execution.'
   },
   'stereo-visual-slam': {
     title: 'Stereo Visual Odometry & SLAM with PnP and Bundle Adjustment',
     stack: ['Stereo Vision', 'KITTI', 'PnP', 'Bundle Adjustment'],
     summary:
-      'Implemented stereo visual odometry and SLAM with geometric estimation, bundle adjustment and loop closure on KITTI.'
+      'The KITTI implementation uses geometric pose estimation, bundle adjustment and loop closure for stereo visual odometry and SLAM.'
   },
   'multi-robot': {
     title: 'Multi-Robot Aerial Coordination with Consensus & Task Allocation',
     stack: ['Consensus', 'Flocking', 'Task Allocation', 'Crazyflie'],
     summary:
-      'Implemented flocking, consensus formation and auction-based task allocation for coordinated aerial robots.'
+      'The aerial-robot system combines flocking, consensus-based formation and auction-based task allocation.'
   },
   'underwater-depth': {
     title: 'Underwater Metric Depth Estimation with Foundation Models',
     stack: ['PyTorch', 'Depth Anything V2', 'Monodepth2', 'FLSea'],
     summary:
-      'Compared supervised and self-supervised underwater metric-depth methods on FLSea with strict scene-level train/test splits.',
+      'The study compares supervised and self-supervised methods for underwater metric depth on FLSea, with training and test data separated by scene.',
     evidence: '24.35% held-out AbsRel reduction'
   },
   openvla: {
     title: 'OpenVLA-Based KUKA Pick-and-Place Manipulation',
     stack: ['OpenVLA', 'PyBullet', 'KUKA', 'Inverse Kinematics'],
     summary:
-      'Connected OpenVLA predictions to a simulated KUKA pick-and-place pipeline with inverse kinematics and retry logic.'
+      'OpenVLA predictions are converted into commands for a simulated KUKA arm through inverse kinematics, with retry logic for pick-and-place tasks.'
   },
   'tiago-assistant': {
     title: 'TIAGo Multimodal HRI with Language, Vision & Gesture Recognition',
     stack: ['TIAGo', 'ROS', 'LLM', 'VLM', 'HRI'],
     summary:
-      'Integrated language, vision, face and gesture interaction with TIAGo for task-oriented home assistance.'
+      'The TIAGo assistant connects language, vision, face and gesture input to robot actions for a home-assistance task.'
   },
   'rl-pid-drone': {
     title: 'Reinforcement-Learning PID Tuning for Drone Control',
     stack: ['Reinforcement Learning', 'PID', 'UAV', 'Simulation'],
     summary:
-      'Applied reinforcement learning to tune PID gains for simulated drone altitude and position control.'
+      'Reinforcement learning selects PID gains for altitude and position control in a drone simulation.'
+  },
+  'wind-turbine-inspection': {
+    title: 'Autonomous Wind Turbine Inspection with 3D Coverage Planning',
+    stack: ['ROS 2', 'Webots', 'A*', 'RRT*', 'RViz'],
+    summary:
+      'The inspection planner selects camera-aware viewpoints around a wind turbine and connects them with collision-checked A* and RRT* paths for a simulated UAV.',
+    evidence: '100% modeled coverage · 31 viewpoints · 0 failed path segments'
   },
   'colour-enhancement': {
     title: 'Underwater Image Enhancement for Robotic Vision',
     stack: ['OpenCV', 'HSV', 'RGB', 'YCbCr'],
     summary:
-      'Evaluated HSV, RGB and YCbCr enhancement methods for perception in degraded underwater imagery.'
+      'The study compares image-processing methods in HSV, RGB and YCbCr for degraded underwater images.'
   }
 }
 
@@ -1650,6 +1715,7 @@ const deploymentByProject: Partial<Record<string, Deployment>> = {
   reconstruction: 'REAL ROBOT DATA',
   bathygraph: 'REAL ROBOT DATA',
   'underwater-depth': 'BENCHMARK / DATASET',
+  'wind-turbine-inspection': 'ROS 2 SIMULATION',
   aquaadapt: 'REAL ROBOT DATA',
   'aquanav-fm': 'REAL ROBOT DATA'
 }

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: '%s | Bilal Ahmed'
   },
   description:
-    'Robotics software and autonomy engineer with projects in ROS/ROS 2, localization, perception, navigation and robot learning.',
+    'Robotics software and autonomy engineer working on ROS and ROS 2, localization, perception, navigation and robot learning.',
   keywords: [
     'Bilal Ahmed',
     'robotics software engineer',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Bilal Ahmed | Robotics Software & Autonomy Engineer',
     description:
-      'Robotics software and autonomy engineer — ROS/ROS 2, localization, perception, navigation and robot learning.',
+      'Robotics software and autonomy engineer working on ROS and ROS 2, localization, perception, navigation and robot learning.',
     url: '/',
     siteName: 'Bilal Ahmed Portfolio',
     images: [
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Bilal Ahmed | Robotics Software & Autonomy Engineer',
     description:
-      'Robotics software and autonomy engineer — ROS/ROS 2, localization, perception, navigation and robot learning.',
+      'Robotics software and autonomy engineer working on ROS and ROS 2, localization, perception, navigation and robot learning.',
     images: ['/projects_picture/minigirona_2.png']
   }
 }
