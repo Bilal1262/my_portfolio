@@ -59,6 +59,7 @@ export type Project = {
   links?: ProjectLink[]
   logos?: ContextLogo[]
   featured?: boolean
+  detailPath?: string
 }
 
 export const profile = {
@@ -161,6 +162,7 @@ export const capabilityGroups: Array<{
     label: 'Robot Learning & Intelligent Autonomy',
     summary: 'Foundation models, reinforcement learning and learning-based systems for robots.',
     projectIds: [
+      'aeroworld',
       'adaptive-sim2real-go2',
       'maestro',
       'failure-aware-manipulation',
@@ -309,6 +311,67 @@ export const technicalSkills = [
 ]
 
 const projectRecords: Project[] = [
+  {
+    id: 'aeroworld',
+    title: 'AeroWorld — Reliability-Gated Visual Dynamics Learning',
+    subtitle:
+      'Predicting high-speed drone motion using real flight recordings, temporal vision and control-aware learning',
+    period: '2026',
+    area: 'Aerial Robot Learning · Visual Dynamics Prediction',
+    category: 'Robot Learning & Perception',
+    system: 'aerial',
+    status: 'Research Prototype',
+    featured: true,
+    detailPath: '/projects/aeroworld/',
+    summary:
+      'A camera-informed residual model that preserves a strong control-and-IMU predictor and learns when visual evidence should adjust its future 3D displacement forecasts.',
+    stack: ['PyTorch', 'ResNet-18', 'GRU', 'Temporal Vision', 'Drone Dynamics'],
+    evidence: '12.75% lower frozen-holdout error · 4 flights · 3 seeds',
+    challenge:
+      'Directly fusing camera features can weaken an already capable dynamics predictor. AeroWorld asks whether vision is more useful as a constrained correction to a control-and-IMU forecast than as an unrestricted replacement for it.',
+    architecture: [
+      'Eight RGB frames sampled at 20 Hz are encoded with a frozen ImageNet ResNet-18; feature differences provide an explicit temporal visual stream',
+      'A GRU baseline maps eight-step roll, pitch, thrust, yaw and gyroscope histories to yaw-relative 3D displacement at 0.2, 0.5 and 1.0 seconds',
+      'A second GRU predicts bounded visual residuals and sigmoid mixing weights while the pretrained baseline remains frozen',
+      'Validation flights decide whether each seed uses the learned correction or falls back to its control-only predictor before test evaluation'
+    ],
+    contribution:
+      'I developed the V1–V3 experiments, built the flight-level data and feature pipeline, implemented the control, static-RGB, temporal-RGB and gated-residual models, and ran the multiseed and frozen-checkpoint evaluations.',
+    role: 'Independent robotics researcher and developer',
+    team: 'Solo research portfolio project',
+    evaluation:
+      'The development protocol used 12 complete recordings split by flight into six training, three validation and three test flights. Final checkpoints were then evaluated without retraining on four additional recordings, with 2,668 overlapping temporal sequences per seed and seeds 42, 43 and 44.',
+    results: [
+      'Frozen holdout mean error: 0.6008 m for AeroWorld-V3 versus 0.6886 m for control + IMU',
+      '12.75% relative reduction in mean 3D displacement error across four additional real-flight recordings',
+      'Lower error than the control-only baseline on all four holdout flights for every one of three seeds',
+      'Development split mean error: 0.5656 m gated, 0.7017 m control-only and 0.7708 m direct temporal RGB fusion'
+    ],
+    limitations:
+      'This is offline forecasting, not closed-loop flight control or a planning-ready world model. The gate is a learned mixing weight rather than calibrated uncertainty; a control-only residual ablation is still needed; flight IDs are separate but may share a physical track or arena; and overlapping windows are correlated rather than independent trials.',
+    technologies: [
+      'Python',
+      'PyTorch',
+      'ResNet-18',
+      'GRU',
+      'Temporal Visual Features',
+      'Gated Residual Learning',
+      'NumPy',
+      'Pandas',
+      'Matplotlib',
+      'NVIDIA CUDA'
+    ],
+    cover: '/projects_picture/aeroworld/aeroworld_architecture.svg',
+    gallery: [
+      '/projects_picture/aeroworld/holdout_by_flight.png',
+      '/projects_picture/aeroworld/v3_comparison.png',
+      '/projects_picture/aeroworld/v2_validation_curves.png'
+    ],
+    links: [
+      { label: 'Full case study', href: '/projects/aeroworld/' },
+      { label: 'Race Against the Machine dataset', href: 'https://github.com/tii-racing/drone-racing-dataset' }
+    ]
+  },
   {
     id: 'adaptive-sim2real-go2',
     title: 'AdaptiveSim2Real-Go2',
@@ -1707,6 +1770,7 @@ export const projects: Project[] = projectRecords.map((project) => {
 })
 
 const deploymentByProject: Partial<Record<string, Deployment>> = {
+  aeroworld: 'REAL ROBOT DATA',
   minigirona: 'REAL ROBOT',
   'tiago-navigation-integration': 'ROS 2 SIMULATION',
   'adaptive-sim2real-go2': 'SIMULATION',

@@ -43,6 +43,7 @@ const robotSystemLabels = Object.fromEntries(
 ) as Record<RobotSystem, string>
 
 const featuredProjectIds = [
+  'aeroworld',
   'minigirona',
   'tiago-navigation-integration',
   'adaptive-sim2real-go2',
@@ -54,6 +55,7 @@ const featuredProjectIds = [
 ]
 
 const flagshipContribution: Record<string, string> = {
+  aeroworld: 'Model design · flight-level evaluation · frozen holdout study',
   minigirona: 'Sonar initialization · EKF integration · mission behaviors',
   'tiago-navigation-integration': 'C++ Nav2 adapter · fleet interfaces · diagnostics',
   'adaptive-sim2real-go2': 'Environment · PPO training · 47-scenario benchmark',
@@ -347,6 +349,14 @@ export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+
+  const openProject = (project: Project) => {
+    if (project.detailPath) {
+      window.location.assign(assetPath(project.detailPath))
+      return
+    }
+    setSelectedProject(project)
+  }
   const [archiveCategory, setArchiveCategory] =
     useState<'All' | RobotSystem>('All')
   const [archiveCapability, setArchiveCapability] =
@@ -618,7 +628,7 @@ export default function Portfolio() {
               {showcase.map((project, index) => (
                 <Reveal className={`flagship-card system-${project.system}`} delay={(index % 2) * 0.04} key={project.id}>
                   <article>
-                    <button className="flagship-image" type="button" onClick={() => setSelectedProject(project)} aria-label={`Open ${project.title}`}>
+                    <button className="flagship-image" type="button" onClick={() => openProject(project)} aria-label={`Open ${project.title}`}>
                       <ProjectImage src={project.cover} alt={`${project.title} project`} eager={index < 2} />
                       <span>View project <ArrowUpRightIcon /></span>
                     </button>
@@ -635,7 +645,7 @@ export default function Portfolio() {
                         <span>My contribution</span>
                         <p>{flagshipContribution[project.id]}</p>
                       </div>
-                      <button className="archive-open" type="button" onClick={() => setSelectedProject(project)}>
+                      <button className="archive-open" type="button" onClick={() => openProject(project)}>
                         View project <span>→</span>
                       </button>
                     </div>
@@ -659,7 +669,7 @@ export default function Portfolio() {
                     <div className="capability-projects">
                       {capability.projectIds.slice(0, 3).map((projectId) => {
                         const project = projects.find((item) => item.id === projectId)
-                        return project ? <button type="button" onClick={() => setSelectedProject(project)} key={project.id}>{project.name ?? project.title}</button> : null
+                        return project ? <button type="button" onClick={() => openProject(project)} key={project.id}>{project.name ?? project.title}</button> : null
                       })}
                     </div>
                     <button className="capability-open" type="button" onClick={() => exploreCapability(capability.id)}>
@@ -937,7 +947,7 @@ export default function Portfolio() {
                   >
                     <button
                       className="archive-image"
-                      onClick={() => setSelectedProject(project)}
+                      onClick={() => openProject(project)}
                       aria-label={`Open ${project.title}`}
                     >
                       <ProjectImage
@@ -974,7 +984,7 @@ export default function Portfolio() {
 
                       <button
                         className="archive-open"
-                        onClick={() => setSelectedProject(project)}
+                        onClick={() => openProject(project)}
                       >
                         View project <span>→</span>
                       </button>

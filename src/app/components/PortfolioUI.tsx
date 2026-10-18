@@ -145,10 +145,17 @@ export function ProjectCard({
   featured?: boolean
 }) {
   const system = systemMeta[project.system]
+  const openProject = () => {
+    if (project.detailPath) {
+      window.location.assign(assetPath(project.detailPath))
+      return
+    }
+    onOpen(project)
+  }
 
   return (
     <article className={`archive-card system-${project.system}${featured ? ' featured' : ''}`}>
-      <button className="archive-image" type="button" onClick={() => onOpen(project)} aria-label={`View ${project.title}`}>
+      <button className="archive-image" type="button" onClick={openProject} aria-label={`View ${project.title}`}>
         <ProjectImage src={project.cover} alt={`${project.title} project`} />
         <span><ArrowUpRightIcon /></span>
       </button>
@@ -162,7 +169,7 @@ export function ProjectCard({
         <p className="project-stack">{(project.stack ?? project.technologies.slice(0, 5)).join(' · ')}</p>
         <p>{conciseSummary(project)}</p>
         {project.evidence ? <p className="project-evidence">{project.evidence}</p> : null}
-        <button className="archive-open" type="button" onClick={() => onOpen(project)}>
+        <button className="archive-open" type="button" onClick={openProject}>
           View project <span aria-hidden="true">→</span>
         </button>
       </div>
