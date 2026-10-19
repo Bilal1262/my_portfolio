@@ -108,7 +108,8 @@ export const capabilityGroups: Array<{
       'underwater-depth',
       'stereo-visual-slam',
       'colour-enhancement',
-      'failure-aware-manipulation'
+      'failure-aware-manipulation',
+      'orca-contactworld'
     ]
   },
   {
@@ -162,6 +163,7 @@ export const capabilityGroups: Array<{
     label: 'Robot Learning & Intelligent Autonomy',
     summary: 'Foundation models, reinforcement learning and learning-based systems for robots.',
     projectIds: [
+      'orca-contactworld',
       'aeroworld',
       'adaptive-sim2real-go2',
       'maestro',
@@ -311,6 +313,68 @@ export const technicalSkills = [
 ]
 
 const projectRecords: Project[] = [
+  {
+    id: 'orca-contactworld',
+    title: 'ORCA ContactWorld — Contact-Aware Dexterous Manipulation',
+    subtitle:
+      'Slip detection, reactive recovery and residual reinforcement learning in MuJoCo',
+    period: '2026',
+    area: 'Dexterous Manipulation · Contact-Rich Robot Learning',
+    category: 'Robot Learning & Manipulation',
+    system: 'manipulation',
+    status: 'Research Prototype',
+    featured: true,
+    detailPath: '/projects/orca-contactworld/',
+    summary:
+      'A MuJoCo research benchmark combining a 7-DoF OpenArm and 17-DoF ORCA hand for force-aware grasping, measured slip recovery, perturbation analysis and a first residual-PPO ball-catch baseline.',
+    stack: ['MuJoCo', 'Gymnasium', 'Contact Sensing', 'PPO', 'Dexterous Control'],
+    evidence: '50/50 stable lifts · 200-episode validated pilot · 773k timesteps',
+    challenge:
+      'Contact-rich dexterous policies need more than successful touch: the hand must establish opposing contacts, regulate each finger, distinguish recoverable slip from loss, and preserve the object through motion and disturbances without relying on unrealistic friction or actuator forces.',
+    architecture: [
+      'A seven-actuator OpenArm carries the unmodified 17-actuator ORCA v2 hand, producing 24 bounded physical position targets in MuJoCo',
+      'Semantic five-finger contacts, estimated normal forces, cube motion, palm state and previous actions form a structured 106-dimensional observation',
+      'A staged controller pre-shapes the hand, establishes opposing contacts, closes fingers independently and increases grip only when persistent slip is measured',
+      'Deterministic perturbation tools vary pose, mass, friction, geometry, actuator strength, delay and lateral force while logging recovery and physics-integrity evidence',
+      'An isolated ball scene maps four learned skill residuals to all 24 actuator targets around a ballistic/contact reference controller'
+    ],
+    contribution:
+      'I integrated the OpenArm and ORCA models, developed the contact-aware grasp-and-lift controller, defined slip and recovery events, built the deterministic perturbation benchmark and validated pilot dataset, and implemented the physical one-ball task and residual PPO training pipeline.',
+    role: 'Independent robotics research engineer and developer',
+    team: 'Solo research portfolio project',
+    evaluation:
+      'The scripted grasp was tested over 50 deterministic cube poses. An 88-condition independent sweep characterized perturbations, followed by a 200-episode pilot with train/validation/IID/OOD splits and full data validation. The ball policy was evaluated on 200 held-out seeds after 10,000 PPO environment steps.',
+    results: [
+      '50/50 grasps, lifts beyond 8 cm and two-second holds without modifying physics parameters',
+      '81/88 successful perturbation-sweep conditions, with 35 detected slips and five physical drops',
+      '153/200 final successes in the pilot dataset, including 90 episodes with actively recovered slip',
+      '773,131 recorded timesteps with zero NaN/Inf values and 200/200 physics-integrity checks passing',
+      'Residual PPO catch rate: 53.5% versus 53.0% for the reference controller on 200 held-out launches'
+    ],
+    limitations:
+      'All results are in simulation. No predictive world model has been trained, the 200-episode dataset is a pilot rather than the planned main dataset, and the ball result uses a scripted release impulse. Its +0.5 percentage-point catch gain validates the pipeline but is not evidence of a strong RL advantage, end-to-end throwing or juggling.',
+    technologies: [
+      'Python',
+      'MuJoCo',
+      'Gymnasium',
+      'PyTorch',
+      'PPO',
+      'OpenArm',
+      'ORCA Hand',
+      'Contact Sensing',
+      'Force Control',
+      'HDF5',
+      'Domain Randomization'
+    ],
+    cover: '/projects_picture/orca-contactworld/contactworld-recovery.webp',
+    gallery: [
+      '/projects_picture/orca-contactworld/contactworld-recovery.webp',
+      '/projects_picture/orca-contactworld/contact-force-slip.png',
+      '/projects_picture/orca-contactworld/perturbation-force.png',
+      '/projects_picture/orca-contactworld/ball-catch.webp'
+    ],
+    links: [{ label: 'Full case study', href: '/projects/orca-contactworld/' }]
+  },
   {
     id: 'aeroworld',
     title: 'AeroWorld — Reliability-Gated Visual Dynamics Learning',
@@ -1603,6 +1667,13 @@ type ProjectPresentation = Pick<Project, 'title' | 'summary'> &
   Pick<Project, 'evidence'>
 
 const projectPresentation: Record<string, ProjectPresentation> = {
+  'orca-contactworld': {
+    title: 'ORCA ContactWorld — Contact-Aware Dexterous Manipulation',
+    stack: ['MuJoCo', 'Contact Sensing', 'PPO', 'OpenArm + ORCA'],
+    summary:
+      'A contact-rich manipulation benchmark for stable grasping, measured slip recovery, validated perturbation data and residual-policy ball catching.',
+    evidence: '50/50 stable lifts · 76.5% pilot success · 773k timesteps'
+  },
   'adaptive-sim2real-go2': {
     title: 'Unitree Go2 Robust Locomotion with Domain-Randomized PPO',
     stack: ['MuJoCo', 'PPO', 'Domain Randomization', 'Context Adaptation'],
@@ -1770,6 +1841,7 @@ export const projects: Project[] = projectRecords.map((project) => {
 })
 
 const deploymentByProject: Partial<Record<string, Deployment>> = {
+  'orca-contactworld': 'SIMULATION',
   aeroworld: 'REAL ROBOT DATA',
   minigirona: 'REAL ROBOT',
   'tiago-navigation-integration': 'ROS 2 SIMULATION',

@@ -43,6 +43,7 @@ const robotSystemLabels = Object.fromEntries(
 ) as Record<RobotSystem, string>
 
 const featuredProjectIds = [
+  'orca-contactworld',
   'aeroworld',
   'minigirona',
   'tiago-navigation-integration',
@@ -55,6 +56,7 @@ const featuredProjectIds = [
 ]
 
 const flagshipContribution: Record<string, string> = {
+  'orca-contactworld': 'System integration · contact-aware control · perturbation benchmark',
   aeroworld: 'Model design · flight-level evaluation · frozen holdout study',
   minigirona: 'Sonar initialization · EKF integration · mission behaviors',
   'tiago-navigation-integration': 'C++ Nav2 adapter · fleet interfaces · diagnostics',
