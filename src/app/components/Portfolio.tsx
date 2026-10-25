@@ -35,7 +35,8 @@ const robotSystems: Array<{
   { id: 'mobile', label: 'Mobile', evidence: 'ROS 2 · Nav2 · SLAM · navigation' },
   { id: 'legged', label: 'Legged', evidence: 'Locomotion · reinforcement learning · exploration' },
   { id: 'aerial', label: 'Aerial', evidence: 'Control · coordination · inspection' },
-  { id: 'manipulation', label: 'Manipulation', evidence: 'Perception · learning · recovery · HRI' }
+  { id: 'manipulation', label: 'Manipulation', evidence: 'Perception · learning · recovery · HRI' },
+  { id: 'medical', label: 'Medical', evidence: 'Endoscopy · 3D navigation · calibrated AR' }
 ]
 
 const robotSystemLabels = Object.fromEntries(
@@ -43,6 +44,7 @@ const robotSystemLabels = Object.fromEntries(
 ) as Record<RobotSystem, string>
 
 const featuredProjectIds = [
+  'surgnav-rt',
   'orca-contactworld',
   'aeroworld',
   'minigirona',
@@ -56,6 +58,7 @@ const featuredProjectIds = [
 ]
 
 const flagshipContribution: Record<string, string> = {
+  'surgnav-rt': 'Study design · calibrated RGB-D odometry · failure analysis',
   'orca-contactworld': 'System integration · contact-aware control · perturbation benchmark',
   aeroworld: 'Model design · flight-level evaluation · frozen holdout study',
   minigirona: 'Sonar initialization · EKF integration · mission behaviors',

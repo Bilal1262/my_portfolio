@@ -18,7 +18,8 @@ export const systemMeta: Record<RobotSystem, { label: string }> = {
   mobile: { label: 'Mobile' },
   legged: { label: 'Legged' },
   aerial: { label: 'Aerial' },
-  manipulation: { label: 'Manipulation' }
+  manipulation: { label: 'Manipulation' },
+  medical: { label: 'Medical' }
 }
 
 export function conciseSummary(project: Project) {

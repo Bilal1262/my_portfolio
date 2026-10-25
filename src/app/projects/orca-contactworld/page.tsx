@@ -65,6 +65,14 @@ export default function OrcaContactWorldPage() {
               <div className={styles.heroImage}><ProjectImage src="/projects_picture/orca-contactworld/contactworld-recovery.webp" alt="Four MuJoCo frames show an ORCA robotic hand holding a yellow cube before a lateral disturbance, during peak slip, and after recovery; measured finger forces and cube-to-palm speed appear below" eager /></div>
               <figcaption><strong>Measured recovery, not a staged render.</strong> Episode 119 is replayed from saved MuJoCo states: a 5.22 N lateral disturbance produces 0.617 m/s peak relative slip before stability is restored 1.08 s after detection. Aggregate pilot results are shown beside the trace.</figcaption>
             </figure>
+            <figure className={styles.videoFigure}>
+              <div className={styles.videoHeading}><span>Experiment replay</span><p>Episode 119 · synchronized simulation and telemetry</p></div>
+              <video autoPlay muted loop playsInline controls preload="metadata" poster={assetPath('/projects_picture/orca-contactworld/contactworld-recovery.webp')} aria-label="ContactWorld Episode 119 slip-recovery replay with synchronized contact force and slip telemetry">
+                <source src={assetPath('/projects_picture/orca-contactworld/contactworld-recovery.webm')} type="video/webm" />
+                <source src={assetPath('/projects_picture/orca-contactworld/contactworld-recovery.mp4')} type="video/mp4" />
+              </video>
+              <figcaption><strong>6.7-second measured replay.</strong> The robot and cube frames are restored from the saved trajectory; the dashboard reads the matching contact forces, external force and cube-to-palm velocity. Simulation evidence, not real hardware.</figcaption>
+            </figure>
           </div>
         </section>
 

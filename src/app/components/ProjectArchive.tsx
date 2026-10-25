@@ -18,7 +18,7 @@ import {
   type RobotSystem
 } from './PortfolioUI'
 
-const systems: Array<'all' | RobotSystem> = ['all', 'marine', 'mobile', 'legged', 'aerial', 'manipulation']
+const systems: Array<'all' | RobotSystem> = ['all', 'medical', 'marine', 'mobile', 'legged', 'aerial', 'manipulation']
 
 export default function ProjectArchive() {
   const [system, setSystem] = useState<'all' | RobotSystem>('all')

@@ -21,6 +21,7 @@ export type RobotSystem =
   | 'legged'
   | 'aerial'
   | 'manipulation'
+  | 'medical'
 
 export type Deployment =
   | 'REAL ROBOT'
@@ -39,7 +40,7 @@ export type Project = {
   category: string
   system: RobotSystem
   capabilities?: string[]
-  status: 'Completed' | 'Ongoing' | 'Research Prototype'
+  status: 'Completed' | 'Ongoing' | 'Research Prototype' | 'Research Study'
   summary: string
   stack?: string[]
   evidence?: string
@@ -76,6 +77,7 @@ export const profile = {
 }
 
 export const roles = [
+  'medical image-guided navigation',
   'marine robot autonomy',
   'mobile robot navigation',
   'legged robot learning',
@@ -101,6 +103,7 @@ export const capabilityGroups: Array<{
     label: 'Perception',
     summary: 'Stereo, sonar, vision and multimodal reconstruction.',
     projectIds: [
+      'surgnav-rt',
       'reconstruction',
       'aquaadapt',
       'aquanav-fm',
@@ -117,6 +120,7 @@ export const capabilityGroups: Array<{
     label: 'Localization & SLAM',
     summary: 'Visual, bathymetric and multisensor state estimation for GPS-denied robots.',
     projectIds: [
+      'surgnav-rt',
       'bathygraph',
       'stereo-visual-slam',
       'minigirona',
@@ -146,6 +150,7 @@ export const capabilityGroups: Array<{
     label: 'ROS & Robotics Software',
     summary: 'ROS and ROS 2 systems, interfaces, validation and real-robot execution.',
     projectIds: [
+      'surgnav-rt',
       'minigirona',
       'tiago-navigation-integration',
       'maestro',
@@ -163,6 +168,7 @@ export const capabilityGroups: Array<{
     label: 'Robot Learning & Intelligent Autonomy',
     summary: 'Foundation models, reinforcement learning and learning-based systems for robots.',
     projectIds: [
+      'surgnav-rt',
       'orca-contactworld',
       'aeroworld',
       'adaptive-sim2real-go2',
@@ -282,6 +288,7 @@ export const awards = [
 
 export const projectCategories = [
   'All',
+  'Medical',
   'Marine',
   'Mobile',
   'Legged',
@@ -313,6 +320,80 @@ export const technicalSkills = [
 ]
 
 const projectRecords: Project[] = [
+  {
+    id: 'surgnav-rt',
+    title: 'SurgNav-RT — Calibrated Endoscopic Navigation',
+    subtitle:
+      'A reproducible phantom study of robust RGB-D odometry, learned depth and pose-consistent augmented reality',
+    period: '2026',
+    area: 'Medical Computer Vision · Surgical Navigation',
+    category: 'Perception & Localization',
+    system: 'medical',
+    status: 'Research Study',
+    featured: true,
+    detailPath: '/projects/surgnav-rt/',
+    summary:
+      'A single-sequence C3VDv2 phantom study evaluating calibrated RGB-D camera tracking, a compact learned-depth ablation, surface-registration ambiguity and evidence-gated 3D overlays.',
+    stack: ['OpenCV', 'OCam Geometry', 'RGB-D Odometry', 'PyTorch', 'Streamlit'],
+    evidence: '454-frame paired study · 20.9% lower mean translation error · explicit oracle audit',
+    challenge:
+      'Determine whether calibrated correspondence rejection and robust rigid refinement reduce endoscopic pose error relative to the reproduced baseline, while separating estimation inputs from evaluation-only references and reporting adverse results.',
+    architecture: [
+      'Strict C3VDv2 decoders recover axial depth, backward optical flow, surface normals and row-vector camera poses with explicit millimetre and pixel units',
+      'The supplied Scaramuzza polynomial and affine calibration provide camera-ray generation, axial-depth unprojection and numerically inverted 3D projection without a pinhole approximation',
+      'Masked Lucas–Kanade tracking uses forward/backward consistency, two-dimensional RANSAC, robust three-dimensional RANSAC and confidence-weighted rigid refinement',
+      'Estimated camera poses drive colored surface reconstruction and persistent synthetic 3D reference anchors through a hysteretic runtime-confidence gate',
+      'A compact Tiny U-Net and independent versus reference-initialized phantom registration are evaluated as separately labeled experimental extensions'
+    ],
+    contribution:
+      'I reproduced the original four-stage pipeline; implemented the calibrated geometry, robust odometry, learned-depth and registration extensions; designed the evaluations; audited oracle dependencies; and produced the tests, figures, interactive workbench and technical demonstration.',
+    role: 'Independent researcher · Medical computer vision and geometric perception',
+    team: 'Independent study',
+    evaluation:
+      'The primary comparison uses all 454 frames of C3VDv2 c1_ascending_t1_v2. Ground-truth depth is an explicit odometry input; ground-truth pose and flow are evaluation-only. Learned depth uses contiguous frames 0–226 for training, 227–299 for validation and 300–453 for testing.',
+    results: [
+      '453/453 valid adjacent camera-motion estimates on the complete sequence',
+      'Mean trajectory error reduced from 4.489 mm to 3.553 mm; median error reduced from 4.296 mm to 2.910 mm',
+      'Mean pose-induced AR displacement reduced from 49.553 px to 35.842 px on the same visibility protocol',
+      'Robust feature tracking achieved 1.597 px mean, 1.198 px median and 3.432 px P90 endpoint error',
+      'The 117,681-parameter Tiny U-Net reached 3.265 mm depth MAE on a within-sequence temporal holdout'
+    ],
+    limitations:
+      'The principal result is descriptive evidence from one phantom sequence and uses dataset depth for RGB-D estimation and AR occlusion. The temporal depth split is not cross-scene evidence, independent tubular-mesh registration remains ambiguous, and no patient, clinical or regulatory claim is made.',
+    technologies: [
+      'Python',
+      'OpenCV',
+      'NumPy',
+      'SciPy',
+      'PyTorch',
+      'Scaramuzza OCam',
+      'Lucas–Kanade',
+      'RANSAC',
+      'SE(3)',
+      'ICP',
+      'Streamlit',
+      'Plotly'
+    ],
+    cover: '/projects_picture/surgnav-rt/surgnav-cover.webp',
+    gallery: [
+      '/projects_picture/surgnav-rt/tracking.webp',
+      '/projects_picture/surgnav-rt/trajectory.webp',
+      '/projects_picture/surgnav-rt/depth.webp',
+      '/projects_picture/surgnav-rt/registration.webp',
+      '/projects_picture/surgnav-rt/ar-reprojection.webp'
+    ],
+    video: {
+      src: '/projects_picture/surgnav-rt/surgnav-demo.mp4',
+      poster: '/projects_picture/surgnav-rt/surgnav-cover.webp',
+      caption:
+        'Measured 65-second technical demonstration using real C3VDv2 frames and generated experimental outputs.',
+      layout: 'wide'
+    },
+    links: [
+      { label: 'Full case study', href: '/projects/surgnav-rt/' },
+      { label: 'C3VDv2 dataset', href: 'https://durrlab.github.io/C3VDv2/' }
+    ]
+  },
   {
     id: 'orca-contactworld',
     title: 'ORCA ContactWorld — Contact-Aware Dexterous Manipulation',
@@ -373,6 +454,13 @@ const projectRecords: Project[] = [
       '/projects_picture/orca-contactworld/perturbation-force.png',
       '/projects_picture/orca-contactworld/ball-catch.webp'
     ],
+    video: {
+      src: '/projects_picture/orca-contactworld/contactworld-recovery.mp4',
+      poster: '/projects_picture/orca-contactworld/contactworld-recovery.webp',
+      caption:
+        'Saved-state replay of Episode 119 with synchronized contact force, disturbance and cube-to-palm slip measurements.',
+      layout: 'wide'
+    },
     links: [{ label: 'Full case study', href: '/projects/orca-contactworld/' }]
   },
   {
@@ -1841,6 +1929,7 @@ export const projects: Project[] = projectRecords.map((project) => {
 })
 
 const deploymentByProject: Partial<Record<string, Deployment>> = {
+  'surgnav-rt': 'BENCHMARK / DATASET',
   'orca-contactworld': 'SIMULATION',
   aeroworld: 'REAL ROBOT DATA',
   minigirona: 'REAL ROBOT',

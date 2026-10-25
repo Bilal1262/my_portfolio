@@ -1200,6 +1200,10 @@ body {
   --system-accent: #b34f68;
 }
 
+.archive-card.system-medical {
+  --system-accent: #009b92;
+}
+
 .archive-card:hover {
   border-color: color-mix(in srgb, var(--system-accent) 42%, #d6ddda);
   box-shadow: var(--shadow-lift);

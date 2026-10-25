@@ -23,6 +23,8 @@ export const metadata: Metadata = {
     'aerial robotics',
     'robot manipulation',
     'robot perception',
+    'medical computer vision',
+    'surgical navigation',
     'robot localization',
     'robot learning'
   ],

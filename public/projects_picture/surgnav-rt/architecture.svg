@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520">
+<defs><style>.bg{fill:#0b0e14}.box{fill:#151c29;stroke:#34425b;stroke-width:2}.oracle{fill:#292117;stroke:#ffb547}.ai{fill:#112825;stroke:#31d6c4}.t{fill:#edf3f8;font:600 18px system-ui}.s{fill:#aebdca;font:14px system-ui}.a{stroke:#74859e;stroke-width:3;fill:none;marker-end:url(#m)}</style><marker id="m" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#74859e"/></marker></defs>
+<rect class="bg" width="1200" height="520" rx="22"/><text class="t" x="42" y="50" font-size="26">SurgNav-RT system architecture</text><text class="s" x="42" y="77">Solid flow: inference · amber: oracle-depth path · teal: learned-depth extension</text>
+<g><rect class="box" x="40" y="130" width="180" height="78" rx="12"/><text class="t" x="67" y="165">Endoscopic RGB</text><text class="s" x="67" y="190">C3VDv2 frames</text>
+<rect class="box" x="280" y="105" width="205" height="90" rx="12"/><text class="t" x="308" y="140">Robust tracking</text><text class="s" x="308" y="165">LK · FB · 2D RANSAC</text>
+<rect class="ai" x="280" y="250" width="205" height="90" rx="12"/><text class="t" x="318" y="285">Tiny U-Net</text><text class="s" x="310" y="310">predicted depth · RGB only</text>
+<rect class="oracle" x="40" y="290" width="180" height="82" rx="12"/><text class="t" x="73" y="325">Oracle depth</text><text class="s" x="67" y="350">explicit GT input</text>
+<rect class="box" x="540" y="175" width="210" height="100" rx="12"/><text class="t" x="580" y="212">OCam geometry</text><text class="s" x="570" y="239">3D lift + robust SE(3)</text>
+<rect class="box" x="815" y="105" width="170" height="80" rx="12"/><text class="t" x="852" y="140">6-DoF pose</text><text class="s" x="846" y="164">camera-0 frame</text>
+<rect class="box" x="815" y="250" width="170" height="80" rx="12"/><text class="t" x="846" y="285">Reconstruction</text><text class="s" x="850" y="310">colored PLY</text>
+<rect class="box" x="1030" y="80" width="135" height="90" rx="12"/><text class="t" x="1060" y="115">AR gate</text><text class="s" x="1048" y="140">confidence only</text>
+<rect class="box" x="1030" y="245" width="135" height="90" rx="12"/><text class="t" x="1067" y="280">ICP</text><text class="s" x="1045" y="305">phantom mesh</text>
+<rect class="box" x="700" y="405" width="330" height="75" rx="12"/><text class="t" x="743" y="438">Workbench · figures · video</text><text class="s" x="768" y="462">measured CSV / JSON only</text>
+<path class="a" d="M220 160 H280"/><path class="a" d="M220 180 C250 220 250 280 280 295"/><path class="a" d="M220 330 H540"/><path class="a" d="M485 150 C520 150 510 205 540 215"/><path class="a" d="M485 295 C520 295 510 245 540 240"/><path class="a" d="M750 210 C780 210 785 145 815 145"/><path class="a" d="M750 245 C780 245 785 290 815 290"/><path class="a" d="M985 145 H1030"/><path class="a" d="M985 290 H1030"/><path class="a" d="M900 185 V405"/><path class="a" d="M1095 335 C1095 390 1030 420 1030 440"/>
+</g></svg>
